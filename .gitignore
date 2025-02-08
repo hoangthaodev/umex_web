@@ -1,0 +1,4 @@
+client_service/.next
+client_service/node_modules
+client_service/.env
+client_service/next-env.d.ts

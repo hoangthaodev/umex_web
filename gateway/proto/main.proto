@@ -1,0 +1,155 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "proto/pb/";
+
+import "google/protobuf/empty.proto";
+
+message User{
+  int64 user_id = 1;
+  string user_name = 2;
+  string user_password = 3;
+  string user_email = 4;
+  int32 user_active = 5;
+}
+
+message Auth{
+  int64 auth_id = 1;
+  int64 user_id = 2;
+  int32 role_id = 3;
+}
+
+message Config{
+  int64 config_id =1;
+  string config_key =2;
+  string config_value =3;
+  string config_style =4;
+}
+
+message Component{
+  int64 comp_id =1;
+  string comp_name =2;
+  int32 comp_position =3;
+  int32 comp_index =4;
+}
+
+message Image{
+  int64 img_id =1;
+  string img_src =2;
+  string img_title =3;
+  string img_alt =4;
+  string img_caption =5;
+}
+
+message MessageResponse {
+  int32 code = 1;
+  string message = 2;
+}
+
+message NumbRequest{
+  int64 numb = 1;
+}
+
+message StrRequest{
+  string str = 1;
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse{
+  int32 code = 1;
+  User user = 2;
+  string access_token = 3;
+  string refresh_token = 4;
+}
+
+message ManyUserResponse{
+  int32 code = 1;
+  repeated User users = 2;
+}
+
+message UserResponse{
+  int32 code = 1;
+  User user = 2;
+}
+
+service UserService {
+  rpc Login(LoginRequest) returns (LoginResponse){}
+  rpc Logout(NumbRequest) returns (MessageResponse){}
+  rpc GetAllUser(google.protobuf.Empty) returns (ManyUserResponse){}
+  rpc GetUserById(NumbRequest) returns (UserResponse){}
+  rpc CreateNewUser(User) returns(MessageResponse){}
+  rpc UpdateUser(User) returns (MessageResponse){}
+  rpc DeleteUser(NumbRequest) returns (MessageResponse){}
+}
+
+message ManyConfigResponse{
+  int32 code = 1;
+  repeated Config configs = 2;
+}
+
+message ConfigResponse{
+  int32 code = 1;
+  Config config = 2;
+}
+
+service ConfigService{
+  rpc GetAllConfig(google.protobuf.Empty) returns (ManyConfigResponse){}
+  rpc GetConfigByKey(StrRequest) returns (ConfigResponse){}
+  rpc GetConfigById(NumbRequest) returns (ConfigResponse){}
+  rpc CreateNewConfig(Config) returns (MessageResponse){}
+  rpc UpdateConfig(Config) returns (MessageResponse){}
+  rpc DeleteConfig(NumbRequest) returns (MessageResponse){}
+}
+
+message ManyComponentResponse{
+  int32 code = 1;
+  repeated Component components = 2;
+}
+
+message ComponentResponse{
+  int32 code = 1;
+  Component component = 2;
+}
+
+service ComponentService{
+  rpc GetAllComponent(google.protobuf.Empty) returns (ManyComponentResponse){}
+  rpc GetComponentById(NumbRequest) returns (ComponentResponse){}
+  rpc GetComponentByName(StrRequest) returns (ComponentResponse){}
+  rpc GetComponentByPosition(NumbRequest) returns (ManyComponentResponse){}
+  rpc CreateNewComponent(Component) returns (MessageResponse){}
+  rpc UpdateComponent(Component) returns (MessageResponse){}
+  rpc DeleteComponent(NumbRequest) returns (MessageResponse){}
+}
+
+message AuthResponse{
+  int32 code = 1;
+  Auth auth = 2;
+}
+
+service AuthService{
+  rpc GetAuthByUserId(NumbRequest) returns (AuthResponse){}
+  rpc CheckAuth(StrRequest) returns (AuthResponse){}
+}
+
+message ManyImageResponse{
+  int32 code = 1;
+  repeated Image images = 2;
+}
+
+message ImageResponse{
+  int32 code = 1;
+  Image image = 2;
+}
+
+service ImageService{
+  rpc GetAllImage(google.protobuf.Empty) returns (ManyImageResponse){}
+  rpc GetImageById(NumbRequest) returns (ImageResponse){}
+  rpc CreateNewImage(Image) returns (MessageResponse){}
+  rpc UpdateImage(Image) returns (MessageResponse){}
+  rpc DeleteImage(NumbRequest) returns (MessageResponse){}
+}

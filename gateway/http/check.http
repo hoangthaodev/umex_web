@@ -1,0 +1,176 @@
+### check status v1
+GET http://localhost:9000/v1/checkstatus
+
+### check status v1/admin
+GET http://localhost:9000/v1/admin/checkstatus
+
+
+### login
+POST http://localhost:9000/v1/admin/login
+Content-Type: "application/json"
+
+{
+  "username": "1",
+  "password": "1"
+}
+
+### logout
+POST http://localhost:9000/v1/admin/logout HTTP/1.1
+user_id: 1
+Content-Type: "application/json"
+
+### get All Users
+GET http://localhost:9000/v1/admin/users
+user_id: 1
+Content-Type: "application/json"
+
+### get user by id
+GET http://localhost:9000/v1/admin/users/2
+user_id: 1
+Content-Type: "application/json"
+
+### update user
+PUT http://localhost:9000/v1/admin/users/2
+user_id: 1
+Content-Type: "application/json"
+
+{
+  "username": "admin2",
+  "password": "123123",
+  "user_email": "admin@gmail.com",
+  "user_active": 1
+}
+
+### delete user
+DELETE http://localhost:9000/v1/admin/users/2
+user_id: 1
+
+### create new user
+POST http://localhost:9000/v1/admin/users
+user_id: 1
+Content-Type: "application/json"
+
+{
+  "username": "admin",
+  "password": "123123",
+  "user_email": "admin@gmail.com"
+}
+
+---------------------------------------
+
+### get all config
+GET http://localhost:9000/v1/config
+user_id: 1
+
+### get config by key
+GET http://localhost:9000/v1/config/key/site_name
+
+### get config by id
+GET http://localhost:9000/v1/admin/configs/3
+user_id: 1
+
+### create new config
+POST http://localhost:9000/v1/admin/configs
+user_id: 1
+Content-Type: "application/json"
+
+{
+  "config_key": "admin_email",
+  "config_value": "meo@meo.com",
+  "config_style":""
+}
+
+### update config
+PUT http://localhost:9000/v1/admin/configs/4
+user_id: 1
+Content-Type: "application/json"
+
+{
+  "config_key": "logo_url",
+  "config_value": "https://umex-bucket-s3.s3.ap-southeast-1.amazonaws.com/umex/1735786792050_next.svg",
+  "config_style": ""
+}
+
+### delete config
+DELETE http://localhost:9000/v1/admin/configs/5
+user_id: 1
+
+------------------------------------
+
+### get all component
+GET http://localhost:9000/v1/component
+
+### create new component
+POST http://localhost:9000/v1/admin/components
+user_id: 1
+Content-Type: "application/json"
+
+{
+  "comp_name": "Item 5",
+  "comp_position": 9,
+  "comp_index": 0
+}
+
+### get component name
+GET http://localhost:9000/v1/component/name/menu
+
+### get component position
+GET http://localhost:9000/v1/component/position/0
+
+### get component by id
+GET http://localhost:9000/v1/admin/components/1
+user_id: 1
+
+### update component
+PUT http://localhost:9000/v1/admin/components/1
+user_id: 1
+Content-Type: application/javascript
+
+{
+  "comp_name": "Logo",
+  "comp_position": 4,
+  "comp_index": 0
+}
+
+### delete component
+DELETE http://localhost:9000/v1/admin/components/2
+user_id: 1
+
+---------------------------------------
+
+### get all image
+GET http://localhost:9000/v1/admin/images
+user_id: 1
+
+### create a new image
+POST http://localhost:9000/v1/admin/images
+user_id: 1
+Content-Type: "application/json"
+
+{
+  "img_src": "https://umex-bucket-s3.s3.ap-southeast-1.amazonaws.com/umex/1735786792050_next.svg",
+  "img_alt": "Logo UMEX",
+  "img_title": "Logo",
+  "img_caption": "logo caption"
+}
+
+### get image by id
+GET http://localhost:9000/v1/admin/images/1
+user_id: 1
+
+### update image
+PUT http://localhost:9000/v1/admin/images/1
+user_id: 1
+
+{
+  "img_src": "https://umex-bucket-s3.s3.ap-southeast-1.amazonaws.com/umex/1735786792050_next.svg",
+  "img_title": "update title",
+  "img_alt": "update alt",
+  "img_caption": "update caption"
+}
+
+### delete image
+DELETE http://localhost:9000/v1/admin/images/2
+user_id: 1
+
+---------------------------------------

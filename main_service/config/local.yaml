@@ -1,0 +1,23 @@
+server:
+  host: "0.0.0.0"
+  port: 9090
+  publicKey: "123umex2@"
+  privateKey: "!@#umex2@"
+
+logger:
+  level: "debug"
+  filename: "./storages/main_service.log"
+  maxSize: 1024
+  maxBackups: 3
+  maxAge: 28
+  compress: true
+
+mysql:
+  host: "localhost"
+  port: 3306
+  user: "root"
+  password: "umex@123@456"
+  dbname: "main_db"
+  maxConnIdle: 10
+  maxConnOpen: 100
+  connMaxLifetime: 60

@@ -1,0 +1,193 @@
+{"level":"info","time":"2025-01-04T14:59:54.585+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-04T14:59:54.586+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-04T14:59:54.587+0700","caller":"transport/grpc.go:78","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-04T15:00:22.458+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-04T15:00:22.459+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-04T15:00:22.459+0700","caller":"transport/grpc.go:78","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T12:49:01.202+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"fatal","time":"2025-01-06T12:49:01.203+0700","caller":"initialize/mysql.go:24","msg":"khong the ket noi database","stacktrace":"main_service/internal/initialize.InitMySql\n\t/home/hoangnv/go/src/umex/umex_web/main_service/internal/initialize/mysql.go:24\nmain_service/internal/initialize.Run\n\t/home/hoangnv/go/src/umex/umex_web/main_service/internal/initialize/run.go:14\nmain.main\n\t/home/hoangnv/go/src/umex/umex_web/main_service/cmd/server/main.go:21\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:272"}
+{"level":"info","time":"2025-01-06T12:52:29.706+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T12:52:29.717+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T12:52:29.717+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T12:52:49.786+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T12:52:49.787+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T12:52:49.788+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T13:31:09.219+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T13:31:09.221+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T13:31:09.221+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T13:32:32.132+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T13:32:32.134+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T13:32:32.134+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T13:33:28.929+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T13:33:28.931+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T13:33:28.931+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T13:33:55.465+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T13:33:55.467+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T13:33:55.467+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T13:35:08.894+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T13:35:08.896+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T13:35:08.896+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T13:35:48.696+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T13:35:48.698+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T13:35:48.698+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T13:55:14.985+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T13:55:14.991+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T13:55:14.991+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T14:11:18.355+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T14:11:18.382+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T14:11:18.383+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T14:33:28.357+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T14:33:28.361+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T14:33:28.362+0700","caller":"transport/run.go:26","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T14:34:18.640+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T14:34:18.643+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T14:34:18.643+0700","caller":"transport/run.go:27","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T14:39:49.730+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T14:39:49.815+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T14:39:49.816+0700","caller":"transport/run.go:27","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T15:12:59.153+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T15:12:59.206+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T15:12:59.206+0700","caller":"transport/run.go:27","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T15:16:23.155+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T15:16:23.160+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T15:16:23.160+0700","caller":"transport/run.go:27","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T15:40:13.000+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T15:40:13.007+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T15:40:13.008+0700","caller":"transport/run.go:27","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T15:45:54.246+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T15:45:54.250+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T15:45:54.250+0700","caller":"transport/run.go:27","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T16:50:17.518+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T16:50:17.521+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T16:50:17.522+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-06T16:51:37.823+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-06T16:51:37.825+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-06T16:51:37.826+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-07T09:42:53.862+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-07T09:42:53.866+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-07T09:42:53.867+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-07T09:48:07.540+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-07T09:48:07.543+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-07T09:48:07.544+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-07T09:55:59.429+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-07T09:55:59.432+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-07T09:55:59.433+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-07T09:56:34.542+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-07T09:56:34.545+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-07T09:56:34.545+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-07T09:57:22.100+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-07T09:57:22.103+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-07T09:57:22.103+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-07T10:11:44.089+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-07T10:11:44.093+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-07T10:11:44.094+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-09T19:24:11.712+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-09T19:24:11.715+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-09T19:24:11.716+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-11T11:09:59.133+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-11T11:09:59.138+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-11T11:09:59.138+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-11T11:11:14.085+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-11T11:11:14.087+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-11T11:11:14.088+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-11T11:23:20.070+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-11T11:23:20.072+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-11T11:23:20.073+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-14T13:47:41.084+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-14T13:47:41.256+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-14T13:47:41.257+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-14T14:15:57.352+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-14T14:15:57.355+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-14T14:15:57.356+0700","caller":"transport/run.go:30","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-15T14:31:23.112+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-15T14:31:23.299+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-15T14:31:23.300+0700","caller":"transport/run.go:32","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-15T14:36:03.202+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-15T14:36:03.337+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-15T14:36:03.338+0700","caller":"transport/run.go:32","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-15T23:00:57.329+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"fatal","time":"2025-01-15T23:00:57.330+0700","caller":"initialize/mysql.go:24","msg":"error status database","stacktrace":"main_service/internal/initialize.InitMySql\n\t/home/hoangnv/go/src/umex/umex_web/main_service/internal/initialize/mysql.go:24\nmain_service/internal/initialize.Run\n\t/home/hoangnv/go/src/umex/umex_web/main_service/internal/initialize/run.go:14\nmain.main\n\t/home/hoangnv/go/src/umex/umex_web/main_service/cmd/server/main.go:8\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:272"}
+{"level":"info","time":"2025-01-15T23:01:20.987+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-15T23:01:20.999+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-15T23:01:20.999+0700","caller":"transport/run.go:32","msg":"Server running on localhost:9090"}
+{"level":"info","time":"2025-01-16T09:30:46.229+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T09:30:46.240+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T09:30:46.240+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T20:32:32.014+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T20:32:32.025+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T20:32:32.025+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T20:51:33.325+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T20:51:33.377+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T20:51:33.378+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T21:07:27.884+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T21:07:27.886+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T21:07:27.887+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T21:08:31.156+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T21:08:31.158+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T21:08:31.158+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T21:10:56.323+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T21:10:56.326+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T21:10:56.327+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T21:11:34.888+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T21:11:34.890+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T21:11:34.890+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T21:27:45.918+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T21:27:45.920+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T21:27:45.921+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T21:33:11.492+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T21:33:11.494+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T21:33:11.494+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T21:38:25.236+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T21:38:25.239+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T21:38:25.239+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T22:02:15.513+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T22:02:15.516+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T22:02:15.516+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-16T22:17:52.824+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-16T22:17:52.826+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-16T22:17:52.827+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-17T09:44:19.081+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-17T09:44:19.092+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-17T09:44:19.093+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-19T10:38:10.317+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-19T10:38:10.333+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-19T10:38:10.333+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-20T10:10:54.268+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-20T10:10:54.279+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-20T10:10:54.279+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-20T10:11:46.171+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-20T10:11:46.175+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-20T10:11:46.176+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-20T10:14:05.675+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-20T10:14:05.677+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-20T10:14:05.677+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-01-22T16:42:31.576+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-01-22T16:42:31.752+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-01-22T16:42:31.752+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-02-02T09:14:17.339+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-02-02T09:14:17.350+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-02-02T09:14:17.350+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-02-02T15:21:03.332+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-02-02T15:21:03.337+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-02-02T15:21:03.341+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-02-03T09:20:59.822+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-02-03T09:20:59.833+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-02-03T09:20:59.833+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-02-04T09:11:47.612+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-02-04T09:11:47.621+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-02-04T09:11:47.622+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-02-05T08:43:01.464+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-02-05T08:43:01.502+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-02-05T08:43:01.503+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-02-06T08:37:43.059+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-02-06T08:37:43.070+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-02-06T08:37:43.070+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-02-07T00:32:02.389+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-02-07T00:32:02.401+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-02-07T00:32:02.401+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-02-07T10:27:36.470+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-02-07T10:27:36.480+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-02-07T10:27:36.481+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
+{"level":"info","time":"2025-02-07T13:58:03.794+0700","caller":"initialize/run.go:12","msg":"Logger running..."}
+{"level":"info","time":"2025-02-07T13:58:03.804+0700","caller":"initialize/mysql.go:27","msg":"Connect database successfully"}
+{"level":"info","time":"2025-02-07T13:58:03.804+0700","caller":"transport/run.go:32","msg":"Server running on 0.0.0.0:9090"}
