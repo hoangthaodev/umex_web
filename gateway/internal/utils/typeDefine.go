@@ -29,3 +29,15 @@ type Image struct {
 	ImgAlt     string `json:"img_alt"`
 	ImgCaption string `json:"img_caption"`
 }
+
+type Menu struct {
+	MenuId    int64  `json:"menu_id"`
+	MenuName  string `json:"menu_name"`
+	MenuValue string `json:"menu_value"`
+}
+
+type MenuLocation struct {
+	LocId   int64  `json:"loc_id"`
+	LocName string `json:"loc_name"`
+	MenuId  int64  `json:"menu_id"`
+}

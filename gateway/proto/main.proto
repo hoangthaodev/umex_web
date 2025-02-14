@@ -6,42 +6,6 @@ option go_package = "proto/pb/";
 
 import "google/protobuf/empty.proto";
 
-message User{
-  int64 user_id = 1;
-  string user_name = 2;
-  string user_password = 3;
-  string user_email = 4;
-  int32 user_active = 5;
-}
-
-message Auth{
-  int64 auth_id = 1;
-  int64 user_id = 2;
-  int32 role_id = 3;
-}
-
-message Config{
-  int64 config_id =1;
-  string config_key =2;
-  string config_value =3;
-  string config_style =4;
-}
-
-message Component{
-  int64 comp_id =1;
-  string comp_name =2;
-  int32 comp_position =3;
-  int32 comp_index =4;
-}
-
-message Image{
-  int64 img_id =1;
-  string img_src =2;
-  string img_title =3;
-  string img_alt =4;
-  string img_caption =5;
-}
-
 message MessageResponse {
   int32 code = 1;
   string message = 2;
@@ -67,6 +31,14 @@ message LoginResponse{
   string refresh_token = 4;
 }
 
+message User{
+  int64 user_id = 1;
+  string user_name = 2;
+  string user_password = 3;
+  string user_email = 4;
+  int32 user_active = 5;
+}
+
 message ManyUserResponse{
   int32 code = 1;
   repeated User users = 2;
@@ -87,6 +59,13 @@ service UserService {
   rpc DeleteUser(NumbRequest) returns (MessageResponse){}
 }
 
+message Config{
+  int64 config_id =1;
+  string config_key =2;
+  string config_value =3;
+  string config_style =4;
+}
+
 message ManyConfigResponse{
   int32 code = 1;
   repeated Config configs = 2;
@@ -104,6 +83,13 @@ service ConfigService{
   rpc CreateNewConfig(Config) returns (MessageResponse){}
   rpc UpdateConfig(Config) returns (MessageResponse){}
   rpc DeleteConfig(NumbRequest) returns (MessageResponse){}
+}
+
+message Component{
+  int64 comp_id =1;
+  string comp_name =2;
+  int32 comp_position =3;
+  int32 comp_index =4;
 }
 
 message ManyComponentResponse{
@@ -126,6 +112,12 @@ service ComponentService{
   rpc DeleteComponent(NumbRequest) returns (MessageResponse){}
 }
 
+message Auth{
+  int64 auth_id = 1;
+  int64 user_id = 2;
+  int32 role_id = 3;
+}
+
 message AuthResponse{
   int32 code = 1;
   Auth auth = 2;
@@ -134,6 +126,14 @@ message AuthResponse{
 service AuthService{
   rpc GetAuthByUserId(NumbRequest) returns (AuthResponse){}
   rpc CheckAuth(StrRequest) returns (AuthResponse){}
+}
+
+message Image{
+  int64 img_id =1;
+  string img_src =2;
+  string img_title =3;
+  string img_alt =4;
+  string img_caption =5;
 }
 
 message ManyImageResponse{
@@ -152,4 +152,51 @@ service ImageService{
   rpc CreateNewImage(Image) returns (MessageResponse){}
   rpc UpdateImage(Image) returns (MessageResponse){}
   rpc DeleteImage(NumbRequest) returns (MessageResponse){}
+}
+
+message Menu{
+  int64 menu_id =1;
+  string menu_name =2;
+  string menu_value =3;
+}
+
+message ManyMenuResponse{
+  int32 code = 1;
+  repeated Menu menus = 2;
+}
+
+message MenuResponse{
+  int32 code = 1;
+  Menu menu = 2;
+}
+
+service MenuService{
+  rpc GetAllMenu(google.protobuf.Empty) returns (ManyMenuResponse){}
+  rpc GetMenuById(NumbRequest) returns (MenuResponse){}
+  rpc CreateNewMenu(Menu) returns (MessageResponse){}
+  rpc UpdateMenu(Menu) returns (MessageResponse){}
+  rpc DeleteMenu(NumbRequest) returns (MessageResponse){}
+}
+
+message MenuLocation{
+  int64 loc_id =1;
+  string loc_name =2;
+  int64 menu_id =3;
+}
+
+message ManyMenuLocationResponse{
+  int32 code = 1;
+  repeated MenuLocation locations = 2;
+}
+
+message MenuLocationResponse{
+  int32 code = 1;
+  MenuLocation location = 2;
+}
+
+service MenuLocationService{
+  rpc GetAllLocation(google.protobuf.Empty) returns (ManyMenuLocationResponse){}
+  rpc GetLocationById(NumbRequest) returns(MenuLocationResponse){}
+  rpc GetLocationByMenuId(NumbRequest) returns(ManyMenuLocationResponse){}
+  rpc UpdateMenuLocation(MenuLocation) returns (MessageResponse){}
 }

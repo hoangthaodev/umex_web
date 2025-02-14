@@ -5,4 +5,6 @@ type AdminRouterGroup struct {
 	ConfigRouter
 	ComponentRouter
 	ImageRouter
+	MenuRouter
+	MenuLocationRouter
 }

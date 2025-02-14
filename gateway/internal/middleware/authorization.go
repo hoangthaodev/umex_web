@@ -11,6 +11,7 @@ func Authorization() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authorization := c.GetHeader("Authorization")
 		res, err := new(services.AuthService).CheckAuth(authorization)
+
 		if err != nil || res.Code != 2000 {
 			response.ErrorResponse(c, 3001, "error: Unauthorized")
 			c.Abort()

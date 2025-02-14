@@ -1364,3 +1364,473 @@ var ImageService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "proto/main.proto",
 }
+
+const (
+	MenuService_GetAllMenu_FullMethodName    = "/pb.MenuService/GetAllMenu"
+	MenuService_GetMenuById_FullMethodName   = "/pb.MenuService/GetMenuById"
+	MenuService_CreateNewMenu_FullMethodName = "/pb.MenuService/CreateNewMenu"
+	MenuService_UpdateMenu_FullMethodName    = "/pb.MenuService/UpdateMenu"
+	MenuService_DeleteMenu_FullMethodName    = "/pb.MenuService/DeleteMenu"
+)
+
+// MenuServiceClient is the client API for MenuService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type MenuServiceClient interface {
+	GetAllMenu(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyMenuResponse, error)
+	GetMenuById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MenuResponse, error)
+	CreateNewMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error)
+	UpdateMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error)
+	DeleteMenu(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+}
+
+type menuServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewMenuServiceClient(cc grpc.ClientConnInterface) MenuServiceClient {
+	return &menuServiceClient{cc}
+}
+
+func (c *menuServiceClient) GetAllMenu(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyMenuResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyMenuResponse)
+	err := c.cc.Invoke(ctx, MenuService_GetAllMenu_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuServiceClient) GetMenuById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MenuResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MenuResponse)
+	err := c.cc.Invoke(ctx, MenuService_GetMenuById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuServiceClient) CreateNewMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, MenuService_CreateNewMenu_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuServiceClient) UpdateMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, MenuService_UpdateMenu_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuServiceClient) DeleteMenu(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, MenuService_DeleteMenu_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// MenuServiceServer is the server API for MenuService service.
+// All implementations must embed UnimplementedMenuServiceServer
+// for forward compatibility.
+type MenuServiceServer interface {
+	GetAllMenu(context.Context, *emptypb.Empty) (*ManyMenuResponse, error)
+	GetMenuById(context.Context, *NumbRequest) (*MenuResponse, error)
+	CreateNewMenu(context.Context, *Menu) (*MessageResponse, error)
+	UpdateMenu(context.Context, *Menu) (*MessageResponse, error)
+	DeleteMenu(context.Context, *NumbRequest) (*MessageResponse, error)
+	mustEmbedUnimplementedMenuServiceServer()
+}
+
+// UnimplementedMenuServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedMenuServiceServer struct{}
+
+func (UnimplementedMenuServiceServer) GetAllMenu(context.Context, *emptypb.Empty) (*ManyMenuResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllMenu not implemented")
+}
+func (UnimplementedMenuServiceServer) GetMenuById(context.Context, *NumbRequest) (*MenuResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMenuById not implemented")
+}
+func (UnimplementedMenuServiceServer) CreateNewMenu(context.Context, *Menu) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNewMenu not implemented")
+}
+func (UnimplementedMenuServiceServer) UpdateMenu(context.Context, *Menu) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMenu not implemented")
+}
+func (UnimplementedMenuServiceServer) DeleteMenu(context.Context, *NumbRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteMenu not implemented")
+}
+func (UnimplementedMenuServiceServer) mustEmbedUnimplementedMenuServiceServer() {}
+func (UnimplementedMenuServiceServer) testEmbeddedByValue()                     {}
+
+// UnsafeMenuServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MenuServiceServer will
+// result in compilation errors.
+type UnsafeMenuServiceServer interface {
+	mustEmbedUnimplementedMenuServiceServer()
+}
+
+func RegisterMenuServiceServer(s grpc.ServiceRegistrar, srv MenuServiceServer) {
+	// If the following call pancis, it indicates UnimplementedMenuServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&MenuService_ServiceDesc, srv)
+}
+
+func _MenuService_GetAllMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).GetAllMenu(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_GetAllMenu_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).GetAllMenu(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuService_GetMenuById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).GetMenuById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_GetMenuById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).GetMenuById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuService_CreateNewMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Menu)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).CreateNewMenu(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_CreateNewMenu_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).CreateNewMenu(ctx, req.(*Menu))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuService_UpdateMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Menu)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).UpdateMenu(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_UpdateMenu_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).UpdateMenu(ctx, req.(*Menu))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuService_DeleteMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).DeleteMenu(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_DeleteMenu_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).DeleteMenu(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// MenuService_ServiceDesc is the grpc.ServiceDesc for MenuService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var MenuService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.MenuService",
+	HandlerType: (*MenuServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAllMenu",
+			Handler:    _MenuService_GetAllMenu_Handler,
+		},
+		{
+			MethodName: "GetMenuById",
+			Handler:    _MenuService_GetMenuById_Handler,
+		},
+		{
+			MethodName: "CreateNewMenu",
+			Handler:    _MenuService_CreateNewMenu_Handler,
+		},
+		{
+			MethodName: "UpdateMenu",
+			Handler:    _MenuService_UpdateMenu_Handler,
+		},
+		{
+			MethodName: "DeleteMenu",
+			Handler:    _MenuService_DeleteMenu_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/main.proto",
+}
+
+const (
+	MenuLocationService_GetAllLocation_FullMethodName      = "/pb.MenuLocationService/GetAllLocation"
+	MenuLocationService_GetLocationById_FullMethodName     = "/pb.MenuLocationService/GetLocationById"
+	MenuLocationService_GetLocationByMenuId_FullMethodName = "/pb.MenuLocationService/GetLocationByMenuId"
+	MenuLocationService_UpdateMenuLocation_FullMethodName  = "/pb.MenuLocationService/UpdateMenuLocation"
+)
+
+// MenuLocationServiceClient is the client API for MenuLocationService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type MenuLocationServiceClient interface {
+	GetAllLocation(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyMenuLocationResponse, error)
+	GetLocationById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MenuLocationResponse, error)
+	GetLocationByMenuId(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyMenuLocationResponse, error)
+	UpdateMenuLocation(ctx context.Context, in *MenuLocation, opts ...grpc.CallOption) (*MessageResponse, error)
+}
+
+type menuLocationServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewMenuLocationServiceClient(cc grpc.ClientConnInterface) MenuLocationServiceClient {
+	return &menuLocationServiceClient{cc}
+}
+
+func (c *menuLocationServiceClient) GetAllLocation(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyMenuLocationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyMenuLocationResponse)
+	err := c.cc.Invoke(ctx, MenuLocationService_GetAllLocation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuLocationServiceClient) GetLocationById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MenuLocationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MenuLocationResponse)
+	err := c.cc.Invoke(ctx, MenuLocationService_GetLocationById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuLocationServiceClient) GetLocationByMenuId(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyMenuLocationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyMenuLocationResponse)
+	err := c.cc.Invoke(ctx, MenuLocationService_GetLocationByMenuId_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuLocationServiceClient) UpdateMenuLocation(ctx context.Context, in *MenuLocation, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, MenuLocationService_UpdateMenuLocation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// MenuLocationServiceServer is the server API for MenuLocationService service.
+// All implementations must embed UnimplementedMenuLocationServiceServer
+// for forward compatibility.
+type MenuLocationServiceServer interface {
+	GetAllLocation(context.Context, *emptypb.Empty) (*ManyMenuLocationResponse, error)
+	GetLocationById(context.Context, *NumbRequest) (*MenuLocationResponse, error)
+	GetLocationByMenuId(context.Context, *NumbRequest) (*ManyMenuLocationResponse, error)
+	UpdateMenuLocation(context.Context, *MenuLocation) (*MessageResponse, error)
+	mustEmbedUnimplementedMenuLocationServiceServer()
+}
+
+// UnimplementedMenuLocationServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedMenuLocationServiceServer struct{}
+
+func (UnimplementedMenuLocationServiceServer) GetAllLocation(context.Context, *emptypb.Empty) (*ManyMenuLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllLocation not implemented")
+}
+func (UnimplementedMenuLocationServiceServer) GetLocationById(context.Context, *NumbRequest) (*MenuLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLocationById not implemented")
+}
+func (UnimplementedMenuLocationServiceServer) GetLocationByMenuId(context.Context, *NumbRequest) (*ManyMenuLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLocationByMenuId not implemented")
+}
+func (UnimplementedMenuLocationServiceServer) UpdateMenuLocation(context.Context, *MenuLocation) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMenuLocation not implemented")
+}
+func (UnimplementedMenuLocationServiceServer) mustEmbedUnimplementedMenuLocationServiceServer() {}
+func (UnimplementedMenuLocationServiceServer) testEmbeddedByValue()                             {}
+
+// UnsafeMenuLocationServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MenuLocationServiceServer will
+// result in compilation errors.
+type UnsafeMenuLocationServiceServer interface {
+	mustEmbedUnimplementedMenuLocationServiceServer()
+}
+
+func RegisterMenuLocationServiceServer(s grpc.ServiceRegistrar, srv MenuLocationServiceServer) {
+	// If the following call pancis, it indicates UnimplementedMenuLocationServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&MenuLocationService_ServiceDesc, srv)
+}
+
+func _MenuLocationService_GetAllLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuLocationServiceServer).GetAllLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuLocationService_GetAllLocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuLocationServiceServer).GetAllLocation(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuLocationService_GetLocationById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuLocationServiceServer).GetLocationById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuLocationService_GetLocationById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuLocationServiceServer).GetLocationById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuLocationService_GetLocationByMenuId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuLocationServiceServer).GetLocationByMenuId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuLocationService_GetLocationByMenuId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuLocationServiceServer).GetLocationByMenuId(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuLocationService_UpdateMenuLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MenuLocation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuLocationServiceServer).UpdateMenuLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuLocationService_UpdateMenuLocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuLocationServiceServer).UpdateMenuLocation(ctx, req.(*MenuLocation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// MenuLocationService_ServiceDesc is the grpc.ServiceDesc for MenuLocationService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var MenuLocationService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.MenuLocationService",
+	HandlerType: (*MenuLocationServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAllLocation",
+			Handler:    _MenuLocationService_GetAllLocation_Handler,
+		},
+		{
+			MethodName: "GetLocationById",
+			Handler:    _MenuLocationService_GetLocationById_Handler,
+		},
+		{
+			MethodName: "GetLocationByMenuId",
+			Handler:    _MenuLocationService_GetLocationByMenuId_Handler,
+		},
+		{
+			MethodName: "UpdateMenuLocation",
+			Handler:    _MenuLocationService_UpdateMenuLocation_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/main.proto",
+}

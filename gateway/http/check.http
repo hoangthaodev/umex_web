@@ -16,22 +16,22 @@ Content-Type: "application/json"
 
 ### logout
 POST http://localhost:9000/v1/admin/logout HTTP/1.1
-user_id: 1
+Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg"
 Content-Type: "application/json"
 
 ### get All Users
 GET http://localhost:9000/v1/admin/users
-user_id: 1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg
 Content-Type: "application/json"
 
 ### get user by id
 GET http://localhost:9000/v1/admin/users/2
-user_id: 1
+Authorization: 1
 Content-Type: "application/json"
 
 ### update user
 PUT http://localhost:9000/v1/admin/users/2
-user_id: 1
+Authorization: 1
 Content-Type: "application/json"
 
 {
@@ -43,11 +43,11 @@ Content-Type: "application/json"
 
 ### delete user
 DELETE http://localhost:9000/v1/admin/users/2
-user_id: 1
+Authorization: 1
 
 ### create new user
 POST http://localhost:9000/v1/admin/users
-user_id: 1
+Authorization: 1
 Content-Type: "application/json"
 
 {
@@ -60,18 +60,18 @@ Content-Type: "application/json"
 
 ### get all config
 GET http://localhost:9000/v1/config
-user_id: 1
+Authorization: 1
 
 ### get config by key
 GET http://localhost:9000/v1/config/key/site_name
 
 ### get config by id
 GET http://localhost:9000/v1/admin/configs/3
-user_id: 1
+Authorization: 1
 
 ### create new config
 POST http://localhost:9000/v1/admin/configs
-user_id: 1
+Authorization: 1
 Content-Type: "application/json"
 
 {
@@ -82,7 +82,7 @@ Content-Type: "application/json"
 
 ### update config
 PUT http://localhost:9000/v1/admin/configs/4
-user_id: 1
+Authorization: 1
 Content-Type: "application/json"
 
 {
@@ -93,7 +93,7 @@ Content-Type: "application/json"
 
 ### delete config
 DELETE http://localhost:9000/v1/admin/configs/5
-user_id: 1
+Authorization: 1
 
 ------------------------------------
 
@@ -102,13 +102,12 @@ GET http://localhost:9000/v1/component
 
 ### create new component
 POST http://localhost:9000/v1/admin/components
-user_id: 1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxNDIyMDcyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19._3CXKpFpOXS4pzrUmgVBiqceGYCX5CZ8KAN41DNZgMg
 Content-Type: "application/json"
 
 {
   "comp_name": "Item 5",
-  "comp_position": 9,
-  "comp_index": 0
+  "comp_position": 4
 }
 
 ### get component name
@@ -119,12 +118,12 @@ GET http://localhost:9000/v1/component/position/0
 
 ### get component by id
 GET http://localhost:9000/v1/admin/components/1
-user_id: 1
+Authorization: 1
 
 ### update component
 PUT http://localhost:9000/v1/admin/components/1
-user_id: 1
-Content-Type: application/javascript
+Authorization: 1
+Content-Type: application/json
 
 {
   "comp_name": "Logo",
@@ -134,17 +133,17 @@ Content-Type: application/javascript
 
 ### delete component
 DELETE http://localhost:9000/v1/admin/components/2
-user_id: 1
+Authorization: 1
 
 ---------------------------------------
 
 ### get all image
 GET http://localhost:9000/v1/admin/images
-user_id: 1
+Authorization: 1
 
 ### create a new image
 POST http://localhost:9000/v1/admin/images
-user_id: 1
+Authorization: 1
 Content-Type: "application/json"
 
 {
@@ -156,11 +155,11 @@ Content-Type: "application/json"
 
 ### get image by id
 GET http://localhost:9000/v1/admin/images/1
-user_id: 1
+Authorization: 1
 
 ### update image
 PUT http://localhost:9000/v1/admin/images/1
-user_id: 1
+Authorization: 1
 
 {
   "img_src": "https://umex-bucket-s3.s3.ap-southeast-1.amazonaws.com/umex/1735786792050_next.svg",
@@ -171,6 +170,60 @@ user_id: 1
 
 ### delete image
 DELETE http://localhost:9000/v1/admin/images/2
-user_id: 1
+Authorization: 1
 
 ---------------------------------------
+
+### get all menu
+GET http://localhost:9000/v1/admin/menus
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg
+
+### create new menu
+POST http://localhost:9000/v1/admin/menus
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg
+Content-Type: "application/json"
+
+{
+  "menu_name": "Menu 2",
+  "menu_value": "{\"giday\": \"khong biet\"}"
+}
+
+### update menu
+PUT http://localhost:9000/v1/admin/menus/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg
+Content-Type: "application/json"
+
+{
+  "menu_name": "Menu main",
+  "menu_value": "{\"giday\": \"biet roi\"}"
+}
+
+### delete menu
+DELETE http://localhost:9000/v1/admin/menus/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg
+
+### get menu by Id
+GET http://localhost:9000/v1/menu/1
+
+------------------------------------------------------
+
+### get all menu location
+GET http://localhost:9000/v1/admin/menu_locations
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg
+
+### get menu location by id
+GET http://localhost:9000/v1/admin/menu_locations/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg
+
+### update menu location
+PUT http://localhost:9000/v1/admin/menu_locations/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg
+Content-Type: "application/json"
+
+{
+  "menu_id": 0
+}
+
+### get location by menu id
+GET http://localhost:9000/v1/admin/menu_locations/menu/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg
