@@ -70,7 +70,7 @@ func (cpc *ComponentController) CreateNewComponent(c *gin.Context) {
 		return
 	}
 
-	res, err := cpc.ComponentService.CreateNewComponent(component.CompName, component.CompPosition, component.CompIndex)
+	res, err := cpc.ComponentService.CreateNewComponent(component.CompName, component.CompPosition, component.CompIndex, component.CompMap)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return

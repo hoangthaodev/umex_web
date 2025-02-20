@@ -7,4 +7,10 @@ type AdminRouterGroup struct {
 	ImageRouter
 	MenuRouter
 	MenuLocationRouter
+	CategoryRouter
+	TypeRouter
+	TagRouter
+	PagetagRouter
+	PageRouter
+	PagecategoryRouter
 }

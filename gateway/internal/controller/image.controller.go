@@ -45,7 +45,7 @@ func (ic *ImageController) CreateNewImage(c *gin.Context) {
 		return
 	}
 
-	res, err := ic.ImageService.CreateNewImage(image.ImgSrc, image.ImgTitle, image.ImgAlt, image.ImgCaption)
+	res, err := ic.ImageService.CreateNewImage(image.ImgUrl, image.ImgTitle, image.ImgAlt, image.ImgCaption)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -66,7 +66,7 @@ func (ic *ImageController) UpdateImage(c *gin.Context) {
 		return
 	}
 
-	res, err := ic.ImageService.UpdateImage(imgId, image.ImgSrc, image.ImgTitle, image.ImgAlt, image.ImgCaption)
+	res, err := ic.ImageService.UpdateImage(imgId, image.ImgUrl, image.ImgTitle, image.ImgAlt, image.ImgCaption)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return

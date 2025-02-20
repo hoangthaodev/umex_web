@@ -10,7 +10,7 @@ POST http://localhost:9000/v1/admin/login
 Content-Type: "application/json"
 
 {
-  "username": "1",
+  "username": "admin",
   "password": "1"
 }
 
@@ -106,8 +106,9 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIx
 Content-Type: "application/json"
 
 {
-  "comp_name": "Item 5",
-  "comp_position": 4
+  "comp_name": "Mobile-Logo",
+  "comp_position": 0,
+  "comp_map": "Logo"
 }
 
 ### get component name
@@ -121,14 +122,14 @@ GET http://localhost:9000/v1/admin/components/1
 Authorization: 1
 
 ### update component
-PUT http://localhost:9000/v1/admin/components/1
-Authorization: 1
+PUT http://localhost:9000/v1/admin/components/26
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxNDIyMDcyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19._3CXKpFpOXS4pzrUmgVBiqceGYCX5CZ8KAN41DNZgMg
 Content-Type: application/json
 
 {
-  "comp_name": "Logo",
-  "comp_position": 4,
-  "comp_index": 0
+  "comp_name": "Mobile-Logo",
+  "comp_position": 11,
+  "comp_index": 1
 }
 
 ### delete component
@@ -227,3 +228,266 @@ Content-Type: "application/json"
 ### get location by menu id
 GET http://localhost:9000/v1/admin/menu_locations/menu/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIwOTE2MDc0NiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.AVGzMul0i8hTLyaeOhVX1mtpNiVbEKWqd3bwvoaMPTg
+
+---------------------------------------------------------------
+
+### get all type
+GET http://localhost:9000/v1/admin/types
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get type by id
+GET http://localhost:9000/v1/admin/types/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### create new type
+POST http://localhost:9000/v1/admin/types
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+{
+  "type_name": "Sample Type 2"
+}
+
+### update type
+PUT http://localhost:9000/v1/admin/types/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+{
+  "type_name": "Updated Type"
+}
+
+### delete type
+DELETE http://localhost:9000/v1/admin/types/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+---------------------------------------------------
+
+### get all category
+GET http://localhost:9000/v1/admin/categories
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+
+### create new category
+POST http://localhost:9000/v1/admin/categories
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+{
+	"category_name": "Cat Name 2",
+	"category_slug": "cat_name_2",
+	"category_des": " hahah cat description here",
+	"type_id": 1
+}
+
+### get category by id
+GET http://localhost:9000/v1/admin/categories/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### update category
+PUT http://localhost:9000/v1/admin/categories/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+{
+  "category_name": "Updated Cat Name",
+  "category_slug": "updated_cat_name",
+  "category_des": " updated cat description here",
+  "type_id": 1
+}
+
+### delete category
+DELETE http://localhost:9000/v1/admin/categories/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+-------------------------------------------
+
+### get all page
+GET http://localhost:9000/v1/admin/pages?limit=10&offset=0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+
+### create new page
+POST http://localhost:9000/v1/admin/pages
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+
+{
+  "page_title": "page 22",
+  "page_content": "This is a sample page content",
+  "page_description": "this is a description",
+	"page_slug": "page_22",
+	"page_year": 2025,
+	"page_month": 2,
+	"page_day": 19,
+	"user_id": 1,
+	"type_id": 1
+}
+
+### get page by id
+GET http://localhost:9000/v1/admin/pages/3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get page by slug
+GET http://localhost:9000/v1/admin/pages/slug/page_2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get page by year
+GET http://localhost:9000/v1/admin/pages/year?year=2025&limit=10&offset=0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get page by month
+GET http://localhost:9000/v1/admin/pages/month?month=2&year=2025&limit=10&offset=0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get page by day
+GET http://localhost:9000/v1/admin/pages/day?day=18&month=2&year=2025&limit=10&offset=0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get page by type
+GET http://localhost:9000/v1/admin/pages/type/1?limit=10&offset=0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get page by status
+GET http://localhost:9000/v1/admin/pages/status/0?limit=10&offset=0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get page by trash
+GET http://localhost:9000/v1/admin/pages/trash/1?limit=10&offset=0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get page by type and status
+GET http://localhost:9000/v1/admin/pages/typestatus?type=1&status=0&limit=10&offset=0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+
+### update page
+PUT http://localhost:9000/v1/admin/pages/3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+{
+  "page_title": "page updated",
+  "page_content": "This is a sample page content",
+  "page_description": "this is a description",
+	"page_slug": "page_updated",
+	"page_year": 2025,
+	"page_month": 1,
+	"page_day": 10,
+	"user_id": 1,
+	"type_id": 1,
+  "category_id": 1,
+  "page_trash": 1
+}
+
+### delete page
+DELETE http://localhost:9000/v1/admin/pages/3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+---------------------------------------------
+
+### get all tag
+GET http://localhost:9000/v1/admin/tags
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+
+### create new tag
+POST http://localhost:9000/v1/admin/tags
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+
+{
+  "tag_name": "tag 1",
+	"tag_slug": "tag_1",
+	"tag_description": "day la tag 1",
+	"type_id": 1
+}
+
+### get tag by id
+GET http://localhost:9000/v1/admin/tags/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get tag by slug
+GET http://localhost:9000/v1/admin/tags/slug/tag_2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### get tag by type
+GET http://localhost:9000/v1/admin/tags/type/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+### update tag
+PUT http://localhost:9000/v1/admin/tags/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+{
+  "tag_name": "tag 1111101",
+	"tag_slug": "tag_1",
+	"tag_description": "day la tag 1",
+	"type_id": 1
+}
+
+### delete tag
+DELETE http://localhost:9000/v1/admin/tags/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Content-Type: "application/json"
+
+----------------------------------------------
+
+### create new page tag
+POST http://localhost:9000/v1/admin/pagetags
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+
+{
+  "page_id": 1,
+	"tag_id":1
+}
+
+### get page by tag
+GET http://localhost:9000/v1/admin/pagetags/tag/1?limit=10&offset=0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+
+### get tag by page
+GET http://localhost:9000/v1/admin/pagetags/page/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+-------------------------------------------------
+
+### create new page category
+POST http://localhost:9000/v1/admin/pagecategories
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+
+{
+  "page_id": 1,
+  "category_id":1
+}
+
+### get page by category
+GET http://localhost:9000/v1/admin/pagecategories/category/1?limit=10&offset=0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"
+
+### get category by page
+GET http://localhost:9000/v1/admin/pagecategories/page/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
+Content-Type: "application/json"

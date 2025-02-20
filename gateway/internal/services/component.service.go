@@ -49,15 +49,16 @@ func (cps *ComponentService) GetComponentByPosition(position int64) (*pb.ManyCom
 	})
 }
 
-func (cps *ComponentService) CreateNewComponent(name string, position int32, index int32) (*pb.MessageResponse, error) {
+func (cps *ComponentService) CreateNewComponent(name string, position int32, index int32, compMap string) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 	client := pb.NewComponentServiceClient(conn)
 
 	return client.CreateNewComponent(context.Background(), &pb.Component{
-		CompName:     name,
-		CompPosition: position,
-		CompIndex:    index,
+		ComponentName:     name,
+		ComponentPosition: position,
+		ComponentIndex:    index,
+		ComponentMap:      compMap,
 	})
 }
 
@@ -67,10 +68,10 @@ func (cps *ComponentService) UpdateComponent(compId int64, name string, position
 	client := pb.NewComponentServiceClient(conn)
 
 	return client.UpdateComponent(context.Background(), &pb.Component{
-		CompId:       compId,
-		CompName:     name,
-		CompPosition: position,
-		CompIndex:    index,
+		ComponentId:       compId,
+		ComponentName:     name,
+		ComponentPosition: position,
+		ComponentIndex:    index,
 	})
 }
 

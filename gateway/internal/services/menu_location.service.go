@@ -46,7 +46,7 @@ func (mls *MenuLocationService) UpdateMenuLocation(locId int64, menuId int64) (*
 	client := pb.NewMenuLocationServiceClient(conn)
 
 	return client.UpdateMenuLocation(context.Background(), &pb.MenuLocation{
-		LocId:  locId,
-		MenuId: menuId,
+		LocationId: locId,
+		MenuId:     menuId,
 	})
 }

@@ -46,6 +46,12 @@ func InitRouter() {
 		adminRouter.InitImageRouter(mainGroup)
 		adminRouter.InitMenuRouter(mainGroup)
 		adminRouter.InitMenuLocationRouter(mainGroup)
+		adminRouter.InitCategoryRouter(mainGroup)
+		adminRouter.InitTypeRouter(mainGroup)
+		adminRouter.InitTagRouter(mainGroup)
+		adminRouter.InitPagetagRouter(mainGroup)
+		adminRouter.InitPageRouter(mainGroup)
+		adminRouter.InitPagecategoryRouter(mainGroup)
 	}
 
 	run := fmt.Sprintf("%s:%d", global.Config.Server.Host, global.Config.Server.Port)

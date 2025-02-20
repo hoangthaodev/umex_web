@@ -31,32 +31,32 @@ func (is *ImageService) GetImageById(imageId int64) (*pb.ImageResponse, error) {
 	})
 }
 
-func (is *ImageService) CreateNewImage(src string, title string, alt string, caption string) (*pb.MessageResponse, error) {
+func (is *ImageService) CreateNewImage(url string, title string, alt string, caption string) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
 	client := pb.NewImageServiceClient(conn)
 
 	return client.CreateNewImage(context.Background(), &pb.Image{
-		ImgSrc:     src,
-		ImgTitle:   title,
-		ImgAlt:     alt,
-		ImgCaption: caption,
+		ImageUrl:     url,
+		ImageTitle:   title,
+		ImageAlt:     alt,
+		ImageCaption: caption,
 	})
 }
 
-func (is *ImageService) UpdateImage(imageId int64, src string, title string, alt string, caption string) (*pb.MessageResponse, error) {
+func (is *ImageService) UpdateImage(imageId int64, url string, title string, alt string, caption string) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
 	client := pb.NewImageServiceClient(conn)
 
 	return client.UpdateImage(context.Background(), &pb.Image{
-		ImgId:      imageId,
-		ImgSrc:     src,
-		ImgTitle:   title,
-		ImgAlt:     alt,
-		ImgCaption: caption,
+		ImageId:      imageId,
+		ImageUrl:     url,
+		ImageTitle:   title,
+		ImageAlt:     alt,
+		ImageCaption: caption,
 	})
 }
 func (is *ImageService) DeleteImage(imageId int64) (*pb.MessageResponse, error) {
