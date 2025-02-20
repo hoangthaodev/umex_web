@@ -2,7 +2,7 @@
 import { useSidebar } from '@/app/ux-admin/(admin)/SidebarContext'
 import Link from 'next/link'
 import React, { Dispatch, ReactNode, SetStateAction } from 'react'
-import { LuImagePlay, LuLayoutDashboard, LuPalette } from 'react-icons/lu'
+import { LuBlocks, LuImagePlay, LuLayoutDashboard, LuPalette } from 'react-icons/lu'
 
 type ItemListType = {
   children?: ReactNode,
@@ -61,6 +61,13 @@ const Sidebar = () => {
             href='/ux-admin/theme'
             name='Theme'
             icon={<LuPalette />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <ItemList
+            href='/ux-admin/blocks'
+            name='Blocks'
+            icon={<LuBlocks />}
             selected={selected}
             setSelected={setSelected}
           />

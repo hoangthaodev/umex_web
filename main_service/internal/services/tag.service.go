@@ -1,0 +1,66 @@
+package services
+
+import (
+	"context"
+	"main_service/global"
+	"main_service/internal/database"
+	"main_service/internal/utils"
+	"time"
+)
+
+type TagService struct{}
+
+func (ts *TagService) GetAllTag() ([]database.TbTag, error) {
+	queries := database.New(global.Mysql)
+
+	return queries.GetAllTag(context.Background())
+}
+
+func (ts *TagService) GetTagById(tagId int64) (database.TbTag, error) {
+	queries := database.New(global.Mysql)
+
+	return queries.GetTagById(context.Background(), tagId)
+}
+
+func (ts *TagService) GetTagByType(typeId int64) ([]database.TbTag, error) {
+	queries := database.New(global.Mysql)
+
+	return queries.GetTagByType(context.Background(), typeId)
+}
+
+func (ts *TagService) GetTagBySlug(tagSlug string) (database.TbTag, error) {
+	queries := database.New(global.Mysql)
+
+	return queries.GetTagBySlug(context.Background(), tagSlug)
+}
+
+func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string, typeId int64) error {
+	queries := database.New(global.Mysql)
+
+	return queries.CreateNewTag(context.Background(), database.CreateNewTagParams{
+		TagName:        tagName,
+		TagSlug:        tagSlug,
+		TagDescription: tagDes,
+		TypeID:         typeId,
+		CreatedAt:      utils.TimeToInt64(time.Now()),
+	})
+}
+
+func (ts *TagService) UpdateTag(tagName string, tagSlug string, tagDes string, typeId int64, tagId int64) error {
+	queries := database.New(global.Mysql)
+
+	return queries.UpdateTag(context.Background(), database.UpdateTagParams{
+		TagName:        tagName,
+		TagSlug:        tagSlug,
+		TagDescription: tagDes,
+		TypeID:         typeId,
+		TagID:          tagId,
+		UpdatedAt:      utils.TimeToInt64(time.Now()),
+	})
+}
+
+func (ts *TagService) DeleteTag(tagId int64) error {
+	queries := database.New(global.Mysql)
+
+	return queries.DeleteTag(context.Background(), tagId)
+}

@@ -1,12 +1,10 @@
-import { getAllConfig } from '@/actions/config.action'
+'use server'
 import SiteIdentify from '@/components/admin/theme/header/SiteIdentify'
-import { ConfigType } from '@/lib/types'
 import React from 'react'
 
-const SiteIdentifyPage = async () => {
-  const allConfig: ConfigType[] = await getAllConfig()
+const SiteIdentifyPage = () => {
   return (
-    <SiteIdentify allConfig={allConfig} />
+    <SiteIdentify />
   )
 }
 

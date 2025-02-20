@@ -1,45 +1,23 @@
 'use client'
 
-import { getConfigFromAllConfigByKey, updateConfigByKey } from '@/actions/config.action'
-import { getImageById } from '@/actions/image.action'
+import { updateConfigByKey } from '@/actions/config.action'
+import { useTheme } from '@/app/ThemeContext'
 import { useMedia } from '@/app/ux-admin/(admin)/media/MediaContext'
 import DivNgang from '@/components/DivNgang'
+import InputRange from '@/components/InputRange'
 import MediaSelect from '@/components/MediaSelect'
 import { SetBreadcrumb } from '@/components/SetBreadcrumb'
-import { ConfigType, ImageType } from '@/lib/types'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
-const SiteIdentify = ({ allConfig }: { allConfig: ConfigType[] }) => {
-  const [title, setTitle] = useState("/")
-  const [description, setDescription] = useState("/")
-  const [logo, setLogo] = useState<ImageType | undefined>(undefined)
-  const [favicon, setFavicon] = useState<ImageType | undefined>(undefined)
+const SiteIdentify = () => {
+  const { title, description, logo, favicon, isDisplayBelowLogo, setTitle, setDescription, setLogo, setFavicon, setIsDisplayBelowLogo
+    , logoContainerWidth, setLogoContainerWidth, logoMaxWidth, setLogoMaxWidth, logoPadding, setLogoPadding, logoLink, setLogoLink
+  } = useTheme()
   const [isSelectMedia, setIsSelectMedia] = useState(false)
-  const [isDisplayBelowLogo, setIsDisplayBelowLogo] = useState(false)
   const { setImageSelected } = useMedia()
   const [isWhat, setIsWhat] = useState<string | undefined>(undefined)
-
-  useEffect(() => {
-    const setData = async () => {
-      const inf_title = await getConfigFromAllConfigByKey(allConfig, "site_name");
-      const inf_description = await getConfigFromAllConfigByKey(allConfig, "site_description");
-      const inf_logo = await getConfigFromAllConfigByKey(allConfig, "site_logo");
-      const inf_favicon = await getConfigFromAllConfigByKey(allConfig, "site_favicon");
-
-      const logo_item: ImageType = await getImageById(Number(inf_logo?.config_value))
-      const favicon_item: ImageType = await getImageById(Number(inf_favicon?.config_value))
-
-      setTitle(inf_title?.config_value || "/");
-      setDescription(inf_description?.config_value || "/");
-      const displayBelowLogo = JSON.parse(inf_description?.config_style || "")
-      setIsDisplayBelowLogo(Boolean(displayBelowLogo.displayBelowLogo) || false)
-      setLogo(logo_item);
-      setFavicon(favicon_item);
-    }
-    setData()
-  }, [])
 
   const handleChangeLogo = () => {
     setIsSelectMedia(true)
@@ -54,10 +32,15 @@ const SiteIdentify = ({ allConfig }: { allConfig: ConfigType[] }) => {
   }
 
   const handleSaveChange = async () => {
-    await updateConfigByKey("site_name", title)
-    await updateConfigByKey("site_description", description, JSON.stringify({ displayBelowLogo: isDisplayBelowLogo }))
-    await updateConfigByKey("site_logo", logo?.img_id.toString() || "1")
-    await updateConfigByKey("site_favicon", favicon?.img_id.toString() || "1")
+    const data = JSON.stringify({
+      title,
+      description,
+      logo: logo ? logo.image_id : undefined,
+      favicon: favicon ? favicon.image_id : undefined,
+      isDisplayBelowLogo,
+      logoContainerWidth, setLogoContainerWidth, logoMaxWidth, setLogoMaxWidth, logoPadding, setLogoPadding, logoLink, setLogoLink
+    })
+    await updateConfigByKey("header_siteidentify", data)
 
     toast.success("Save Change Successfully!")
   }
@@ -81,14 +64,14 @@ const SiteIdentify = ({ allConfig }: { allConfig: ConfigType[] }) => {
         { name: "Header", link: "/ux-admin/theme/header" },
         { name: "Logo & Site Identify", link: "/ux-admin/theme/header/siteidentify" },
       ]} />
-      <div className='flex flex-col'>
-        <label className='font-semibold'>Site Title</label>
+      <div className='flex flex-col gap-2'>
+        <h3>Site Title</h3>
         <input className='border border-gray-400 px-2 rounded-sm my-2'
           type="text" value={title}
           onChange={(e) => { setTitle(e.target.value) }} />
         <DivNgang className='my-2' />
 
-        <label className='font-semibold'>Description</label>
+        <h3>Description</h3>
         <input className='border border-gray-400 px-2 rounded-sm my-2'
           type="text" value={description}
           onChange={(e) => { setDescription(e.target.value) }} />
@@ -98,12 +81,12 @@ const SiteIdentify = ({ allConfig }: { allConfig: ConfigType[] }) => {
         </div>
         <DivNgang className='my-2' />
 
-        <label className='font-semibold'>Logo</label>
+        <h3>Logo</h3>
         <div>
           <div className='w-32 h-32 flex items-center border border-gray-500 my-2'>
             <Image
               alt='logo'
-              src={logo?.img_src || "/"}
+              src={logo?.image_url || "/"}
               width={100}
               height={100}
               className='w-full h-auto'
@@ -119,14 +102,32 @@ const SiteIdentify = ({ allConfig }: { allConfig: ConfigType[] }) => {
             Change Logo
           </button>
         </div>
+
+        <h3>Logo container width</h3>
+        <InputRange min={30} max={700} defaultValue={200} value={logoContainerWidth} setValue={setLogoContainerWidth} />
+
+        <h3>Logo max width (px)</h3>
+        <p className='text-xs text-gray-400 italic'>Set the logo max width in pixels. Leave it blank to make is auto fit inside the logo container.</p>
+        <input
+          className='border border-gray-400 rounded-sm px-2'
+          type="text" value={logoMaxWidth} onChange={(e) => { setLogoMaxWidth(e.target.value) }} />
+
+        <h3>Logo Padding</h3>
+        <InputRange min={0} max={30} defaultValue={0} value={logoPadding} setValue={setLogoPadding} />
+
+        <h3>Logo link</h3>
+        <p className='text-xs text-gray-400 italic'>Custom logo link (Default to homepage link if empty).</p>
+        <input
+          className='border border-gray-400 rounded-sm px-2'
+          type="text" value={logoLink} onChange={(e) => { setLogoLink(e.target.value) }} />
         <DivNgang className='my-2' />
 
-        <label className='font-semibold'>Favicon</label>
+        <h3>Favicon</h3>
         <div className='flex items-end'>
           <div className='w-20 h-20 flex items-center border border-gray-500 my-2'>
             <Image
               alt='favicon'
-              src={favicon?.img_src || "/"}
+              src={favicon?.image_url || "/"}
               width={100}
               height={100}
               className='w-full h-auto'

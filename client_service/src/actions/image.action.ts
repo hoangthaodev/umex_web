@@ -53,7 +53,7 @@ export async function getImageById(id: number) {
 
 export async function updateImage(
   id: number,
-  src: string,
+  url: string,
   alt: string,
   title: string,
   caption: string
@@ -68,10 +68,10 @@ export async function updateImage(
           Authorization: access_token,
         },
         body: JSON.stringify({
-          img_src: src,
-          img_title: title,
-          img_alt: alt,
-          img_caption: caption,
+          imgage_url: url,
+          image_title: title,
+          image_alt: alt,
+          image_caption: caption,
         }),
       }
     );
@@ -117,7 +117,7 @@ export async function deleteImage(id: number) {
   }
 }
 
-export async function createNewImage(src: string) {
+export async function createNewImage(url: string) {
   try {
     const access_token = (await cookies()).get("access_token")?.value || "";
     const res = await fetch(
@@ -128,10 +128,10 @@ export async function createNewImage(src: string) {
           Authorization: access_token,
         },
         body: JSON.stringify({
-          img_src: src,
-          img_alt: " ",
-          img_title: " ",
-          img_caption: " ",
+          image_url: url,
+          image_alt: " ",
+          image_title: " ",
+          image_caption: " ",
         }),
       }
     );

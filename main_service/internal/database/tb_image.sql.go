@@ -10,13 +10,13 @@ import (
 )
 
 const createNewImage = `-- name: CreateNewImage :exec
-insert into tb_image (image_title, image_src, image_alt, image_caption, created_at)
+insert into tb_image (image_title, image_url, image_alt, image_caption, created_at)
 values (?, ?, ?, ?, ?)
 `
 
 type CreateNewImageParams struct {
 	ImageTitle   string
-	ImageSrc     string
+	ImageUrl     string
 	ImageAlt     string
 	ImageCaption string
 	CreatedAt    int64
@@ -25,7 +25,7 @@ type CreateNewImageParams struct {
 func (q *Queries) CreateNewImage(ctx context.Context, arg CreateNewImageParams) error {
 	_, err := q.db.ExecContext(ctx, createNewImage,
 		arg.ImageTitle,
-		arg.ImageSrc,
+		arg.ImageUrl,
 		arg.ImageAlt,
 		arg.ImageCaption,
 		arg.CreatedAt,
@@ -43,7 +43,7 @@ func (q *Queries) DeleteImage(ctx context.Context, imageID int64) error {
 }
 
 const getAllImage = `-- name: GetAllImage :many
-select image_id, image_src, image_title, image_alt, image_caption, created_at, updated_at from tb_image
+select image_id, image_url, image_title, image_alt, image_caption, created_at, updated_at from tb_image
 `
 
 func (q *Queries) GetAllImage(ctx context.Context) ([]TbImage, error) {
@@ -57,7 +57,7 @@ func (q *Queries) GetAllImage(ctx context.Context) ([]TbImage, error) {
 		var i TbImage
 		if err := rows.Scan(
 			&i.ImageID,
-			&i.ImageSrc,
+			&i.ImageUrl,
 			&i.ImageTitle,
 			&i.ImageAlt,
 			&i.ImageCaption,
@@ -78,7 +78,7 @@ func (q *Queries) GetAllImage(ctx context.Context) ([]TbImage, error) {
 }
 
 const getImageById = `-- name: GetImageById :one
-select image_id, image_src, image_title, image_alt, image_caption, created_at, updated_at from tb_image where image_id = ?
+select image_id, image_url, image_title, image_alt, image_caption, created_at, updated_at from tb_image where image_id = ?
 `
 
 func (q *Queries) GetImageById(ctx context.Context, imageID int64) (TbImage, error) {
@@ -86,7 +86,7 @@ func (q *Queries) GetImageById(ctx context.Context, imageID int64) (TbImage, err
 	var i TbImage
 	err := row.Scan(
 		&i.ImageID,
-		&i.ImageSrc,
+		&i.ImageUrl,
 		&i.ImageTitle,
 		&i.ImageAlt,
 		&i.ImageCaption,
@@ -98,13 +98,13 @@ func (q *Queries) GetImageById(ctx context.Context, imageID int64) (TbImage, err
 
 const updateImage = `-- name: UpdateImage :exec
 update tb_image
-set image_title = ?, image_src = ?, image_alt = ?, image_caption = ?, updated_at = ?
+set image_title = ?, image_url = ?, image_alt = ?, image_caption = ?, updated_at = ?
 where image_id = ?
 `
 
 type UpdateImageParams struct {
 	ImageTitle   string
-	ImageSrc     string
+	ImageUrl     string
 	ImageAlt     string
 	ImageCaption string
 	UpdatedAt    int64
@@ -114,7 +114,7 @@ type UpdateImageParams struct {
 func (q *Queries) UpdateImage(ctx context.Context, arg UpdateImageParams) error {
 	_, err := q.db.ExecContext(ctx, updateImage,
 		arg.ImageTitle,
-		arg.ImageSrc,
+		arg.ImageUrl,
 		arg.ImageAlt,
 		arg.ImageCaption,
 		arg.UpdatedAt,

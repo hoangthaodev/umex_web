@@ -19,8 +19,8 @@ const SelectImage = ({ image, setImage }: Props) => {
             (
               <div className='w-32 h-32 border border-gray-400'>
                 <Image
-                  src={image.img_src}
-                  alt={image.img_alt}
+                  src={image.image_url}
+                  alt={image.image_alt}
                   width={100}
                   height={100}
                   className='w-full h-full'

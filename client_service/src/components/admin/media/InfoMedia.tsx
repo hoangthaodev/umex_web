@@ -18,8 +18,8 @@ const InfoMedia = ({ className }: Props) => {
   const [caption, setCaption] = useState("")
 
   useEffect(() => {
-    setAlt(imageSelected?.img_alt || "")
-    setTitle(imageSelected?.img_title || "")
+    setAlt(imageSelected?.image_alt || "")
+    setTitle(imageSelected?.image_title || "")
     setCaption(imageSelected?.img_caption || "")
   }, [imageSelected])
 
@@ -27,8 +27,8 @@ const InfoMedia = ({ className }: Props) => {
     setIsLoading(true)
 
     const res = await updateImage(
-      imageSelected?.img_id || 0,
-      imageSelected?.img_src || "/",
+      imageSelected?.image_id || 0,
+      imageSelected?.image_url || "/",
       alt,
       title,
       caption
@@ -41,11 +41,11 @@ const InfoMedia = ({ className }: Props) => {
   const handleDelete = async () => {
     setIsLoading(true)
 
-    const s3res = await deleteImageS3(imageSelected?.img_src || "")
+    const s3res = await deleteImageS3(imageSelected?.image_url || "")
 
     if (s3res?.code === 2000) {
       const res = await deleteImage(
-        imageSelected?.img_id || 0
+        imageSelected?.image_id || 0
       )
 
       if (res) {
@@ -60,8 +60,8 @@ const InfoMedia = ({ className }: Props) => {
         <div className={`w-32 h-32 border border-gray-400 p-2`}>
           {imageSelected &&
             <Image
-              src={imageSelected.img_src}
-              alt={imageSelected.img_alt}
+              src={imageSelected.image_url}
+              alt={imageSelected.image_alt}
               width={100}
               height={100}
               className='w-full h-full'

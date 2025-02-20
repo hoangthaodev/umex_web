@@ -14,7 +14,7 @@ const ListMedia = ({ className }: Props) => {
   const { imageSelected, setImageSelected, isLoading, listImages } = useMedia()
 
   useEffect(() => {
-    imageSelected && setSelected(imageSelected.img_id)
+    imageSelected && setSelected(imageSelected.image_id)
   }, [listImages])
 
   return (
@@ -33,16 +33,16 @@ const ListMedia = ({ className }: Props) => {
         }
         {
           listImages && listImages.map(image => (
-            <div id={image.img_id.toString()} key={image.img_id}
-              className={`h-24 p-2 ${selected === image.img_id ? "border-2 border-blue-700" : "border border-gray-400"}`}
+            <div id={image.image_id.toString()} key={image.image_id}
+              className={`h-24 p-2 ${selected === image.image_id ? "border-2 border-blue-700" : "border border-gray-400"}`}
               onClick={() => {
-                setSelected(image.img_id)
+                setSelected(image.image_id)
                 setImageSelected(image)
               }}
             >
               <Image
-                src={image.img_src}
-                alt={image.img_alt}
+                src={image.image_url}
+                alt={image.image_alt}
                 width={100}
                 height={100}
                 className='w-full h-full'

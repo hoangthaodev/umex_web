@@ -2,6 +2,7 @@ package transport
 
 import (
 	"context"
+	"main_service/global"
 	"main_service/internal/services"
 	"main_service/proto/pb"
 
@@ -16,6 +17,7 @@ type ConfigTransport struct {
 func (ct *ConfigTransport) GetAllConfig(context.Context, *emptypb.Empty) (*pb.ManyConfigResponse, error) {
 	tbConf, err := ct.ConfigService.GetAllConfig()
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.ManyConfigResponse{
 			Code: 2001,
 		}, nil
@@ -42,6 +44,7 @@ func (ct *ConfigTransport) GetAllConfig(context.Context, *emptypb.Empty) (*pb.Ma
 func (ct *ConfigTransport) GetConfigByKey(c context.Context, in *pb.StrRequest) (*pb.ConfigResponse, error) {
 	tbConf, err := ct.ConfigService.GetConfigByKey(in.Str)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.ConfigResponse{
 			Code: 2001,
 		}, nil
@@ -62,6 +65,7 @@ func (ct *ConfigTransport) GetConfigByKey(c context.Context, in *pb.StrRequest) 
 func (ct *ConfigTransport) GetConfigById(c context.Context, in *pb.NumbRequest) (*pb.ConfigResponse, error) {
 	tbConf, err := ct.ConfigService.GetConfigById(in.Numb)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.ConfigResponse{
 			Code: 2001,
 		}, nil
@@ -82,6 +86,7 @@ func (ct *ConfigTransport) GetConfigById(c context.Context, in *pb.NumbRequest) 
 func (ct *ConfigTransport) CreateNewConfig(c context.Context, in *pb.Config) (*pb.MessageResponse, error) {
 	err := ct.ConfigService.CreateNewConfig(in.ConfigKey, in.ConfigValue, in.ConfigStyle)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code: 2002,
 		}, nil
@@ -96,6 +101,7 @@ func (ct *ConfigTransport) CreateNewConfig(c context.Context, in *pb.Config) (*p
 func (ct *ConfigTransport) UpdateConfig(c context.Context, in *pb.Config) (*pb.MessageResponse, error) {
 	err := ct.ConfigService.UpdateConfig(in.ConfigKey, in.ConfigValue, in.ConfigStyle, in.ConfigId)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code: 2003,
 		}, nil
@@ -110,6 +116,7 @@ func (ct *ConfigTransport) UpdateConfig(c context.Context, in *pb.Config) (*pb.M
 func (ct *ConfigTransport) DeleteConfig(c context.Context, in *pb.NumbRequest) (*pb.MessageResponse, error) {
 	err := ct.ConfigService.DeleteConfig(in.Numb)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code:    2004,
 			Message: "error deleting config",

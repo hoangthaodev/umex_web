@@ -1,8 +1,9 @@
 export type ComponentType = {
-  comp_id?: number;
-  comp_name?: string;
-  comp_position?: number;
-  comp_index?: number;
+  component_id: number;
+  component_name: string;
+  component_position: number;
+  component_index: number;
+  component_map: string;
 };
 
 export type ConfigType = {
@@ -13,10 +14,10 @@ export type ConfigType = {
 };
 
 export type ImageType = {
-  img_id: number;
-  img_src: string;
-  img_title: string;
-  img_alt: string;
+  image_id: number;
+  image_url: string;
+  image_title: string;
+  image_alt: string;
   img_caption: string;
 };
 
@@ -61,4 +62,62 @@ export type ColorType = {
 export type DrawerType = {
   backdropColor: string;
   drawerWidth: number;
+};
+
+export type SiteIdentifyType = {
+  title: string;
+  description: string;
+  isDisplayBelowLogo: boolean;
+  logo: number;
+  favicon: number;
+  logoContainerWidth: number;
+  logoMaxWidth: string;
+  logoPadding: number;
+  logoLink: string;
+};
+
+export type CompItems = string[];
+
+export type TopbarType = {
+  topbarEnable: boolean;
+  topbarLayoutHeight: number;
+  topbarLayoutTextColor: string;
+  topbarLayoutBackgroundColor: string;
+  topbarLayoutBackgroundImage: number;
+  topbarLayoutBackgroundRepeat: number;
+  topbarIsUppercase: boolean;
+  topbarNavColor: string;
+  topbarNavColorHover: string;
+  topbarNavHeight: number;
+  topbarNavStyle: number;
+};
+
+export type PageType = {
+  page_id: number;
+  page_title: string;
+  page_slug: string;
+  page_content: string;
+  page_description: string;
+  page_status: number;
+  page_publish_year: number;
+  page_publish_month: number;
+  page_publish_day: number;
+  page_image: number;
+  page_trash: number;
+  user_id: number;
+  type_id: number;
+  category_id: number;
+  temp_id: number;
+};
+
+export type UserType = {
+  user_id: number;
+  user_name: string;
+  user_email: string;
+  user_active: number;
+};
+
+export type TypeType = {
+  type_id: number;
+  type_name: string;
 };

@@ -2,6 +2,7 @@ package transport
 
 import (
 	"context"
+	"main_service/global"
 	"main_service/internal/auth"
 	"main_service/internal/services"
 	"main_service/internal/utils"
@@ -21,6 +22,7 @@ type UserTransport struct {
 func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.LoginResponse, error) {
 	user, err := ut.UserService.GetUserByUsername(in.Username)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.LoginResponse{
 			Code: 3001,
 		}, nil
@@ -28,12 +30,14 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.UserPassword), []byte(in.Password))
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.LoginResponse{
 			Code: 3001,
 		}, nil
 	}
 
 	if user.UserActive == 0 {
+		global.Logger.Error("user inactive")
 		return &pb.LoginResponse{
 			Code: 3002,
 		}, nil
@@ -45,6 +49,7 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 	payload.UserEmail = user.UserEmail
 	tokenPair, err := auth.CreateTokenPair(payload)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.LoginResponse{
 			Code: 2002,
 		}, nil
@@ -53,6 +58,7 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 	if err != nil {
 		err = ut.TokenService.CreateNewToken(user.UserID, tokenPair.RefreshToken, tokenPair.RefreshExpires)
 		if err != nil {
+			global.Logger.Error(err.Error())
 			return &pb.LoginResponse{
 				Code: 2002,
 			}, nil
@@ -60,6 +66,7 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 	} else {
 		err = ut.TokenService.UpdateToken(tokenPair.RefreshToken, tokenPair.RefreshExpires, token.TokenID)
 		if err != nil {
+			global.Logger.Error(err.Error())
 			return &pb.LoginResponse{
 				Code: 2003,
 			}, nil
@@ -80,6 +87,7 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 func (ut *UserTransport) Logout(c context.Context, in *pb.NumbRequest) (*pb.MessageResponse, error) {
 	err := ut.TokenService.DeleteToken(in.Numb)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code:    2004,
 			Message: "error deleting token",
@@ -95,6 +103,7 @@ func (ut *UserTransport) Logout(c context.Context, in *pb.NumbRequest) (*pb.Mess
 func (ut *UserTransport) GetAllUser(context.Context, *emptypb.Empty) (*pb.ManyUserResponse, error) {
 	tbUser, err := ut.UserService.GetAllUser()
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.ManyUserResponse{
 			Code: 2001,
 		}, nil
@@ -121,6 +130,7 @@ func (ut *UserTransport) GetAllUser(context.Context, *emptypb.Empty) (*pb.ManyUs
 func (ut *UserTransport) GetUserById(c context.Context, in *pb.NumbRequest) (*pb.UserResponse, error) {
 	tbuser, err := ut.UserService.GetUserById(in.Numb)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.UserResponse{
 			Code: 2001,
 		}, nil
@@ -142,6 +152,7 @@ func (ut *UserTransport) CreateNewUser(c context.Context, in *pb.User) (*pb.Mess
 
 	err := ut.UserService.CreateNewUser(in.UserName, in.UserPassword, in.UserEmail)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code:    2002,
 			Message: "error creating user",
@@ -150,6 +161,7 @@ func (ut *UserTransport) CreateNewUser(c context.Context, in *pb.User) (*pb.Mess
 
 	user, err := ut.UserService.GetUserByUsername(in.UserName)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code:    2001,
 			Message: "error getting user",
@@ -158,6 +170,7 @@ func (ut *UserTransport) CreateNewUser(c context.Context, in *pb.User) (*pb.Mess
 
 	err = ut.AuthService.CreateNewAuth(user.UserID, int32(111))
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code:    2002,
 			Message: "error creating auth",
@@ -173,6 +186,7 @@ func (ut *UserTransport) CreateNewUser(c context.Context, in *pb.User) (*pb.Mess
 func (ut *UserTransport) UpdateUser(c context.Context, in *pb.User) (*pb.MessageResponse, error) {
 	err := ut.UserService.UpdateUser(in.UserName, in.UserPassword, in.UserEmail, int8(in.UserActive), in.UserId)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code:    2003,
 			Message: "error updating user",
@@ -188,6 +202,7 @@ func (ut *UserTransport) UpdateUser(c context.Context, in *pb.User) (*pb.Message
 func (ut *UserTransport) DeleteUser(c context.Context, in *pb.NumbRequest) (*pb.MessageResponse, error) {
 	err := ut.UserService.DeleteUser(in.Numb)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code:    2004,
 			Message: "error deleting user",

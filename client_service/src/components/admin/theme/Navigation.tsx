@@ -8,10 +8,10 @@ import React, { SetStateAction } from 'react'
 type Props = {
   isUppercase: boolean
   setIsUppercase: React.Dispatch<SetStateAction<boolean>>
-  navColor: string
-  setNavColor: React.Dispatch<SetStateAction<string>>
-  navColorHover: string
-  setNavColorHover: React.Dispatch<SetStateAction<string>>
+  navColor: string | undefined
+  setNavColor: React.Dispatch<SetStateAction<string | undefined>>
+  navColorHover: string | undefined
+  setNavColorHover: React.Dispatch<SetStateAction<string | undefined>>
   navHeight: number
   setNavHeight: React.Dispatch<SetStateAction<number>>
   navStyle: number

@@ -1,7 +1,7 @@
 'use client'
 import { getConfigByKey } from '@/actions/config.action'
 import { getImageById } from '@/actions/image.action'
-import { ColorType, DrawerType, ImageType, LayoutType, TypographyType } from '@/lib/types'
+import { ColorType, DrawerType, ImageType, LayoutType, SiteIdentifyType, TopbarType, TypographyType } from '@/lib/types'
 import React, { createContext, SetStateAction, useContext, useEffect, useState } from 'react'
 
 type themeContextType = {
@@ -61,6 +61,51 @@ type themeContextType = {
   setBackdropColor: React.Dispatch<SetStateAction<string | undefined>>,
   drawerWidth: number,
   setDrawerWidth: React.Dispatch<SetStateAction<number>>,
+  isMobile: boolean,
+  setIsMobile: React.Dispatch<SetStateAction<boolean>>,
+  // header_site_identify
+  title: string,
+  setTitle: React.Dispatch<SetStateAction<string>>,
+  description: string,
+  setDescription: React.Dispatch<SetStateAction<string>>,
+  logo: ImageType | undefined,
+  setLogo: React.Dispatch<SetStateAction<ImageType | undefined>>,
+  favicon: ImageType | undefined,
+  setFavicon: React.Dispatch<SetStateAction<ImageType | undefined>>,
+  isDisplayBelowLogo: boolean,
+  setIsDisplayBelowLogo: React.Dispatch<SetStateAction<boolean>>,
+  logoContainerWidth: number,
+  setLogoContainerWidth: React.Dispatch<SetStateAction<number>>,
+  logoMaxWidth: string,
+  setLogoMaxWidth: React.Dispatch<SetStateAction<string>>,
+  logoPadding: number,
+  setLogoPadding: React.Dispatch<SetStateAction<number>>,
+  logoLink: string,
+  setLogoLink: React.Dispatch<SetStateAction<string>>,
+  // header_topbar
+  topbarEnable: boolean,
+  setTopbarEnable: React.Dispatch<SetStateAction<boolean>>,
+  topbarLayoutHeight: number,
+  setTopbarLayoutHeight: React.Dispatch<SetStateAction<number>>,
+  topbarLayoutTextColor: string,
+  setTopbarLayoutTextColor: React.Dispatch<SetStateAction<string>>,
+  topbarLayoutBackgroundColor: string | undefined,
+  setTopbarLayoutBackgroundColor: React.Dispatch<SetStateAction<string | undefined>>,
+  topbarLayoutBackgroundImage: ImageType | undefined,
+  setTopbarLayoutBackgroundImage: React.Dispatch<SetStateAction<ImageType | undefined>>,
+  topbarLayoutBackgroundRepeat: number,
+  setTopbarLayoutBackgroundRepeat: React.Dispatch<SetStateAction<number>>,
+  topbarIsUppercase: boolean,
+  setTopbarIsUppercase: React.Dispatch<SetStateAction<boolean>>,
+  topbarNavColor: string | undefined,
+  setTopbarNavColor: React.Dispatch<SetStateAction<string | undefined>>,
+  topbarNavColorHover: string | undefined,
+  setTopbarNavColorHover: React.Dispatch<SetStateAction<string | undefined>>,
+  topbarNavHeight: number,
+  setTopbarNavHeight: React.Dispatch<SetStateAction<number>>,
+  topbarNavStyle: number,
+  setTopbarNavStyle: React.Dispatch<SetStateAction<number>>,
+
 
 }
 const themeContext = createContext<themeContextType | undefined>(undefined)
@@ -69,6 +114,7 @@ type themeProviderType = {
   children: React.ReactNode,
 }
 export function ThemeProvider({ children }: themeProviderType) {
+  const [isMobile, setIsMobile] = useState(false)
   // layout 
   const [themeMode, setThemeMode] = useState("light")
   const [layoutMode, setLayoutMode] = useState("0")
@@ -99,9 +145,33 @@ export function ThemeProvider({ children }: themeProviderType) {
   // style_drawer
   const [backdropColor, setBackdropColor] = useState<string | undefined>(undefined)
   const [drawerWidth, setDrawerWidth] = useState(300)
+  // header_site_identify
+  const [title, setTitle] = useState("/")
+  const [description, setDescription] = useState("/")
+  const [logo, setLogo] = useState<ImageType | undefined>(undefined)
+  const [favicon, setFavicon] = useState<ImageType | undefined>(undefined)
+  const [isDisplayBelowLogo, setIsDisplayBelowLogo] = useState(false)
+  const [logoContainerWidth, setLogoContainerWidth] = useState(200)
+  const [logoMaxWidth, setLogoMaxWidth] = useState("")
+  const [logoPadding, setLogoPadding] = useState(0)
+  const [logoLink, setLogoLink] = useState("")
+  // header_topbar
+  const [topbarEnable, setTopbarEnable] = useState(false)
+  const [topbarLayoutHeight, setTopbarLayoutHeight] = useState(30)
+  const [topbarLayoutTextColor, setTopbarLayoutTextColor] = useState<string>("0")
+  const [topbarLayoutBackgroundColor, setTopbarLayoutBackgroundColor] = useState<string | undefined>(undefined)
+  const [topbarLayoutBackgroundImage, setTopbarLayoutBackgroundImage] = useState<ImageType | undefined>(undefined)
+  const [topbarLayoutBackgroundRepeat, setTopbarLayoutBackgroundRepeat] = useState(3)
+  const [topbarIsUppercase, setTopbarIsUppercase] = useState(true)
+  const [topbarNavColor, setTopbarNavColor] = useState<string | undefined>(undefined)
+  const [topbarNavColorHover, setTopbarNavColorHover] = useState<string | undefined>(undefined)
+  const [topbarNavHeight, setTopbarNavHeight] = useState(16)
+  const [topbarNavStyle, setTopbarNavStyle] = useState(2)
 
   useEffect(() => {
     const getData = async () => {
+      const size = document.documentElement.clientWidth
+      setIsMobile(size <= 768)
       //layout
       const layout = await getConfigByKey("layout")
       const layoutParse: LayoutType = JSON.parse(layout.config_value)
@@ -141,11 +211,38 @@ export function ThemeProvider({ children }: themeProviderType) {
       const drawerParse: DrawerType = JSON.parse(drawer.config_value)
       setBackdropColor(drawerParse.backdropColor)
       setDrawerWidth(drawerParse.drawerWidth)
+      // header_site_identify
+      const site_identify = await getConfigByKey("header_siteidentify")
+      const site_identifyParse: SiteIdentifyType = JSON.parse(site_identify.config_value)
+      setTitle(site_identifyParse.title)
+      setDescription(site_identifyParse.description)
+      setLogo(await getImageById(site_identifyParse.logo))
+      setFavicon(await getImageById(site_identifyParse.favicon))
+      setIsDisplayBelowLogo(site_identifyParse.isDisplayBelowLogo)
+      setLogoContainerWidth(site_identifyParse.logoContainerWidth)
+      setLogoMaxWidth(site_identifyParse.logoMaxWidth)
+      setLogoPadding(site_identifyParse.logoPadding)
+      setLogoLink(site_identifyParse.logoLink)
+      // header_topbar
+      const topbar = await getConfigByKey("header_topbar")
+      const topbarParse: TopbarType = JSON.parse(topbar.config_value)
+      setTopbarEnable(topbarParse.topbarEnable)
+      setTopbarLayoutHeight(topbarParse.topbarLayoutHeight)
+      setTopbarLayoutTextColor(topbarParse.topbarLayoutTextColor)
+      setTopbarLayoutBackgroundColor(topbarParse.topbarLayoutBackgroundColor)
+      setTopbarLayoutBackgroundImage(await getImageById(topbarParse.topbarLayoutBackgroundImage))
+      setTopbarLayoutBackgroundRepeat(topbarParse.topbarLayoutBackgroundRepeat)
+      setTopbarIsUppercase(topbarParse.topbarIsUppercase)
+      setTopbarNavColor(topbarParse.topbarNavColor)
+      setTopbarNavColorHover(topbarParse.topbarNavColorHover)
+      setTopbarNavHeight(topbarParse.topbarNavHeight)
+      setTopbarNavStyle(topbarParse.topbarNavStyle)
     }
     getData()
   }, [])
   return (
     <themeContext.Provider value={{
+      isMobile, setIsMobile,
       // layout
       themeMode,
       setThemeMode,
@@ -202,6 +299,48 @@ export function ThemeProvider({ children }: themeProviderType) {
       setBackdropColor,
       drawerWidth,
       setDrawerWidth,
+      // header_site_identify
+      title,
+      setTitle,
+      description,
+      setDescription,
+      logo,
+      setLogo,
+      favicon,
+      setFavicon,
+      isDisplayBelowLogo,
+      setIsDisplayBelowLogo,
+      logoContainerWidth,
+      setLogoContainerWidth,
+      logoMaxWidth,
+      setLogoMaxWidth,
+      logoPadding,
+      setLogoPadding,
+      logoLink,
+      setLogoLink,
+      // header_topbar
+      topbarEnable,
+      setTopbarEnable,
+      topbarLayoutHeight,
+      setTopbarLayoutHeight,
+      topbarLayoutTextColor,
+      setTopbarLayoutTextColor,
+      topbarLayoutBackgroundColor,
+      setTopbarLayoutBackgroundColor,
+      topbarLayoutBackgroundImage,
+      setTopbarLayoutBackgroundImage,
+      topbarLayoutBackgroundRepeat,
+      setTopbarLayoutBackgroundRepeat,
+      topbarIsUppercase,
+      setTopbarIsUppercase,
+      topbarNavColor,
+      setTopbarNavColor,
+      topbarNavColorHover,
+      setTopbarNavColorHover,
+      topbarNavHeight,
+      setTopbarNavHeight,
+      topbarNavStyle,
+      setTopbarNavStyle,
     }}>
       {children}
     </themeContext.Provider>

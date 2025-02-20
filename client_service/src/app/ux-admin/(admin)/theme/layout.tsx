@@ -6,11 +6,12 @@ import ShowArea from '@/components/admin/theme/showArea/ShowArea'
 import Breadcrumb from '@/components/admin/theme/Breadcrumb'
 import React from 'react'
 
+
 type Props = {
   children: React.ReactNode
 }
 
-const SettingLayout = ({ children }: Props) => {
+const SettingLayout = async ({ children }: Props) => {
   return (
     <BreadcrumbProvider>
       <MediaProvider>
@@ -19,8 +20,8 @@ const SettingLayout = ({ children }: Props) => {
             <Breadcrumb />
             {children}
           </div>
-          <div className='hidden sm:flex flex-col justify-between overflow-hidden'>
-            <div>
+          <div className='hidden sm:flex w-full flex-col justify-between overflow-hidden'>
+            <div className='overflow-y-auto '>
               <ShowArea />
             </div>
             <div>

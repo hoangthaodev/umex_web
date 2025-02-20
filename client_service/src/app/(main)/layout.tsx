@@ -50,7 +50,7 @@ const MainLayout = ({ children }: Props) => {
     if (backgroundImage) {
       rootClass = {
         ...rootClass,
-        backgroundImage: `url('${backgroundImage?.img_src}')`,
+        backgroundImage: `url('${backgroundImage?.image_url}')`,
         backgroundPosition: "center",
       }
       if (backgroundRepeat === "0") {
@@ -111,6 +111,18 @@ const MainLayout = ({ children }: Props) => {
   }
   .alert {
   color: ${alertColor}
+  }
+  .bg-primary {
+  background-color: ${primaryColor}
+  }
+  .bg-secondary {
+  background-color: ${secondaryColor}
+  }
+  .bg-success {
+  background-color: ${successColor}
+  }
+  .bg-alert {
+  background-color: ${alertColor}
   }
   body {
   color: ${baseColor}

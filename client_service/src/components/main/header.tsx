@@ -22,102 +22,102 @@ const MainHeader = async () => {
   var component8: ComponentType[] = []
   var component9: ComponentType[] = []
   if (componentAll && componentAll.length > 0) {
-    component1 = componentAll.filter(item => item.comp_position === 1).sort((a, b) => (a.comp_index || 0) - (b.comp_index || 0))
-    component2 = componentAll.filter(item => item.comp_position === 2).sort((a, b) => (a.comp_index || 0) - (b.comp_index || 0))
-    component3 = componentAll.filter(item => item.comp_position === 3).sort((a, b) => (a.comp_index || 0) - (b.comp_index || 0))
-    component4 = componentAll.filter(item => item.comp_position === 4).sort((a, b) => (a.comp_index || 0) - (b.comp_index || 0))
-    component5 = componentAll.filter(item => item.comp_position === 5).sort((a, b) => (a.comp_index || 0) - (b.comp_index || 0))
-    component6 = componentAll.filter(item => item.comp_position === 6).sort((a, b) => (a.comp_index || 0) - (b.comp_index || 0))
-    component7 = componentAll.filter(item => item.comp_position === 7).sort((a, b) => (a.comp_index || 0) - (b.comp_index || 0))
-    component8 = componentAll.filter(item => item.comp_position === 8).sort((a, b) => (a.comp_index || 0) - (b.comp_index || 0))
-    component9 = componentAll.filter(item => item.comp_position === 9).sort((a, b) => (a.comp_index || 0) - (b.comp_index || 0))
+    component1 = componentAll.filter(item => item.component_position === 1).sort((a, b) => (a.component_index || 0) - (b.component_index || 0))
+    component2 = componentAll.filter(item => item.component_position === 2).sort((a, b) => (a.component_index || 0) - (b.component_index || 0))
+    component3 = componentAll.filter(item => item.component_position === 3).sort((a, b) => (a.component_index || 0) - (b.component_index || 0))
+    component4 = componentAll.filter(item => item.component_position === 4).sort((a, b) => (a.component_index || 0) - (b.component_index || 0))
+    component5 = componentAll.filter(item => item.component_position === 5).sort((a, b) => (a.component_index || 0) - (b.component_index || 0))
+    component6 = componentAll.filter(item => item.component_position === 6).sort((a, b) => (a.component_index || 0) - (b.component_index || 0))
+    component7 = componentAll.filter(item => item.component_position === 7).sort((a, b) => (a.component_index || 0) - (b.component_index || 0))
+    component8 = componentAll.filter(item => item.component_position === 8).sort((a, b) => (a.component_index || 0) - (b.component_index || 0))
+    component9 = componentAll.filter(item => item.component_position === 9).sort((a, b) => (a.component_index || 0) - (b.component_index || 0))
   }
   return (
     <div>
       <div className='flex gap-2'>
         <div className='flex gap-2 justify-start'>
           {component1 && component1.map((item: ComponentType) => {
-            const Component = componentMapping[item.comp_name || ""]
+            const Component = componentMapping[item.component_name || ""]
             if (!Component) {
               return null
             }
-            return <Component key={item.comp_id} />
+            return <Component key={item.component_id} />
           })}
         </div>
         <div className='flex gap-2 grow justify-center'>
           {component2 && component2.map((item: ComponentType) => {
-            const Component = componentMapping[item.comp_name || ""]
+            const Component = componentMapping[item.component_name || ""]
             if (!Component) {
               return null
             }
-            return <Component key={item.comp_id} />
+            return <Component key={item.component_id} />
           })}
         </div>
         <div className='flex gap-2 justify-end'>
           {component3 && component3.map((item: ComponentType) => {
-            const Component = componentMapping[item.comp_name || ""]
+            const Component = componentMapping[item.component_name || ""]
             if (!Component) {
               return null
             }
-            return <Component key={item.comp_id} />
+            return <Component key={item.component_id} />
           })}
         </div>
       </div>
       <div className='flex gap-2'>
         <div className='flex gap-2 justify-start'>
           {component4 && component4.map((item: ComponentType) => {
-            const Component = componentMapping[item.comp_name || ""]
+            const Component = componentMapping[item.component_name || ""]
             if (!Component) {
               return null
             }
-            return <Component key={item.comp_id} />
+            return <Component key={item.component_id} />
           })}
         </div>
         <div className='flex gap-2 grow justify-center'>
           {component5 && component5.map((item: ComponentType) => {
-            const Component = componentMapping[item.comp_name || ""]
+            const Component = componentMapping[item.component_name || ""]
             if (!Component) {
               return null
             }
-            return <Component key={item.comp_id} />
+            return <Component key={item.component_id} />
           })}
         </div>
         <div className='flex gap-2 justify-end'>
           {component6 && component6.map((item: ComponentType) => {
-            const Component = componentMapping[item.comp_name || ""]
+            const Component = componentMapping[item.component_name || ""]
             if (!Component) {
               return null
             }
-            return <Component key={item.comp_id} />
+            return <Component key={item.component_id} />
           })}
         </div>
       </div>
       <div className='flex gap-2'>
         <div className='flex gap-2 justify-start'>
           {component7 && component7.map((item: ComponentType) => {
-            const Component = componentMapping[item.comp_name || ""]
+            const Component = componentMapping[item.component_name || ""]
             if (!Component) {
               return null
             }
-            return <Component key={item.comp_id} />
+            return <Component key={item.component_id} />
           })}
         </div>
         <div className='flex gap-2 grow justify-center'>
           {component8 && component8.map((item: ComponentType) => {
-            const Component = componentMapping[item.comp_name || ""]
+            const Component = componentMapping[item.component_name || ""]
             if (!Component) {
               return null
             }
-            return <Component key={item.comp_id} />
+            return <Component key={item.component_id} />
           })}
         </div>
         <div className='flex gap-2 justify-end'>
           {component9 && component9.map((item: ComponentType) => {
-            const Component = componentMapping[item.comp_name || ""]
+            const Component = componentMapping[item.component_name || ""]
             if (!Component) {
               return null
             }
-            return <Component key={item.comp_id} />
+            return <Component key={item.component_id} />
           })}
         </div>
       </div>

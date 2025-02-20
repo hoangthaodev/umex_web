@@ -12,13 +12,13 @@ import { toast } from 'react-toastify'
 const HeaderBottom = () => {
   const [layoutHeight, setLayoutHeight] = useState(30)
   const [layoutTextColor, setLayoutTextColor] = useState("0")
-  const [layoutBackgroundColor, setLayoutBackgroundColor] = useState("#333333")
+  const [layoutBackgroundColor, setLayoutBackgroundColor] = useState<string | undefined>("#333333")
   const [layoutBackgroundImage, setLayoutBackgroundImage] = useState<ImageType | undefined>(undefined)
   const [layoutBackgroundRepeat, setLayoutBackgroundRepeat] = useState(3)
 
   const [isUppercase, setIsUppercase] = useState(true)
-  const [navColor, setNavColor] = useState('#333333')
-  const [navColorHover, setNavColorHover] = useState('#333333')
+  const [navColor, setNavColor] = useState<string | undefined>('#333333')
+  const [navColorHover, setNavColorHover] = useState<string | undefined>('#333333')
   const [navHeight, setNavHeight] = useState(16)
   const [navStyle, setNavStyle] = useState(2)
 
@@ -45,7 +45,7 @@ const HeaderBottom = () => {
       layoutHeight,
       layoutTextColor,
       layoutBackgroundColor,
-      layoutBackgroundImage: layoutBackgroundImage ? layoutBackgroundImage.img_id : undefined,
+      layoutBackgroundImage: layoutBackgroundImage ? layoutBackgroundImage.image_id : undefined,
       layoutBackgroundRepeat,
       isUppercase,
       navColor,

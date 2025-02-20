@@ -10,31 +10,37 @@ import (
 )
 
 const createNewComponent = `-- name: CreateNewComponent :exec
-insert into tb_component (comp_name, comp_position, comp_index) values (?,?,?)
+insert into tb_component (component_name, component_position, component_index, component_map) values (?,?,?,?)
 `
 
 type CreateNewComponentParams struct {
-	CompName     string
-	CompPosition int32
-	CompIndex    int32
+	ComponentName     string
+	ComponentPosition int32
+	ComponentIndex    int32
+	ComponentMap      string
 }
 
 func (q *Queries) CreateNewComponent(ctx context.Context, arg CreateNewComponentParams) error {
-	_, err := q.db.ExecContext(ctx, createNewComponent, arg.CompName, arg.CompPosition, arg.CompIndex)
+	_, err := q.db.ExecContext(ctx, createNewComponent,
+		arg.ComponentName,
+		arg.ComponentPosition,
+		arg.ComponentIndex,
+		arg.ComponentMap,
+	)
 	return err
 }
 
 const deleteComponent = `-- name: DeleteComponent :exec
-delete from tb_component where comp_id = ?
+delete from tb_component where component_id = ?
 `
 
-func (q *Queries) DeleteComponent(ctx context.Context, compID int64) error {
-	_, err := q.db.ExecContext(ctx, deleteComponent, compID)
+func (q *Queries) DeleteComponent(ctx context.Context, componentID int64) error {
+	_, err := q.db.ExecContext(ctx, deleteComponent, componentID)
 	return err
 }
 
 const getAllComponent = `-- name: GetAllComponent :many
-select comp_id, comp_name, comp_position, comp_index from tb_component
+select component_id, component_name, component_position, component_index, component_map from tb_component
 `
 
 func (q *Queries) GetAllComponent(ctx context.Context) ([]TbComponent, error) {
@@ -47,10 +53,11 @@ func (q *Queries) GetAllComponent(ctx context.Context) ([]TbComponent, error) {
 	for rows.Next() {
 		var i TbComponent
 		if err := rows.Scan(
-			&i.CompID,
-			&i.CompName,
-			&i.CompPosition,
-			&i.CompIndex,
+			&i.ComponentID,
+			&i.ComponentName,
+			&i.ComponentPosition,
+			&i.ComponentIndex,
+			&i.ComponentMap,
 		); err != nil {
 			return nil, err
 		}
@@ -66,43 +73,45 @@ func (q *Queries) GetAllComponent(ctx context.Context) ([]TbComponent, error) {
 }
 
 const getComponentById = `-- name: GetComponentById :one
-select comp_id, comp_name, comp_position, comp_index from tb_component where comp_id = ?
+select component_id, component_name, component_position, component_index, component_map from tb_component where component_id = ?
 `
 
-func (q *Queries) GetComponentById(ctx context.Context, compID int64) (TbComponent, error) {
-	row := q.db.QueryRowContext(ctx, getComponentById, compID)
+func (q *Queries) GetComponentById(ctx context.Context, componentID int64) (TbComponent, error) {
+	row := q.db.QueryRowContext(ctx, getComponentById, componentID)
 	var i TbComponent
 	err := row.Scan(
-		&i.CompID,
-		&i.CompName,
-		&i.CompPosition,
-		&i.CompIndex,
+		&i.ComponentID,
+		&i.ComponentName,
+		&i.ComponentPosition,
+		&i.ComponentIndex,
+		&i.ComponentMap,
 	)
 	return i, err
 }
 
 const getComponentByName = `-- name: GetComponentByName :one
-select comp_id, comp_name, comp_position, comp_index from tb_component where comp_name = ?
+select component_id, component_name, component_position, component_index, component_map from tb_component where component_name = ?
 `
 
-func (q *Queries) GetComponentByName(ctx context.Context, compName string) (TbComponent, error) {
-	row := q.db.QueryRowContext(ctx, getComponentByName, compName)
+func (q *Queries) GetComponentByName(ctx context.Context, componentName string) (TbComponent, error) {
+	row := q.db.QueryRowContext(ctx, getComponentByName, componentName)
 	var i TbComponent
 	err := row.Scan(
-		&i.CompID,
-		&i.CompName,
-		&i.CompPosition,
-		&i.CompIndex,
+		&i.ComponentID,
+		&i.ComponentName,
+		&i.ComponentPosition,
+		&i.ComponentIndex,
+		&i.ComponentMap,
 	)
 	return i, err
 }
 
 const getComponentByPosition = `-- name: GetComponentByPosition :many
-select comp_id, comp_name, comp_position, comp_index from tb_component where comp_position = ?
+select component_id, component_name, component_position, component_index, component_map from tb_component where component_position = ?
 `
 
-func (q *Queries) GetComponentByPosition(ctx context.Context, compPosition int32) ([]TbComponent, error) {
-	rows, err := q.db.QueryContext(ctx, getComponentByPosition, compPosition)
+func (q *Queries) GetComponentByPosition(ctx context.Context, componentPosition int32) ([]TbComponent, error) {
+	rows, err := q.db.QueryContext(ctx, getComponentByPosition, componentPosition)
 	if err != nil {
 		return nil, err
 	}
@@ -111,10 +120,11 @@ func (q *Queries) GetComponentByPosition(ctx context.Context, compPosition int32
 	for rows.Next() {
 		var i TbComponent
 		if err := rows.Scan(
-			&i.CompID,
-			&i.CompName,
-			&i.CompPosition,
-			&i.CompIndex,
+			&i.ComponentID,
+			&i.ComponentName,
+			&i.ComponentPosition,
+			&i.ComponentIndex,
+			&i.ComponentMap,
 		); err != nil {
 			return nil, err
 		}
@@ -130,22 +140,22 @@ func (q *Queries) GetComponentByPosition(ctx context.Context, compPosition int32
 }
 
 const updateComponent = `-- name: UpdateComponent :exec
-update tb_component set comp_name = ?, comp_position = ?, comp_index = ? where comp_id = ?
+update tb_component set component_name = ?, component_position = ?, component_index = ? where component_id = ?
 `
 
 type UpdateComponentParams struct {
-	CompName     string
-	CompPosition int32
-	CompIndex    int32
-	CompID       int64
+	ComponentName     string
+	ComponentPosition int32
+	ComponentIndex    int32
+	ComponentID       int64
 }
 
 func (q *Queries) UpdateComponent(ctx context.Context, arg UpdateComponentParams) error {
 	_, err := q.db.ExecContext(ctx, updateComponent,
-		arg.CompName,
-		arg.CompPosition,
-		arg.CompIndex,
-		arg.CompID,
+		arg.ComponentName,
+		arg.ComponentPosition,
+		arg.ComponentIndex,
+		arg.ComponentID,
 	)
 	return err
 }

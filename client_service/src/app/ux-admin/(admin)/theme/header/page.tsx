@@ -1,4 +1,4 @@
-
+'use server'
 import ThemeHeader from '@/components/admin/theme/header/header'
 import React from 'react'
 

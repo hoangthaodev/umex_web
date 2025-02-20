@@ -22,28 +22,28 @@ func (is *ImageService) GetImageById(imageId int64) (database.TbImage, error) {
 	return queries.GetImageById(context.Background(), imageId)
 }
 
-func (is *ImageService) CreateNewImage(title string, src string, alt string, caption string) error {
+func (is *ImageService) CreateNewImage(title string, url string, alt string, caption string) error {
 	queries := database.New(global.Mysql)
 
 	create_at := utils.TimeToInt64(time.Now())
 
 	return queries.CreateNewImage(context.Background(), database.CreateNewImageParams{
 		ImageTitle:   title,
-		ImageSrc:     src,
+		ImageUrl:     url,
 		ImageAlt:     alt,
 		ImageCaption: caption,
 		CreatedAt:    create_at,
 	})
 }
 
-func (is *ImageService) UpdateImage(title string, src string, alt string, caption string, imageId int64) error {
+func (is *ImageService) UpdateImage(title string, url string, alt string, caption string, imageId int64) error {
 	queries := database.New(global.Mysql)
 
 	update_at := utils.TimeToInt64(time.Now())
 
 	return queries.UpdateImage(context.Background(), database.UpdateImageParams{
 		ImageTitle:   title,
-		ImageSrc:     src,
+		ImageUrl:     url,
 		ImageAlt:     alt,
 		ImageCaption: caption,
 		UpdatedAt:    update_at,

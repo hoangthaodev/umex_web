@@ -2,7 +2,7 @@
 -- +goose StatementBegin
 create table tb_image (
   image_id bigint not null auto_increment,
-  image_src varchar(255) not null,
+  image_url varchar(255) not null,
   image_title varchar(255) not null,
   image_alt varchar(255) not null,
   image_caption varchar(255) not null,

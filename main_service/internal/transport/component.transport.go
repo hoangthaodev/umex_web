@@ -2,6 +2,7 @@ package transport
 
 import (
 	"context"
+	"main_service/global"
 	"main_service/internal/services"
 	"main_service/proto/pb"
 
@@ -16,6 +17,7 @@ type ComponentTransport struct {
 func (cpt *ComponentTransport) GetAllComponent(context.Context, *emptypb.Empty) (*pb.ManyComponentResponse, error) {
 	tbComp, err := cpt.ComponentService.GetAllComponent()
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.ManyComponentResponse{
 			Code: 2001,
 		}, nil
@@ -24,9 +26,11 @@ func (cpt *ComponentTransport) GetAllComponent(context.Context, *emptypb.Empty) 
 	var components []*pb.Component
 	for _, comp := range tbComp {
 		var component pb.Component
-		component.CompId = comp.CompID
-		component.CompName = comp.CompName
-		component.CompPosition = comp.CompPosition
+		component.ComponentId = comp.ComponentID
+		component.ComponentName = comp.ComponentName
+		component.ComponentPosition = comp.ComponentPosition
+		component.ComponentIndex = comp.ComponentIndex
+		component.ComponentMap = comp.ComponentMap
 
 		components = append(components, &component)
 	}
@@ -40,15 +44,18 @@ func (cpt *ComponentTransport) GetAllComponent(context.Context, *emptypb.Empty) 
 func (cpt *ComponentTransport) GetComponentById(c context.Context, in *pb.NumbRequest) (*pb.ComponentResponse, error) {
 	tbComp, err := cpt.ComponentService.GetComponentById(in.Numb)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.ComponentResponse{
 			Code: 2001,
 		}, nil
 	}
 
 	var component pb.Component
-	component.CompId = tbComp.CompID
-	component.CompName = tbComp.CompName
-	component.CompPosition = tbComp.CompPosition
+	component.ComponentId = tbComp.ComponentID
+	component.ComponentName = tbComp.ComponentName
+	component.ComponentPosition = tbComp.ComponentPosition
+	component.ComponentIndex = tbComp.ComponentIndex
+	component.ComponentMap = tbComp.ComponentMap
 
 	return &pb.ComponentResponse{
 		Code:      2000,
@@ -59,15 +66,18 @@ func (cpt *ComponentTransport) GetComponentById(c context.Context, in *pb.NumbRe
 func (cpt *ComponentTransport) GetComponentByName(c context.Context, in *pb.StrRequest) (*pb.ComponentResponse, error) {
 	tbComp, err := cpt.ComponentService.GetComponentByName(in.Str)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.ComponentResponse{
 			Code: 2001,
 		}, nil
 	}
 
 	var component pb.Component
-	component.CompId = tbComp.CompID
-	component.CompName = tbComp.CompName
-	component.CompPosition = tbComp.CompPosition
+	component.ComponentId = tbComp.ComponentID
+	component.ComponentName = tbComp.ComponentName
+	component.ComponentPosition = tbComp.ComponentPosition
+	component.ComponentIndex = tbComp.ComponentIndex
+	component.ComponentMap = tbComp.ComponentMap
 
 	return &pb.ComponentResponse{
 		Code:      2000,
@@ -78,6 +88,7 @@ func (cpt *ComponentTransport) GetComponentByName(c context.Context, in *pb.StrR
 func (cpt *ComponentTransport) GetComponentByPosition(c context.Context, in *pb.NumbRequest) (*pb.ManyComponentResponse, error) {
 	tbComp, err := cpt.ComponentService.GetComponentByPosition(int32(in.Numb))
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.ManyComponentResponse{
 			Code: 2001,
 		}, nil
@@ -86,9 +97,11 @@ func (cpt *ComponentTransport) GetComponentByPosition(c context.Context, in *pb.
 	var components []*pb.Component
 	for _, comp := range tbComp {
 		var component pb.Component
-		component.CompId = comp.CompID
-		component.CompName = comp.CompName
-		component.CompPosition = comp.CompPosition
+		component.ComponentId = comp.ComponentID
+		component.ComponentName = comp.ComponentName
+		component.ComponentPosition = comp.ComponentPosition
+		component.ComponentIndex = comp.ComponentIndex
+		component.ComponentMap = comp.ComponentMap
 
 		components = append(components, &component)
 	}
@@ -100,8 +113,18 @@ func (cpt *ComponentTransport) GetComponentByPosition(c context.Context, in *pb.
 }
 
 func (cpt *ComponentTransport) CreateNewComponent(c context.Context, in *pb.Component) (*pb.MessageResponse, error) {
-	err := cpt.ComponentService.CreateNewComponent(in.CompName, in.CompPosition, in.CompIndex)
+	res, err := cpt.ComponentService.GetComponentByPosition(in.ComponentPosition)
 	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.MessageResponse{
+			Code:    2001,
+			Message: "error getting component by position",
+		}, nil
+	}
+
+	err = cpt.ComponentService.CreateNewComponent(in.ComponentName, in.ComponentPosition, int32(len(res)+1), in.ComponentMap)
+	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code:    2002,
 			Message: "error creating new component",
@@ -115,8 +138,9 @@ func (cpt *ComponentTransport) CreateNewComponent(c context.Context, in *pb.Comp
 }
 
 func (cpt *ComponentTransport) UpdateComponent(c context.Context, in *pb.Component) (*pb.MessageResponse, error) {
-	err := cpt.ComponentService.UpdateComponent(in.CompName, in.CompPosition, in.CompIndex, in.CompId)
+	err := cpt.ComponentService.UpdateComponent(in.ComponentName, in.ComponentPosition, in.ComponentIndex, in.ComponentId)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code:    2003,
 			Message: "error updating component",
@@ -132,6 +156,7 @@ func (cpt *ComponentTransport) UpdateComponent(c context.Context, in *pb.Compone
 func (cpt *ComponentTransport) DeleteComponent(c context.Context, in *pb.NumbRequest) (*pb.MessageResponse, error) {
 	err := cpt.ComponentService.DeleteComponent(in.Numb)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
 			Code:    2004,
 			Message: "error deleting component",

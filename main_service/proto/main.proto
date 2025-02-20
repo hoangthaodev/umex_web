@@ -6,42 +6,6 @@ option go_package = "proto/pb/";
 
 import "google/protobuf/empty.proto";
 
-message User{
-  int64 user_id = 1;
-  string user_name = 2;
-  string user_password = 3;
-  string user_email = 4;
-  int32 user_active = 5;
-}
-
-message Auth{
-  int64 auth_id = 1;
-  int64 user_id = 2;
-  int32 role_id = 3;
-}
-
-message Config{
-  int64 config_id =1;
-  string config_key =2;
-  string config_value =3;
-  string config_style =4;
-}
-
-message Component{
-  int64 comp_id =1;
-  string comp_name =2;
-  int32 comp_position =3;
-  int32 comp_index =4;
-}
-
-message Image{
-  int64 img_id =1;
-  string img_src =2;
-  string img_title =3;
-  string img_alt =4;
-  string img_caption =5;
-}
-
 message MessageResponse {
   int32 code = 1;
   string message = 2;
@@ -67,6 +31,14 @@ message LoginResponse{
   string refresh_token = 4;
 }
 
+message User{
+  int64 user_id = 1;
+  string user_name = 2;
+  string user_password = 3;
+  string user_email = 4;
+  int32 user_active = 5;
+}
+
 message ManyUserResponse{
   int32 code = 1;
   repeated User users = 2;
@@ -87,6 +59,13 @@ service UserService {
   rpc DeleteUser(NumbRequest) returns (MessageResponse){}
 }
 
+message Config{
+  int64 config_id =1;
+  string config_key =2;
+  string config_value =3;
+  string config_style =4;
+}
+
 message ManyConfigResponse{
   int32 code = 1;
   repeated Config configs = 2;
@@ -104,6 +83,14 @@ service ConfigService{
   rpc CreateNewConfig(Config) returns (MessageResponse){}
   rpc UpdateConfig(Config) returns (MessageResponse){}
   rpc DeleteConfig(NumbRequest) returns (MessageResponse){}
+}
+
+message Component{
+  int64 component_id =1;
+  string component_name =2;
+  int32 component_position =3;
+  int32 component_index =4;
+  string component_map =5;
 }
 
 message ManyComponentResponse{
@@ -126,6 +113,12 @@ service ComponentService{
   rpc DeleteComponent(NumbRequest) returns (MessageResponse){}
 }
 
+message Auth{
+  int64 auth_id = 1;
+  int64 user_id = 2;
+  int32 role_id = 3;
+}
+
 message AuthResponse{
   int32 code = 1;
   Auth auth = 2;
@@ -134,6 +127,14 @@ message AuthResponse{
 service AuthService{
   rpc GetAuthByUserId(NumbRequest) returns (AuthResponse){}
   rpc CheckAuth(StrRequest) returns (AuthResponse){}
+}
+
+message Image{
+  int64 image_id =1;
+  string image_url =2;
+  string image_title =3;
+  string image_alt =4;
+  string image_caption =5;
 }
 
 message ManyImageResponse{
@@ -152,4 +153,208 @@ service ImageService{
   rpc CreateNewImage(Image) returns (MessageResponse){}
   rpc UpdateImage(Image) returns (MessageResponse){}
   rpc DeleteImage(NumbRequest) returns (MessageResponse){}
+}
+
+message Menu{
+  int64 menu_id =1;
+  string menu_name =2;
+  string menu_value =3;
+}
+
+message ManyMenuResponse{
+  int32 code = 1;
+  repeated Menu menus = 2;
+}
+
+message MenuResponse{
+  int32 code = 1;
+  Menu menu = 2;
+}
+
+service MenuService{
+  rpc GetAllMenu(google.protobuf.Empty) returns (ManyMenuResponse){}
+  rpc GetMenuById(NumbRequest) returns (MenuResponse){}
+  rpc CreateNewMenu(Menu) returns (MessageResponse){}
+  rpc UpdateMenu(Menu) returns (MessageResponse){}
+  rpc DeleteMenu(NumbRequest) returns (MessageResponse){}
+}
+
+message MenuLocation{
+  int64 location_id =1;
+  string location_name =2;
+  int64 menu_id =3;
+}
+
+message ManyMenuLocationResponse{
+  int32 code = 1;
+  repeated MenuLocation locations = 2;
+}
+
+message MenuLocationResponse{
+  int32 code = 1;
+  MenuLocation location = 2;
+}
+
+service MenuLocationService{
+  rpc GetAllLocation(google.protobuf.Empty) returns (ManyMenuLocationResponse){}
+  rpc GetLocationById(NumbRequest) returns(MenuLocationResponse){}
+  rpc GetLocationByMenuId(NumbRequest) returns(ManyMenuLocationResponse){}
+  rpc UpdateMenuLocation(MenuLocation) returns (MessageResponse){}
+}
+
+message Category{
+  int64 category_id = 1;
+  string category_name = 2;
+  string category_slug =3;
+  string category_description =4;
+  int64 category_parent =5;
+  int64 type_id = 6;
+}
+
+message CategoryResponse{
+  int32 code = 1;
+  Category category = 2;
+}
+
+message ManyCategoryResponse{
+  int32 code = 1;
+  repeated Category categories = 2;
+}
+
+service CategoryService{
+  rpc GetAllCategory(google.protobuf.Empty) returns (ManyCategoryResponse){}
+  rpc GetCategoryById(NumbRequest) returns (CategoryResponse){}
+  rpc GetCategoryBySlug(StrRequest) returns (CategoryResponse){}
+  rpc GetCategoryByType(NumbRequest) returns (ManyCategoryResponse){}
+  rpc GetCategoryByParent(NumbRequest) returns (ManyCategoryResponse){}
+  rpc CreateNewCategory(Category) returns (MessageResponse){}
+  rpc UpdateCategory(Category) returns (MessageResponse){}
+  rpc DeleteCategory(NumbRequest) returns (MessageResponse){}
+}
+
+message Page{
+  int64 page_id =1;
+  string page_title =2;
+  string page_slug =3;
+  string page_content =4;
+  string page_description =5;
+  int32 page_status =6;
+  int32 page_publish_year =7;
+  int32 page_publish_month =8;
+  int32 page_publish_day =9;
+  int64 page_feature_image =10;
+  int32 page_trash =11;
+  int64 user_id =12;
+  int64 type_id =13;
+  int32 template_id =14;
+  int32 limit =15;
+  int32 offset =16;
+}
+
+message ManyPageResponse{
+  int32 code = 1;
+  repeated Page pages = 2;
+}
+
+message PageResponse{
+  int32 code = 1;
+  Page page = 2;
+}
+
+service PageService{
+  rpc GetAllPage(Page) returns (ManyPageResponse){}
+  rpc GetPageById(NumbRequest) returns (PageResponse){}
+  rpc GetPageBySlug(StrRequest) returns (PageResponse){}
+  rpc GetPageByStatus(Page) returns (ManyPageResponse){}
+  rpc GetPageByTrash(Page) returns (ManyPageResponse){}
+  rpc GetPageByUser(Page) returns (ManyPageResponse){}
+  rpc GetPageByType(Page) returns (ManyPageResponse){}
+  rpc GetPageByTypeNStatus(Page) returns (ManyPageResponse){}
+  rpc GetPageByPublishYear(Page) returns (ManyPageResponse){}
+  rpc GetPageByPublishYearMonth(Page) returns (ManyPageResponse){}
+  rpc GetPageByPublishYearMonthDay(Page) returns (ManyPageResponse){}
+  rpc CreateNewPage(Page) returns (MessageResponse){}
+  rpc UpdatePage(Page) returns (MessageResponse){}
+  rpc DeletePage(NumbRequest) returns (MessageResponse){}
+}
+
+message Tag{
+  int64 tag_id =1;
+  string tag_name =2;
+  string tag_slug =3;
+  string tag_description =4;
+  int64 type_id =5;
+}
+
+message ManyTagResponse{
+  int32 code = 1;
+  repeated Tag tags = 2;
+}
+
+message TagResponse{
+  int32 code = 1;
+  Tag tag = 2;
+}
+
+service TagService{
+  rpc GetAllTag(google.protobuf.Empty) returns (ManyTagResponse){}
+  rpc GetTagById(NumbRequest) returns (TagResponse){}
+  rpc GetTagByType(NumbRequest) returns (ManyTagResponse){}
+  rpc GetTagBySlug(StrRequest) returns (TagResponse){}
+  rpc CreateNewTag(Tag) returns (MessageResponse){}
+  rpc UpdateTag(Tag) returns (MessageResponse){}
+  rpc DeleteTag(NumbRequest) returns (MessageResponse){}
+}
+
+message Pagetag{
+  int64 pagetag_id =1;
+  int64 page_id =2;
+  int64 tag_id =3;
+  int32 limit =4;
+  int32 offset =5;
+}
+
+service PagetagService{
+  rpc GetPageByTag(Pagetag) returns (ManyPageResponse){}
+  rpc GetTagByPage(NumbRequest) returns (ManyTagResponse){}
+  rpc CreateNewPagetag(Pagetag) returns (MessageResponse){}
+  rpc DeletePagetag(NumbRequest) returns (MessageResponse){}
+}
+
+message Type{
+  int64 type_id =1;
+  string type_name =2;
+}
+
+message ManyTypeResponse{
+  int32 code = 1;
+  repeated Type types = 2;
+}
+
+message TypeResponse{
+  int32 code = 1;
+  Type type = 2;
+}
+
+service TypeService{
+  rpc GetAllType(google.protobuf.Empty) returns (ManyTypeResponse){}
+  rpc GetTypeById(NumbRequest) returns (TypeResponse){}
+  rpc CreateNewType(Type) returns (MessageResponse){}
+  rpc UpdateType(Type) returns (MessageResponse){}
+  rpc DeleteType(NumbRequest) returns (MessageResponse){}
+}
+
+message Pagecategory{
+  int64 pagecategory_id =1;
+  int64 page_id =2;
+  int64 category_id =3;
+  int32 limit =4;
+  int32 offset =5;
+}
+
+service PagecategoryService{
+  rpc GetPageByCategory(Pagecategory) returns (ManyPageResponse){}
+  rpc GetCategoryByPage(NumbRequest) returns (ManyCategoryResponse){}
+  rpc CreateNewPagecategory(Pagecategory) returns (MessageResponse){}
+  rpc DeletePagecategory(NumbRequest) returns (MessageResponse){}
 }

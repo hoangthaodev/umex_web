@@ -1,10 +1,12 @@
 'use client'
 import { useTheme } from "@/app/ThemeContext"
+import DeskHeader from "@/components/admin/theme/showArea/header/DeskHeader"
+import MobHeader from "@/components/admin/theme/showArea/header/MobHeader"
 import { getFontMap } from "@/lib/fontMap"
 import { CSSProperties, useEffect } from "react"
 
 const ShowArea = () => {
-  const { themeMode, layoutMode, backgroundImage, backgroundsColor, containerWidth, dropShadow, contentBackground, siteWidth, backgroundRepeat,
+  const { isMobile, themeMode, layoutMode, backgroundImage, backgroundsColor, containerWidth, dropShadow, contentBackground, siteWidth, backgroundRepeat,
     fontBase, fontBaseSize, fontBaseWeight, fontHeadline, fontHeadlineWeight, fontNavigation, fontNavigationWeight,
     primaryColor, secondaryColor, successColor, alertColor, baseColor, headlineColor, linkColor, linkColorHover,
     backdropColor, drawerWidth
@@ -44,7 +46,7 @@ const ShowArea = () => {
     if (backgroundImage) {
       rootClass = {
         ...rootClass,
-        backgroundImage: `url('${backgroundImage?.img_src}')`,
+        backgroundImage: `url('${backgroundImage?.image_url}')`,
         backgroundPosition: "center",
       }
       if (backgroundRepeat === "0") {
@@ -110,6 +112,18 @@ const ShowArea = () => {
   .alert {
   color: ${alertColor}
   }
+  .bg-primary {
+  background-color: ${primaryColor}
+  }
+  .bg-secondary {
+  background-color: ${secondaryColor}
+  }
+  .bg-success {
+  background-color: ${successColor}
+  }
+  .bg-alert {
+  background-color: ${alertColor}
+  }
   body {
   color: ${baseColor}
   }
@@ -132,40 +146,25 @@ const ShowArea = () => {
   `
 
   return (
-    <div>
-      <p>ngoai Dark</p>
-      <div
-        className="text-gray-900 dark:text-gray-50 dark:bg-gray-700"
-        style={rootClass}>
-        <div style={siteClass}>
-          <div style={containerClass}>
-            header
-            <h2>day la h2</h2>
-            <h3>day la h3</h3>
-            <p>day la base text</p>
-            <p className="primary">primary</p>
-            <p className="secondary">secondary</p>
-            <p className="success">success</p>
-            <p className="alert">alert</p>
-            <ul className="nav">
-              <li><a href="">li 1</a></li>
-              <li><a href="">li 4</a></li>
-              <li><a href="">li 3</a></li>
-              <li><a href="">li 2</a></li>
-            </ul>
-            {/* <MainHeader /> */}
-          </div>
+    <div
+      className="text-gray-900 dark:text-gray-50 dark:bg-gray-700"
+      style={rootClass}>
+      <div style={siteClass}>
+        <div style={containerClass}>
+          {
+            isMobile ? <MobHeader /> : <DeskHeader />
+          }
         </div>
-        <style>
-          {`
+      </div>
+      <style>
+        {`
           ${headlineFont}
           ${baseFont}
           ${navFont}
           ${styleColor}
           ${styleDrawer}
         `}
-        </style>
-      </div>
+      </style>
     </div>
   )
 }

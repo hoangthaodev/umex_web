@@ -1364,3 +1364,2453 @@ var ImageService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "proto/main.proto",
 }
+
+const (
+	MenuService_GetAllMenu_FullMethodName    = "/pb.MenuService/GetAllMenu"
+	MenuService_GetMenuById_FullMethodName   = "/pb.MenuService/GetMenuById"
+	MenuService_CreateNewMenu_FullMethodName = "/pb.MenuService/CreateNewMenu"
+	MenuService_UpdateMenu_FullMethodName    = "/pb.MenuService/UpdateMenu"
+	MenuService_DeleteMenu_FullMethodName    = "/pb.MenuService/DeleteMenu"
+)
+
+// MenuServiceClient is the client API for MenuService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type MenuServiceClient interface {
+	GetAllMenu(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyMenuResponse, error)
+	GetMenuById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MenuResponse, error)
+	CreateNewMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error)
+	UpdateMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error)
+	DeleteMenu(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+}
+
+type menuServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewMenuServiceClient(cc grpc.ClientConnInterface) MenuServiceClient {
+	return &menuServiceClient{cc}
+}
+
+func (c *menuServiceClient) GetAllMenu(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyMenuResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyMenuResponse)
+	err := c.cc.Invoke(ctx, MenuService_GetAllMenu_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuServiceClient) GetMenuById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MenuResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MenuResponse)
+	err := c.cc.Invoke(ctx, MenuService_GetMenuById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuServiceClient) CreateNewMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, MenuService_CreateNewMenu_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuServiceClient) UpdateMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, MenuService_UpdateMenu_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuServiceClient) DeleteMenu(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, MenuService_DeleteMenu_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// MenuServiceServer is the server API for MenuService service.
+// All implementations must embed UnimplementedMenuServiceServer
+// for forward compatibility.
+type MenuServiceServer interface {
+	GetAllMenu(context.Context, *emptypb.Empty) (*ManyMenuResponse, error)
+	GetMenuById(context.Context, *NumbRequest) (*MenuResponse, error)
+	CreateNewMenu(context.Context, *Menu) (*MessageResponse, error)
+	UpdateMenu(context.Context, *Menu) (*MessageResponse, error)
+	DeleteMenu(context.Context, *NumbRequest) (*MessageResponse, error)
+	mustEmbedUnimplementedMenuServiceServer()
+}
+
+// UnimplementedMenuServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedMenuServiceServer struct{}
+
+func (UnimplementedMenuServiceServer) GetAllMenu(context.Context, *emptypb.Empty) (*ManyMenuResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllMenu not implemented")
+}
+func (UnimplementedMenuServiceServer) GetMenuById(context.Context, *NumbRequest) (*MenuResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMenuById not implemented")
+}
+func (UnimplementedMenuServiceServer) CreateNewMenu(context.Context, *Menu) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNewMenu not implemented")
+}
+func (UnimplementedMenuServiceServer) UpdateMenu(context.Context, *Menu) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMenu not implemented")
+}
+func (UnimplementedMenuServiceServer) DeleteMenu(context.Context, *NumbRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteMenu not implemented")
+}
+func (UnimplementedMenuServiceServer) mustEmbedUnimplementedMenuServiceServer() {}
+func (UnimplementedMenuServiceServer) testEmbeddedByValue()                     {}
+
+// UnsafeMenuServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MenuServiceServer will
+// result in compilation errors.
+type UnsafeMenuServiceServer interface {
+	mustEmbedUnimplementedMenuServiceServer()
+}
+
+func RegisterMenuServiceServer(s grpc.ServiceRegistrar, srv MenuServiceServer) {
+	// If the following call pancis, it indicates UnimplementedMenuServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&MenuService_ServiceDesc, srv)
+}
+
+func _MenuService_GetAllMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).GetAllMenu(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_GetAllMenu_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).GetAllMenu(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuService_GetMenuById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).GetMenuById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_GetMenuById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).GetMenuById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuService_CreateNewMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Menu)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).CreateNewMenu(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_CreateNewMenu_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).CreateNewMenu(ctx, req.(*Menu))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuService_UpdateMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Menu)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).UpdateMenu(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_UpdateMenu_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).UpdateMenu(ctx, req.(*Menu))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuService_DeleteMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).DeleteMenu(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_DeleteMenu_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).DeleteMenu(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// MenuService_ServiceDesc is the grpc.ServiceDesc for MenuService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var MenuService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.MenuService",
+	HandlerType: (*MenuServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAllMenu",
+			Handler:    _MenuService_GetAllMenu_Handler,
+		},
+		{
+			MethodName: "GetMenuById",
+			Handler:    _MenuService_GetMenuById_Handler,
+		},
+		{
+			MethodName: "CreateNewMenu",
+			Handler:    _MenuService_CreateNewMenu_Handler,
+		},
+		{
+			MethodName: "UpdateMenu",
+			Handler:    _MenuService_UpdateMenu_Handler,
+		},
+		{
+			MethodName: "DeleteMenu",
+			Handler:    _MenuService_DeleteMenu_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/main.proto",
+}
+
+const (
+	MenuLocationService_GetAllLocation_FullMethodName      = "/pb.MenuLocationService/GetAllLocation"
+	MenuLocationService_GetLocationById_FullMethodName     = "/pb.MenuLocationService/GetLocationById"
+	MenuLocationService_GetLocationByMenuId_FullMethodName = "/pb.MenuLocationService/GetLocationByMenuId"
+	MenuLocationService_UpdateMenuLocation_FullMethodName  = "/pb.MenuLocationService/UpdateMenuLocation"
+)
+
+// MenuLocationServiceClient is the client API for MenuLocationService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type MenuLocationServiceClient interface {
+	GetAllLocation(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyMenuLocationResponse, error)
+	GetLocationById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MenuLocationResponse, error)
+	GetLocationByMenuId(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyMenuLocationResponse, error)
+	UpdateMenuLocation(ctx context.Context, in *MenuLocation, opts ...grpc.CallOption) (*MessageResponse, error)
+}
+
+type menuLocationServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewMenuLocationServiceClient(cc grpc.ClientConnInterface) MenuLocationServiceClient {
+	return &menuLocationServiceClient{cc}
+}
+
+func (c *menuLocationServiceClient) GetAllLocation(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyMenuLocationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyMenuLocationResponse)
+	err := c.cc.Invoke(ctx, MenuLocationService_GetAllLocation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuLocationServiceClient) GetLocationById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MenuLocationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MenuLocationResponse)
+	err := c.cc.Invoke(ctx, MenuLocationService_GetLocationById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuLocationServiceClient) GetLocationByMenuId(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyMenuLocationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyMenuLocationResponse)
+	err := c.cc.Invoke(ctx, MenuLocationService_GetLocationByMenuId_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *menuLocationServiceClient) UpdateMenuLocation(ctx context.Context, in *MenuLocation, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, MenuLocationService_UpdateMenuLocation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// MenuLocationServiceServer is the server API for MenuLocationService service.
+// All implementations must embed UnimplementedMenuLocationServiceServer
+// for forward compatibility.
+type MenuLocationServiceServer interface {
+	GetAllLocation(context.Context, *emptypb.Empty) (*ManyMenuLocationResponse, error)
+	GetLocationById(context.Context, *NumbRequest) (*MenuLocationResponse, error)
+	GetLocationByMenuId(context.Context, *NumbRequest) (*ManyMenuLocationResponse, error)
+	UpdateMenuLocation(context.Context, *MenuLocation) (*MessageResponse, error)
+	mustEmbedUnimplementedMenuLocationServiceServer()
+}
+
+// UnimplementedMenuLocationServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedMenuLocationServiceServer struct{}
+
+func (UnimplementedMenuLocationServiceServer) GetAllLocation(context.Context, *emptypb.Empty) (*ManyMenuLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllLocation not implemented")
+}
+func (UnimplementedMenuLocationServiceServer) GetLocationById(context.Context, *NumbRequest) (*MenuLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLocationById not implemented")
+}
+func (UnimplementedMenuLocationServiceServer) GetLocationByMenuId(context.Context, *NumbRequest) (*ManyMenuLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLocationByMenuId not implemented")
+}
+func (UnimplementedMenuLocationServiceServer) UpdateMenuLocation(context.Context, *MenuLocation) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMenuLocation not implemented")
+}
+func (UnimplementedMenuLocationServiceServer) mustEmbedUnimplementedMenuLocationServiceServer() {}
+func (UnimplementedMenuLocationServiceServer) testEmbeddedByValue()                             {}
+
+// UnsafeMenuLocationServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MenuLocationServiceServer will
+// result in compilation errors.
+type UnsafeMenuLocationServiceServer interface {
+	mustEmbedUnimplementedMenuLocationServiceServer()
+}
+
+func RegisterMenuLocationServiceServer(s grpc.ServiceRegistrar, srv MenuLocationServiceServer) {
+	// If the following call pancis, it indicates UnimplementedMenuLocationServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&MenuLocationService_ServiceDesc, srv)
+}
+
+func _MenuLocationService_GetAllLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuLocationServiceServer).GetAllLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuLocationService_GetAllLocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuLocationServiceServer).GetAllLocation(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuLocationService_GetLocationById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuLocationServiceServer).GetLocationById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuLocationService_GetLocationById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuLocationServiceServer).GetLocationById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuLocationService_GetLocationByMenuId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuLocationServiceServer).GetLocationByMenuId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuLocationService_GetLocationByMenuId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuLocationServiceServer).GetLocationByMenuId(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MenuLocationService_UpdateMenuLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MenuLocation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuLocationServiceServer).UpdateMenuLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuLocationService_UpdateMenuLocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuLocationServiceServer).UpdateMenuLocation(ctx, req.(*MenuLocation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// MenuLocationService_ServiceDesc is the grpc.ServiceDesc for MenuLocationService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var MenuLocationService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.MenuLocationService",
+	HandlerType: (*MenuLocationServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAllLocation",
+			Handler:    _MenuLocationService_GetAllLocation_Handler,
+		},
+		{
+			MethodName: "GetLocationById",
+			Handler:    _MenuLocationService_GetLocationById_Handler,
+		},
+		{
+			MethodName: "GetLocationByMenuId",
+			Handler:    _MenuLocationService_GetLocationByMenuId_Handler,
+		},
+		{
+			MethodName: "UpdateMenuLocation",
+			Handler:    _MenuLocationService_UpdateMenuLocation_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/main.proto",
+}
+
+const (
+	CategoryService_GetAllCategory_FullMethodName      = "/pb.CategoryService/GetAllCategory"
+	CategoryService_GetCategoryById_FullMethodName     = "/pb.CategoryService/GetCategoryById"
+	CategoryService_GetCategoryBySlug_FullMethodName   = "/pb.CategoryService/GetCategoryBySlug"
+	CategoryService_GetCategoryByType_FullMethodName   = "/pb.CategoryService/GetCategoryByType"
+	CategoryService_GetCategoryByParent_FullMethodName = "/pb.CategoryService/GetCategoryByParent"
+	CategoryService_CreateNewCategory_FullMethodName   = "/pb.CategoryService/CreateNewCategory"
+	CategoryService_UpdateCategory_FullMethodName      = "/pb.CategoryService/UpdateCategory"
+	CategoryService_DeleteCategory_FullMethodName      = "/pb.CategoryService/DeleteCategory"
+)
+
+// CategoryServiceClient is the client API for CategoryService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type CategoryServiceClient interface {
+	GetAllCategory(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
+	GetCategoryById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*CategoryResponse, error)
+	GetCategoryBySlug(ctx context.Context, in *StrRequest, opts ...grpc.CallOption) (*CategoryResponse, error)
+	GetCategoryByType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
+	GetCategoryByParent(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
+	CreateNewCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*MessageResponse, error)
+	UpdateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*MessageResponse, error)
+	DeleteCategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+}
+
+type categoryServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewCategoryServiceClient(cc grpc.ClientConnInterface) CategoryServiceClient {
+	return &categoryServiceClient{cc}
+}
+
+func (c *categoryServiceClient) GetAllCategory(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyCategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyCategoryResponse)
+	err := c.cc.Invoke(ctx, CategoryService_GetAllCategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *categoryServiceClient) GetCategoryById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*CategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CategoryResponse)
+	err := c.cc.Invoke(ctx, CategoryService_GetCategoryById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *categoryServiceClient) GetCategoryBySlug(ctx context.Context, in *StrRequest, opts ...grpc.CallOption) (*CategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CategoryResponse)
+	err := c.cc.Invoke(ctx, CategoryService_GetCategoryBySlug_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *categoryServiceClient) GetCategoryByType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyCategoryResponse)
+	err := c.cc.Invoke(ctx, CategoryService_GetCategoryByType_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *categoryServiceClient) GetCategoryByParent(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyCategoryResponse)
+	err := c.cc.Invoke(ctx, CategoryService_GetCategoryByParent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *categoryServiceClient) CreateNewCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, CategoryService_CreateNewCategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *categoryServiceClient) UpdateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, CategoryService_UpdateCategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *categoryServiceClient) DeleteCategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, CategoryService_DeleteCategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CategoryServiceServer is the server API for CategoryService service.
+// All implementations must embed UnimplementedCategoryServiceServer
+// for forward compatibility.
+type CategoryServiceServer interface {
+	GetAllCategory(context.Context, *emptypb.Empty) (*ManyCategoryResponse, error)
+	GetCategoryById(context.Context, *NumbRequest) (*CategoryResponse, error)
+	GetCategoryBySlug(context.Context, *StrRequest) (*CategoryResponse, error)
+	GetCategoryByType(context.Context, *NumbRequest) (*ManyCategoryResponse, error)
+	GetCategoryByParent(context.Context, *NumbRequest) (*ManyCategoryResponse, error)
+	CreateNewCategory(context.Context, *Category) (*MessageResponse, error)
+	UpdateCategory(context.Context, *Category) (*MessageResponse, error)
+	DeleteCategory(context.Context, *NumbRequest) (*MessageResponse, error)
+	mustEmbedUnimplementedCategoryServiceServer()
+}
+
+// UnimplementedCategoryServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedCategoryServiceServer struct{}
+
+func (UnimplementedCategoryServiceServer) GetAllCategory(context.Context, *emptypb.Empty) (*ManyCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllCategory not implemented")
+}
+func (UnimplementedCategoryServiceServer) GetCategoryById(context.Context, *NumbRequest) (*CategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryById not implemented")
+}
+func (UnimplementedCategoryServiceServer) GetCategoryBySlug(context.Context, *StrRequest) (*CategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryBySlug not implemented")
+}
+func (UnimplementedCategoryServiceServer) GetCategoryByType(context.Context, *NumbRequest) (*ManyCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryByType not implemented")
+}
+func (UnimplementedCategoryServiceServer) GetCategoryByParent(context.Context, *NumbRequest) (*ManyCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryByParent not implemented")
+}
+func (UnimplementedCategoryServiceServer) CreateNewCategory(context.Context, *Category) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNewCategory not implemented")
+}
+func (UnimplementedCategoryServiceServer) UpdateCategory(context.Context, *Category) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCategory not implemented")
+}
+func (UnimplementedCategoryServiceServer) DeleteCategory(context.Context, *NumbRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCategory not implemented")
+}
+func (UnimplementedCategoryServiceServer) mustEmbedUnimplementedCategoryServiceServer() {}
+func (UnimplementedCategoryServiceServer) testEmbeddedByValue()                         {}
+
+// UnsafeCategoryServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CategoryServiceServer will
+// result in compilation errors.
+type UnsafeCategoryServiceServer interface {
+	mustEmbedUnimplementedCategoryServiceServer()
+}
+
+func RegisterCategoryServiceServer(s grpc.ServiceRegistrar, srv CategoryServiceServer) {
+	// If the following call pancis, it indicates UnimplementedCategoryServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&CategoryService_ServiceDesc, srv)
+}
+
+func _CategoryService_GetAllCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).GetAllCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CategoryService_GetAllCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).GetAllCategory(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CategoryService_GetCategoryById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).GetCategoryById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CategoryService_GetCategoryById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).GetCategoryById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CategoryService_GetCategoryBySlug_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StrRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).GetCategoryBySlug(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CategoryService_GetCategoryBySlug_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).GetCategoryBySlug(ctx, req.(*StrRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CategoryService_GetCategoryByType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).GetCategoryByType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CategoryService_GetCategoryByType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).GetCategoryByType(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CategoryService_GetCategoryByParent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).GetCategoryByParent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CategoryService_GetCategoryByParent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).GetCategoryByParent(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CategoryService_CreateNewCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Category)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).CreateNewCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CategoryService_CreateNewCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).CreateNewCategory(ctx, req.(*Category))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CategoryService_UpdateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Category)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).UpdateCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CategoryService_UpdateCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).UpdateCategory(ctx, req.(*Category))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CategoryService_DeleteCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).DeleteCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CategoryService_DeleteCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).DeleteCategory(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// CategoryService_ServiceDesc is the grpc.ServiceDesc for CategoryService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var CategoryService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.CategoryService",
+	HandlerType: (*CategoryServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAllCategory",
+			Handler:    _CategoryService_GetAllCategory_Handler,
+		},
+		{
+			MethodName: "GetCategoryById",
+			Handler:    _CategoryService_GetCategoryById_Handler,
+		},
+		{
+			MethodName: "GetCategoryBySlug",
+			Handler:    _CategoryService_GetCategoryBySlug_Handler,
+		},
+		{
+			MethodName: "GetCategoryByType",
+			Handler:    _CategoryService_GetCategoryByType_Handler,
+		},
+		{
+			MethodName: "GetCategoryByParent",
+			Handler:    _CategoryService_GetCategoryByParent_Handler,
+		},
+		{
+			MethodName: "CreateNewCategory",
+			Handler:    _CategoryService_CreateNewCategory_Handler,
+		},
+		{
+			MethodName: "UpdateCategory",
+			Handler:    _CategoryService_UpdateCategory_Handler,
+		},
+		{
+			MethodName: "DeleteCategory",
+			Handler:    _CategoryService_DeleteCategory_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/main.proto",
+}
+
+const (
+	PageService_GetAllPage_FullMethodName                   = "/pb.PageService/GetAllPage"
+	PageService_GetPageById_FullMethodName                  = "/pb.PageService/GetPageById"
+	PageService_GetPageBySlug_FullMethodName                = "/pb.PageService/GetPageBySlug"
+	PageService_GetPageByStatus_FullMethodName              = "/pb.PageService/GetPageByStatus"
+	PageService_GetPageByTrash_FullMethodName               = "/pb.PageService/GetPageByTrash"
+	PageService_GetPageByUser_FullMethodName                = "/pb.PageService/GetPageByUser"
+	PageService_GetPageByType_FullMethodName                = "/pb.PageService/GetPageByType"
+	PageService_GetPageByTypeNStatus_FullMethodName         = "/pb.PageService/GetPageByTypeNStatus"
+	PageService_GetPageByPublishYear_FullMethodName         = "/pb.PageService/GetPageByPublishYear"
+	PageService_GetPageByPublishYearMonth_FullMethodName    = "/pb.PageService/GetPageByPublishYearMonth"
+	PageService_GetPageByPublishYearMonthDay_FullMethodName = "/pb.PageService/GetPageByPublishYearMonthDay"
+	PageService_CreateNewPage_FullMethodName                = "/pb.PageService/CreateNewPage"
+	PageService_UpdatePage_FullMethodName                   = "/pb.PageService/UpdatePage"
+	PageService_DeletePage_FullMethodName                   = "/pb.PageService/DeletePage"
+)
+
+// PageServiceClient is the client API for PageService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type PageServiceClient interface {
+	GetAllPage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetPageById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*PageResponse, error)
+	GetPageBySlug(ctx context.Context, in *StrRequest, opts ...grpc.CallOption) (*PageResponse, error)
+	GetPageByStatus(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetPageByTrash(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetPageByUser(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetPageByType(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetPageByTypeNStatus(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetPageByPublishYear(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetPageByPublishYearMonth(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetPageByPublishYearMonthDay(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	CreateNewPage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*MessageResponse, error)
+	UpdatePage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*MessageResponse, error)
+	DeletePage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+}
+
+type pageServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewPageServiceClient(cc grpc.ClientConnInterface) PageServiceClient {
+	return &pageServiceClient{cc}
+}
+
+func (c *pageServiceClient) GetAllPage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetAllPage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*PageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageBySlug(ctx context.Context, in *StrRequest, opts ...grpc.CallOption) (*PageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageBySlug_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageByStatus(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageByStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageByTrash(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageByTrash_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageByUser(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageByUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageByType(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageByType_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageByTypeNStatus(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageByTypeNStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageByPublishYear(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageByPublishYear_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageByPublishYearMonth(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageByPublishYearMonth_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageByPublishYearMonthDay(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageByPublishYearMonthDay_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) CreateNewPage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, PageService_CreateNewPage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) UpdatePage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, PageService_UpdatePage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) DeletePage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, PageService_DeletePage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// PageServiceServer is the server API for PageService service.
+// All implementations must embed UnimplementedPageServiceServer
+// for forward compatibility.
+type PageServiceServer interface {
+	GetAllPage(context.Context, *Page) (*ManyPageResponse, error)
+	GetPageById(context.Context, *NumbRequest) (*PageResponse, error)
+	GetPageBySlug(context.Context, *StrRequest) (*PageResponse, error)
+	GetPageByStatus(context.Context, *Page) (*ManyPageResponse, error)
+	GetPageByTrash(context.Context, *Page) (*ManyPageResponse, error)
+	GetPageByUser(context.Context, *Page) (*ManyPageResponse, error)
+	GetPageByType(context.Context, *Page) (*ManyPageResponse, error)
+	GetPageByTypeNStatus(context.Context, *Page) (*ManyPageResponse, error)
+	GetPageByPublishYear(context.Context, *Page) (*ManyPageResponse, error)
+	GetPageByPublishYearMonth(context.Context, *Page) (*ManyPageResponse, error)
+	GetPageByPublishYearMonthDay(context.Context, *Page) (*ManyPageResponse, error)
+	CreateNewPage(context.Context, *Page) (*MessageResponse, error)
+	UpdatePage(context.Context, *Page) (*MessageResponse, error)
+	DeletePage(context.Context, *NumbRequest) (*MessageResponse, error)
+	mustEmbedUnimplementedPageServiceServer()
+}
+
+// UnimplementedPageServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedPageServiceServer struct{}
+
+func (UnimplementedPageServiceServer) GetAllPage(context.Context, *Page) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllPage not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageById(context.Context, *NumbRequest) (*PageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageById not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageBySlug(context.Context, *StrRequest) (*PageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageBySlug not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageByStatus(context.Context, *Page) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByStatus not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageByTrash(context.Context, *Page) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByTrash not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageByUser(context.Context, *Page) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByUser not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageByType(context.Context, *Page) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByType not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageByTypeNStatus(context.Context, *Page) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByTypeNStatus not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageByPublishYear(context.Context, *Page) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByPublishYear not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageByPublishYearMonth(context.Context, *Page) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByPublishYearMonth not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageByPublishYearMonthDay(context.Context, *Page) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByPublishYearMonthDay not implemented")
+}
+func (UnimplementedPageServiceServer) CreateNewPage(context.Context, *Page) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNewPage not implemented")
+}
+func (UnimplementedPageServiceServer) UpdatePage(context.Context, *Page) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePage not implemented")
+}
+func (UnimplementedPageServiceServer) DeletePage(context.Context, *NumbRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePage not implemented")
+}
+func (UnimplementedPageServiceServer) mustEmbedUnimplementedPageServiceServer() {}
+func (UnimplementedPageServiceServer) testEmbeddedByValue()                     {}
+
+// UnsafePageServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PageServiceServer will
+// result in compilation errors.
+type UnsafePageServiceServer interface {
+	mustEmbedUnimplementedPageServiceServer()
+}
+
+func RegisterPageServiceServer(s grpc.ServiceRegistrar, srv PageServiceServer) {
+	// If the following call pancis, it indicates UnimplementedPageServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&PageService_ServiceDesc, srv)
+}
+
+func _PageService_GetAllPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetAllPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetAllPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetAllPage(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageBySlug_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StrRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageBySlug(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageBySlug_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageBySlug(ctx, req.(*StrRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageByStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageByStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageByStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageByStatus(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageByTrash_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageByTrash(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageByTrash_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageByTrash(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageByUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageByUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageByUser(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageByType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageByType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageByType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageByType(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageByTypeNStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageByTypeNStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageByTypeNStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageByTypeNStatus(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageByPublishYear_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageByPublishYear(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageByPublishYear_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageByPublishYear(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageByPublishYearMonth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageByPublishYearMonth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageByPublishYearMonth_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageByPublishYearMonth(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageByPublishYearMonthDay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageByPublishYearMonthDay(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageByPublishYearMonthDay_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageByPublishYearMonthDay(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_CreateNewPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).CreateNewPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_CreateNewPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).CreateNewPage(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_UpdatePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).UpdatePage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_UpdatePage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).UpdatePage(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_DeletePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).DeletePage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_DeletePage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).DeletePage(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// PageService_ServiceDesc is the grpc.ServiceDesc for PageService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var PageService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.PageService",
+	HandlerType: (*PageServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAllPage",
+			Handler:    _PageService_GetAllPage_Handler,
+		},
+		{
+			MethodName: "GetPageById",
+			Handler:    _PageService_GetPageById_Handler,
+		},
+		{
+			MethodName: "GetPageBySlug",
+			Handler:    _PageService_GetPageBySlug_Handler,
+		},
+		{
+			MethodName: "GetPageByStatus",
+			Handler:    _PageService_GetPageByStatus_Handler,
+		},
+		{
+			MethodName: "GetPageByTrash",
+			Handler:    _PageService_GetPageByTrash_Handler,
+		},
+		{
+			MethodName: "GetPageByUser",
+			Handler:    _PageService_GetPageByUser_Handler,
+		},
+		{
+			MethodName: "GetPageByType",
+			Handler:    _PageService_GetPageByType_Handler,
+		},
+		{
+			MethodName: "GetPageByTypeNStatus",
+			Handler:    _PageService_GetPageByTypeNStatus_Handler,
+		},
+		{
+			MethodName: "GetPageByPublishYear",
+			Handler:    _PageService_GetPageByPublishYear_Handler,
+		},
+		{
+			MethodName: "GetPageByPublishYearMonth",
+			Handler:    _PageService_GetPageByPublishYearMonth_Handler,
+		},
+		{
+			MethodName: "GetPageByPublishYearMonthDay",
+			Handler:    _PageService_GetPageByPublishYearMonthDay_Handler,
+		},
+		{
+			MethodName: "CreateNewPage",
+			Handler:    _PageService_CreateNewPage_Handler,
+		},
+		{
+			MethodName: "UpdatePage",
+			Handler:    _PageService_UpdatePage_Handler,
+		},
+		{
+			MethodName: "DeletePage",
+			Handler:    _PageService_DeletePage_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/main.proto",
+}
+
+const (
+	TagService_GetAllTag_FullMethodName    = "/pb.TagService/GetAllTag"
+	TagService_GetTagById_FullMethodName   = "/pb.TagService/GetTagById"
+	TagService_GetTagByType_FullMethodName = "/pb.TagService/GetTagByType"
+	TagService_GetTagBySlug_FullMethodName = "/pb.TagService/GetTagBySlug"
+	TagService_CreateNewTag_FullMethodName = "/pb.TagService/CreateNewTag"
+	TagService_UpdateTag_FullMethodName    = "/pb.TagService/UpdateTag"
+	TagService_DeleteTag_FullMethodName    = "/pb.TagService/DeleteTag"
+)
+
+// TagServiceClient is the client API for TagService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type TagServiceClient interface {
+	GetAllTag(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyTagResponse, error)
+	GetTagById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*TagResponse, error)
+	GetTagByType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyTagResponse, error)
+	GetTagBySlug(ctx context.Context, in *StrRequest, opts ...grpc.CallOption) (*TagResponse, error)
+	CreateNewTag(ctx context.Context, in *Tag, opts ...grpc.CallOption) (*MessageResponse, error)
+	UpdateTag(ctx context.Context, in *Tag, opts ...grpc.CallOption) (*MessageResponse, error)
+	DeleteTag(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+}
+
+type tagServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewTagServiceClient(cc grpc.ClientConnInterface) TagServiceClient {
+	return &tagServiceClient{cc}
+}
+
+func (c *tagServiceClient) GetAllTag(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyTagResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyTagResponse)
+	err := c.cc.Invoke(ctx, TagService_GetAllTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tagServiceClient) GetTagById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*TagResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TagResponse)
+	err := c.cc.Invoke(ctx, TagService_GetTagById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tagServiceClient) GetTagByType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyTagResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyTagResponse)
+	err := c.cc.Invoke(ctx, TagService_GetTagByType_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tagServiceClient) GetTagBySlug(ctx context.Context, in *StrRequest, opts ...grpc.CallOption) (*TagResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TagResponse)
+	err := c.cc.Invoke(ctx, TagService_GetTagBySlug_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tagServiceClient) CreateNewTag(ctx context.Context, in *Tag, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, TagService_CreateNewTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tagServiceClient) UpdateTag(ctx context.Context, in *Tag, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, TagService_UpdateTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tagServiceClient) DeleteTag(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, TagService_DeleteTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// TagServiceServer is the server API for TagService service.
+// All implementations must embed UnimplementedTagServiceServer
+// for forward compatibility.
+type TagServiceServer interface {
+	GetAllTag(context.Context, *emptypb.Empty) (*ManyTagResponse, error)
+	GetTagById(context.Context, *NumbRequest) (*TagResponse, error)
+	GetTagByType(context.Context, *NumbRequest) (*ManyTagResponse, error)
+	GetTagBySlug(context.Context, *StrRequest) (*TagResponse, error)
+	CreateNewTag(context.Context, *Tag) (*MessageResponse, error)
+	UpdateTag(context.Context, *Tag) (*MessageResponse, error)
+	DeleteTag(context.Context, *NumbRequest) (*MessageResponse, error)
+	mustEmbedUnimplementedTagServiceServer()
+}
+
+// UnimplementedTagServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedTagServiceServer struct{}
+
+func (UnimplementedTagServiceServer) GetAllTag(context.Context, *emptypb.Empty) (*ManyTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllTag not implemented")
+}
+func (UnimplementedTagServiceServer) GetTagById(context.Context, *NumbRequest) (*TagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTagById not implemented")
+}
+func (UnimplementedTagServiceServer) GetTagByType(context.Context, *NumbRequest) (*ManyTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTagByType not implemented")
+}
+func (UnimplementedTagServiceServer) GetTagBySlug(context.Context, *StrRequest) (*TagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTagBySlug not implemented")
+}
+func (UnimplementedTagServiceServer) CreateNewTag(context.Context, *Tag) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNewTag not implemented")
+}
+func (UnimplementedTagServiceServer) UpdateTag(context.Context, *Tag) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTag not implemented")
+}
+func (UnimplementedTagServiceServer) DeleteTag(context.Context, *NumbRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTag not implemented")
+}
+func (UnimplementedTagServiceServer) mustEmbedUnimplementedTagServiceServer() {}
+func (UnimplementedTagServiceServer) testEmbeddedByValue()                    {}
+
+// UnsafeTagServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TagServiceServer will
+// result in compilation errors.
+type UnsafeTagServiceServer interface {
+	mustEmbedUnimplementedTagServiceServer()
+}
+
+func RegisterTagServiceServer(s grpc.ServiceRegistrar, srv TagServiceServer) {
+	// If the following call pancis, it indicates UnimplementedTagServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&TagService_ServiceDesc, srv)
+}
+
+func _TagService_GetAllTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).GetAllTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_GetAllTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).GetAllTag(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TagService_GetTagById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).GetTagById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_GetTagById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).GetTagById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TagService_GetTagByType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).GetTagByType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_GetTagByType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).GetTagByType(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TagService_GetTagBySlug_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StrRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).GetTagBySlug(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_GetTagBySlug_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).GetTagBySlug(ctx, req.(*StrRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TagService_CreateNewTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Tag)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).CreateNewTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_CreateNewTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).CreateNewTag(ctx, req.(*Tag))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TagService_UpdateTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Tag)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).UpdateTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_UpdateTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).UpdateTag(ctx, req.(*Tag))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TagService_DeleteTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).DeleteTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_DeleteTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).DeleteTag(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// TagService_ServiceDesc is the grpc.ServiceDesc for TagService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var TagService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.TagService",
+	HandlerType: (*TagServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAllTag",
+			Handler:    _TagService_GetAllTag_Handler,
+		},
+		{
+			MethodName: "GetTagById",
+			Handler:    _TagService_GetTagById_Handler,
+		},
+		{
+			MethodName: "GetTagByType",
+			Handler:    _TagService_GetTagByType_Handler,
+		},
+		{
+			MethodName: "GetTagBySlug",
+			Handler:    _TagService_GetTagBySlug_Handler,
+		},
+		{
+			MethodName: "CreateNewTag",
+			Handler:    _TagService_CreateNewTag_Handler,
+		},
+		{
+			MethodName: "UpdateTag",
+			Handler:    _TagService_UpdateTag_Handler,
+		},
+		{
+			MethodName: "DeleteTag",
+			Handler:    _TagService_DeleteTag_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/main.proto",
+}
+
+const (
+	PagetagService_GetPageByTag_FullMethodName     = "/pb.PagetagService/GetPageByTag"
+	PagetagService_GetTagByPage_FullMethodName     = "/pb.PagetagService/GetTagByPage"
+	PagetagService_CreateNewPagetag_FullMethodName = "/pb.PagetagService/CreateNewPagetag"
+	PagetagService_DeletePagetag_FullMethodName    = "/pb.PagetagService/DeletePagetag"
+)
+
+// PagetagServiceClient is the client API for PagetagService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type PagetagServiceClient interface {
+	GetPageByTag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetTagByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyTagResponse, error)
+	CreateNewPagetag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*MessageResponse, error)
+	DeletePagetag(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+}
+
+type pagetagServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewPagetagServiceClient(cc grpc.ClientConnInterface) PagetagServiceClient {
+	return &pagetagServiceClient{cc}
+}
+
+func (c *pagetagServiceClient) GetPageByTag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PagetagService_GetPageByTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pagetagServiceClient) GetTagByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyTagResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyTagResponse)
+	err := c.cc.Invoke(ctx, PagetagService_GetTagByPage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pagetagServiceClient) CreateNewPagetag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, PagetagService_CreateNewPagetag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pagetagServiceClient) DeletePagetag(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, PagetagService_DeletePagetag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// PagetagServiceServer is the server API for PagetagService service.
+// All implementations must embed UnimplementedPagetagServiceServer
+// for forward compatibility.
+type PagetagServiceServer interface {
+	GetPageByTag(context.Context, *Pagetag) (*ManyPageResponse, error)
+	GetTagByPage(context.Context, *NumbRequest) (*ManyTagResponse, error)
+	CreateNewPagetag(context.Context, *Pagetag) (*MessageResponse, error)
+	DeletePagetag(context.Context, *NumbRequest) (*MessageResponse, error)
+	mustEmbedUnimplementedPagetagServiceServer()
+}
+
+// UnimplementedPagetagServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedPagetagServiceServer struct{}
+
+func (UnimplementedPagetagServiceServer) GetPageByTag(context.Context, *Pagetag) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByTag not implemented")
+}
+func (UnimplementedPagetagServiceServer) GetTagByPage(context.Context, *NumbRequest) (*ManyTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTagByPage not implemented")
+}
+func (UnimplementedPagetagServiceServer) CreateNewPagetag(context.Context, *Pagetag) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNewPagetag not implemented")
+}
+func (UnimplementedPagetagServiceServer) DeletePagetag(context.Context, *NumbRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePagetag not implemented")
+}
+func (UnimplementedPagetagServiceServer) mustEmbedUnimplementedPagetagServiceServer() {}
+func (UnimplementedPagetagServiceServer) testEmbeddedByValue()                        {}
+
+// UnsafePagetagServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PagetagServiceServer will
+// result in compilation errors.
+type UnsafePagetagServiceServer interface {
+	mustEmbedUnimplementedPagetagServiceServer()
+}
+
+func RegisterPagetagServiceServer(s grpc.ServiceRegistrar, srv PagetagServiceServer) {
+	// If the following call pancis, it indicates UnimplementedPagetagServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&PagetagService_ServiceDesc, srv)
+}
+
+func _PagetagService_GetPageByTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Pagetag)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagetagServiceServer).GetPageByTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagetagService_GetPageByTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagetagServiceServer).GetPageByTag(ctx, req.(*Pagetag))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PagetagService_GetTagByPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagetagServiceServer).GetTagByPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagetagService_GetTagByPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagetagServiceServer).GetTagByPage(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PagetagService_CreateNewPagetag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Pagetag)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagetagServiceServer).CreateNewPagetag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagetagService_CreateNewPagetag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagetagServiceServer).CreateNewPagetag(ctx, req.(*Pagetag))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PagetagService_DeletePagetag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagetagServiceServer).DeletePagetag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagetagService_DeletePagetag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagetagServiceServer).DeletePagetag(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// PagetagService_ServiceDesc is the grpc.ServiceDesc for PagetagService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var PagetagService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.PagetagService",
+	HandlerType: (*PagetagServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetPageByTag",
+			Handler:    _PagetagService_GetPageByTag_Handler,
+		},
+		{
+			MethodName: "GetTagByPage",
+			Handler:    _PagetagService_GetTagByPage_Handler,
+		},
+		{
+			MethodName: "CreateNewPagetag",
+			Handler:    _PagetagService_CreateNewPagetag_Handler,
+		},
+		{
+			MethodName: "DeletePagetag",
+			Handler:    _PagetagService_DeletePagetag_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/main.proto",
+}
+
+const (
+	TypeService_GetAllType_FullMethodName    = "/pb.TypeService/GetAllType"
+	TypeService_GetTypeById_FullMethodName   = "/pb.TypeService/GetTypeById"
+	TypeService_CreateNewType_FullMethodName = "/pb.TypeService/CreateNewType"
+	TypeService_UpdateType_FullMethodName    = "/pb.TypeService/UpdateType"
+	TypeService_DeleteType_FullMethodName    = "/pb.TypeService/DeleteType"
+)
+
+// TypeServiceClient is the client API for TypeService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type TypeServiceClient interface {
+	GetAllType(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyTypeResponse, error)
+	GetTypeById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*TypeResponse, error)
+	CreateNewType(ctx context.Context, in *Type, opts ...grpc.CallOption) (*MessageResponse, error)
+	UpdateType(ctx context.Context, in *Type, opts ...grpc.CallOption) (*MessageResponse, error)
+	DeleteType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+}
+
+type typeServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewTypeServiceClient(cc grpc.ClientConnInterface) TypeServiceClient {
+	return &typeServiceClient{cc}
+}
+
+func (c *typeServiceClient) GetAllType(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyTypeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyTypeResponse)
+	err := c.cc.Invoke(ctx, TypeService_GetAllType_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *typeServiceClient) GetTypeById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*TypeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TypeResponse)
+	err := c.cc.Invoke(ctx, TypeService_GetTypeById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *typeServiceClient) CreateNewType(ctx context.Context, in *Type, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, TypeService_CreateNewType_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *typeServiceClient) UpdateType(ctx context.Context, in *Type, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, TypeService_UpdateType_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *typeServiceClient) DeleteType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, TypeService_DeleteType_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// TypeServiceServer is the server API for TypeService service.
+// All implementations must embed UnimplementedTypeServiceServer
+// for forward compatibility.
+type TypeServiceServer interface {
+	GetAllType(context.Context, *emptypb.Empty) (*ManyTypeResponse, error)
+	GetTypeById(context.Context, *NumbRequest) (*TypeResponse, error)
+	CreateNewType(context.Context, *Type) (*MessageResponse, error)
+	UpdateType(context.Context, *Type) (*MessageResponse, error)
+	DeleteType(context.Context, *NumbRequest) (*MessageResponse, error)
+	mustEmbedUnimplementedTypeServiceServer()
+}
+
+// UnimplementedTypeServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedTypeServiceServer struct{}
+
+func (UnimplementedTypeServiceServer) GetAllType(context.Context, *emptypb.Empty) (*ManyTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllType not implemented")
+}
+func (UnimplementedTypeServiceServer) GetTypeById(context.Context, *NumbRequest) (*TypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTypeById not implemented")
+}
+func (UnimplementedTypeServiceServer) CreateNewType(context.Context, *Type) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNewType not implemented")
+}
+func (UnimplementedTypeServiceServer) UpdateType(context.Context, *Type) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateType not implemented")
+}
+func (UnimplementedTypeServiceServer) DeleteType(context.Context, *NumbRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteType not implemented")
+}
+func (UnimplementedTypeServiceServer) mustEmbedUnimplementedTypeServiceServer() {}
+func (UnimplementedTypeServiceServer) testEmbeddedByValue()                     {}
+
+// UnsafeTypeServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TypeServiceServer will
+// result in compilation errors.
+type UnsafeTypeServiceServer interface {
+	mustEmbedUnimplementedTypeServiceServer()
+}
+
+func RegisterTypeServiceServer(s grpc.ServiceRegistrar, srv TypeServiceServer) {
+	// If the following call pancis, it indicates UnimplementedTypeServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&TypeService_ServiceDesc, srv)
+}
+
+func _TypeService_GetAllType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TypeServiceServer).GetAllType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TypeService_GetAllType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TypeServiceServer).GetAllType(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TypeService_GetTypeById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TypeServiceServer).GetTypeById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TypeService_GetTypeById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TypeServiceServer).GetTypeById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TypeService_CreateNewType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Type)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TypeServiceServer).CreateNewType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TypeService_CreateNewType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TypeServiceServer).CreateNewType(ctx, req.(*Type))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TypeService_UpdateType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Type)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TypeServiceServer).UpdateType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TypeService_UpdateType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TypeServiceServer).UpdateType(ctx, req.(*Type))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TypeService_DeleteType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TypeServiceServer).DeleteType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TypeService_DeleteType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TypeServiceServer).DeleteType(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// TypeService_ServiceDesc is the grpc.ServiceDesc for TypeService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var TypeService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.TypeService",
+	HandlerType: (*TypeServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAllType",
+			Handler:    _TypeService_GetAllType_Handler,
+		},
+		{
+			MethodName: "GetTypeById",
+			Handler:    _TypeService_GetTypeById_Handler,
+		},
+		{
+			MethodName: "CreateNewType",
+			Handler:    _TypeService_CreateNewType_Handler,
+		},
+		{
+			MethodName: "UpdateType",
+			Handler:    _TypeService_UpdateType_Handler,
+		},
+		{
+			MethodName: "DeleteType",
+			Handler:    _TypeService_DeleteType_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/main.proto",
+}
+
+const (
+	PagecategoryService_GetPageByCategory_FullMethodName     = "/pb.PagecategoryService/GetPageByCategory"
+	PagecategoryService_GetCategoryByPage_FullMethodName     = "/pb.PagecategoryService/GetCategoryByPage"
+	PagecategoryService_CreateNewPagecategory_FullMethodName = "/pb.PagecategoryService/CreateNewPagecategory"
+	PagecategoryService_DeletePagecategory_FullMethodName    = "/pb.PagecategoryService/DeletePagecategory"
+)
+
+// PagecategoryServiceClient is the client API for PagecategoryService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type PagecategoryServiceClient interface {
+	GetPageByCategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetCategoryByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
+	CreateNewPagecategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*MessageResponse, error)
+	DeletePagecategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+}
+
+type pagecategoryServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewPagecategoryServiceClient(cc grpc.ClientConnInterface) PagecategoryServiceClient {
+	return &pagecategoryServiceClient{cc}
+}
+
+func (c *pagecategoryServiceClient) GetPageByCategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PagecategoryService_GetPageByCategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pagecategoryServiceClient) GetCategoryByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyCategoryResponse)
+	err := c.cc.Invoke(ctx, PagecategoryService_GetCategoryByPage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pagecategoryServiceClient) CreateNewPagecategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, PagecategoryService_CreateNewPagecategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pagecategoryServiceClient) DeletePagecategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, PagecategoryService_DeletePagecategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// PagecategoryServiceServer is the server API for PagecategoryService service.
+// All implementations must embed UnimplementedPagecategoryServiceServer
+// for forward compatibility.
+type PagecategoryServiceServer interface {
+	GetPageByCategory(context.Context, *Pagecategory) (*ManyPageResponse, error)
+	GetCategoryByPage(context.Context, *NumbRequest) (*ManyCategoryResponse, error)
+	CreateNewPagecategory(context.Context, *Pagecategory) (*MessageResponse, error)
+	DeletePagecategory(context.Context, *NumbRequest) (*MessageResponse, error)
+	mustEmbedUnimplementedPagecategoryServiceServer()
+}
+
+// UnimplementedPagecategoryServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedPagecategoryServiceServer struct{}
+
+func (UnimplementedPagecategoryServiceServer) GetPageByCategory(context.Context, *Pagecategory) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByCategory not implemented")
+}
+func (UnimplementedPagecategoryServiceServer) GetCategoryByPage(context.Context, *NumbRequest) (*ManyCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryByPage not implemented")
+}
+func (UnimplementedPagecategoryServiceServer) CreateNewPagecategory(context.Context, *Pagecategory) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNewPagecategory not implemented")
+}
+func (UnimplementedPagecategoryServiceServer) DeletePagecategory(context.Context, *NumbRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePagecategory not implemented")
+}
+func (UnimplementedPagecategoryServiceServer) mustEmbedUnimplementedPagecategoryServiceServer() {}
+func (UnimplementedPagecategoryServiceServer) testEmbeddedByValue()                             {}
+
+// UnsafePagecategoryServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PagecategoryServiceServer will
+// result in compilation errors.
+type UnsafePagecategoryServiceServer interface {
+	mustEmbedUnimplementedPagecategoryServiceServer()
+}
+
+func RegisterPagecategoryServiceServer(s grpc.ServiceRegistrar, srv PagecategoryServiceServer) {
+	// If the following call pancis, it indicates UnimplementedPagecategoryServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&PagecategoryService_ServiceDesc, srv)
+}
+
+func _PagecategoryService_GetPageByCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Pagecategory)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagecategoryServiceServer).GetPageByCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagecategoryService_GetPageByCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagecategoryServiceServer).GetPageByCategory(ctx, req.(*Pagecategory))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PagecategoryService_GetCategoryByPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagecategoryServiceServer).GetCategoryByPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagecategoryService_GetCategoryByPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagecategoryServiceServer).GetCategoryByPage(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PagecategoryService_CreateNewPagecategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Pagecategory)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagecategoryServiceServer).CreateNewPagecategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagecategoryService_CreateNewPagecategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagecategoryServiceServer).CreateNewPagecategory(ctx, req.(*Pagecategory))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PagecategoryService_DeletePagecategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagecategoryServiceServer).DeletePagecategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagecategoryService_DeletePagecategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagecategoryServiceServer).DeletePagecategory(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// PagecategoryService_ServiceDesc is the grpc.ServiceDesc for PagecategoryService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var PagecategoryService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.PagecategoryService",
+	HandlerType: (*PagecategoryServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetPageByCategory",
+			Handler:    _PagecategoryService_GetPageByCategory_Handler,
+		},
+		{
+			MethodName: "GetCategoryByPage",
+			Handler:    _PagecategoryService_GetCategoryByPage_Handler,
+		},
+		{
+			MethodName: "CreateNewPagecategory",
+			Handler:    _PagecategoryService_CreateNewPagecategory_Handler,
+		},
+		{
+			MethodName: "DeletePagecategory",
+			Handler:    _PagecategoryService_DeletePagecategory_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/main.proto",
+}

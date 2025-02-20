@@ -35,7 +35,7 @@ export async function getAllComponent() {
       return null;
     }
 
-    return dataParse.data;
+    return dataParse.data.components;
   } catch (error) {
     console.log("error::", error);
     return null;

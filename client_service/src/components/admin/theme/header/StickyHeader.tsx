@@ -38,7 +38,7 @@ const StickyHeader = () => {
       topCheck,
       mainCheck,
       bottomCheck,
-      stickyLogo: stickyLogo ? stickyLogo.img_id : undefined,
+      stickyLogo: stickyLogo ? stickyLogo.image_id : undefined,
     })
     await updateConfigByKey("header_sticky", data)
 
@@ -85,8 +85,8 @@ const StickyHeader = () => {
             (
               <div className='w-32 h-32 border border-gray-400'>
                 <Image
-                  src={stickyLogo.img_src}
-                  alt={stickyLogo.img_alt}
+                  src={stickyLogo.image_url}
+                  alt={stickyLogo.image_alt}
                   width={100}
                   height={100}
                   className='w-full h-full'

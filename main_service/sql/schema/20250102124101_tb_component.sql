@@ -1,10 +1,11 @@
 -- +goose Up
 -- +goose StatementBegin
 create table tb_component(
-  comp_id bigint not null auto_increment,
-  comp_name varchar(255) not null unique,
-  comp_position int not null,
-  comp_index int not null default 0,
+  component_id bigint not null auto_increment,
+  component_name varchar(255) not null unique,
+  component_position int not null default 0,
+  component_index int not null,
+  component_map varchar(255) not null,
   primary key (comp_id)
 );
 -- +goose StatementEnd

@@ -35,7 +35,7 @@ const ThemeLayout = (props: Props) => {
       siteWidth,
       containerWidth,
       backgroundsColor,
-      backgroundImage: backgroundImage ? backgroundImage.img_id : undefined,
+      backgroundImage: backgroundImage ? backgroundImage.image_id : undefined,
       contentBackground,
       backgroundRepeat,
     })

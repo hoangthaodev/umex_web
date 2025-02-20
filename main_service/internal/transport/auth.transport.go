@@ -7,6 +7,7 @@ import (
 	"main_service/internal/services"
 	"main_service/internal/utils"
 	"main_service/proto/pb"
+
 	"time"
 )
 
@@ -22,6 +23,7 @@ func (at *AuthTransport) CheckAuth(c context.Context, in *pb.StrRequest) (*pb.Au
 	// verify decode authorization
 	decode, err := auth.VerifyToken(authorization, []byte(global.Config.Server.PublishKey))
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.AuthResponse{
 			Code: 3001,
 		}, nil
@@ -29,6 +31,7 @@ func (at *AuthTransport) CheckAuth(c context.Context, in *pb.StrRequest) (*pb.Au
 	// check het han chua
 	expired_at := decode["expires_at"].(float64)
 	if int64(expired_at) < utils.TimeToInt64(time.Now()) {
+		global.Logger.Error("expires_at < time.Now")
 		return &pb.AuthResponse{
 			Code: 3001,
 		}, nil
@@ -38,11 +41,13 @@ func (at *AuthTransport) CheckAuth(c context.Context, in *pb.StrRequest) (*pb.Au
 	userId := int64(user["user_id"].(float64))
 	token, err := at.GetTokenByUserId(userId)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.AuthResponse{
 			Code: 3001,
 		}, nil
 	}
 	if token.ExpiredToken < utils.TimeToInt64(time.Now()) {
+		global.Logger.Error("expired_token < time.Now")
 		return &pb.AuthResponse{
 			Code: 3001,
 		}, nil
@@ -51,6 +56,7 @@ func (at *AuthTransport) CheckAuth(c context.Context, in *pb.StrRequest) (*pb.Au
 	// get permission
 	auth, err := at.AuthService.GetAuthByUserId(userId)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.AuthResponse{
 			Code: 3001,
 		}, nil
@@ -72,12 +78,14 @@ func (at *AuthTransport) GetAuthByUserId(c context.Context, in *pb.NumbRequest) 
 	// user nay co dang login hay khong: neu khong thi response, co thi lay thong tin auth -> response
 	_, err := at.TokenService.GetTokenByUserId(userId)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.AuthResponse{
 			Code: 2001,
 		}, nil
 	}
 	auth, err := at.AuthService.GetAuthByUserId(userId)
 	if err != nil {
+		global.Logger.Error(err.Error())
 		return &pb.AuthResponse{
 			Code: 2001,
 		}, nil

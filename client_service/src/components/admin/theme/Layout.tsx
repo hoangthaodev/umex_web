@@ -12,8 +12,8 @@ type Props = {
   setLayoutHeight: React.Dispatch<SetStateAction<number>>
   layoutTextColor: string
   setLayoutTextColor: React.Dispatch<SetStateAction<string>>
-  layoutBackgroundColor: string
-  setLayoutBackgroundColor: React.Dispatch<SetStateAction<string>>
+  layoutBackgroundColor: string | undefined
+  setLayoutBackgroundColor: React.Dispatch<SetStateAction<string | undefined>>
   layoutImage: ImageType | undefined
   setLayoutImage: React.Dispatch<SetStateAction<ImageType | undefined>>
   layoutRepeat: number

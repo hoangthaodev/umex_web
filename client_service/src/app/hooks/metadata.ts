@@ -75,7 +75,7 @@ export const generateMetadata = async ({
     },
     icons: icons || [
       {
-        url: favicon?.img_src,
+        url: favicon?.image_url,
         rel: "icon",
         type: "image/x-icon",
       },
