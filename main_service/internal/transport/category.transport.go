@@ -83,7 +83,7 @@ func (ct *CategoryTransport) GetCategoryBySlug(c context.Context, in *pb.StrRequ
 }
 
 func (ct *CategoryTransport) GetCategoryByType(c context.Context, in *pb.NumbRequest) (*pb.ManyCategoryResponse, error) {
-	res, err := ct.CategoryService.GetCategoryByType(in.Numb)
+	res, err := ct.CategoryService.GetCategoryByType(int32(in.Numb))
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.ManyCategoryResponse{

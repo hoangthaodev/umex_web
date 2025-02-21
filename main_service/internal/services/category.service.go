@@ -28,7 +28,7 @@ func (cs *CategoryService) GetCategoryBySlug(catSlug string) (database.TbCategor
 	return queries.GetCategoryBySlug(context.Background(), catSlug)
 }
 
-func (cs *CategoryService) GetCategoryByType(typeId int64) ([]database.TbCategory, error) {
+func (cs *CategoryService) GetCategoryByType(typeId int32) ([]database.TbCategory, error) {
 	queries := database.New(global.Mysql)
 
 	return queries.GetCategoryByType(context.Background(), typeId)
@@ -40,7 +40,7 @@ func (cs *CategoryService) GetCategoryByParent(catParent int64) ([]database.TbCa
 	return queries.GetCategoryByParent(context.Background(), catParent)
 }
 
-func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, catDes string, catParent int64, typeId int64) error {
+func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, catDes string, catParent int64, typeId int32) error {
 	queries := database.New(global.Mysql)
 
 	return queries.CreateNewCategory(context.Background(), database.CreateNewCategoryParams{
@@ -53,7 +53,7 @@ func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, cat
 	})
 }
 
-func (cs *CategoryService) UpdateCategory(catName string, catSlug string, catDes string, catParent int64, typeId int64, catId int64) error {
+func (cs *CategoryService) UpdateCategory(catName string, catSlug string, catDes string, catParent int64, typeId int32, catId int64) error {
 	queries := database.New(global.Mysql)
 
 	return queries.UpdateCategory(context.Background(), database.UpdateCategoryParams{

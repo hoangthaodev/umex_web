@@ -8,7 +8,6 @@ type AdminRouterGroup struct {
 	MenuRouter
 	MenuLocationRouter
 	CategoryRouter
-	TypeRouter
 	TagRouter
 	PagetagRouter
 	PageRouter

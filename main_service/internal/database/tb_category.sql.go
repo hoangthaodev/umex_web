@@ -19,7 +19,7 @@ type CreateNewCategoryParams struct {
 	CategorySlug        string
 	CategoryDescription string
 	CategoryParent      int64
-	TypeID              int64
+	TypeID              int32
 	CreatedAt           int64
 }
 
@@ -160,7 +160,7 @@ const getCategoryByType = `-- name: GetCategoryByType :many
 select category_id, category_name, category_slug, category_description, category_parent, type_id, created_at, updated_at from tb_category where type_id = ?
 `
 
-func (q *Queries) GetCategoryByType(ctx context.Context, typeID int64) ([]TbCategory, error) {
+func (q *Queries) GetCategoryByType(ctx context.Context, typeID int32) ([]TbCategory, error) {
 	rows, err := q.db.QueryContext(ctx, getCategoryByType, typeID)
 	if err != nil {
 		return nil, err
@@ -201,7 +201,7 @@ type UpdateCategoryParams struct {
 	CategorySlug        string
 	CategoryDescription string
 	CategoryParent      int64
-	TypeID              int64
+	TypeID              int32
 	UpdatedAt           int64
 	CategoryID          int64
 }

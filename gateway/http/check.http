@@ -273,7 +273,7 @@ Content-Type: "application/json"
 
 ### create new category
 POST http://localhost:9000/v1/admin/categories
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIxOTA5NTg0MiwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiIxIiwidXNlcl9lbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIn19.qEkHYvQKeicPGwe0EtvxX83hqnNW-KDVFtFtDqBofUA
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzX2F0IjoyMDI1MDIyMTA4MzgyMSwicGF5bG9hZCI6eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJhZG1pbiIsInVzZXJfZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSJ9fQ.4L-HOXt0hoMEgVLkL-5D9IbdYD3FGk8EsdsM6Ma9UJw
 Content-Type: "application/json"
 
 {

@@ -17,7 +17,6 @@ type server struct {
 	ImageTransport
 	MenuTransport
 	MenuLocationTransport
-	TypeTransport
 	PageTransport
 	TagTransport
 	PagetagTransport
@@ -39,7 +38,6 @@ func RunServer() {
 	pb.RegisterImageServiceServer(s, &server{})
 	pb.RegisterMenuServiceServer(s, &server{})
 	pb.RegisterMenuLocationServiceServer(s, &server{})
-	pb.RegisterTypeServiceServer(s, &server{})
 	pb.RegisterPageServiceServer(s, &server{})
 	pb.RegisterPagetagServiceServer(s, &server{})
 	pb.RegisterTagServiceServer(s, &server{})

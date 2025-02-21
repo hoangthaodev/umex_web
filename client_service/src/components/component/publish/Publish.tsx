@@ -4,6 +4,8 @@ import { statusMap } from '@/lib/pageMap'
 import { PageType } from '@/lib/types'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { FaMapPin } from 'react-icons/fa'
+import { FaCalendarDays } from 'react-icons/fa6'
 
 type Props = {
   page: PageType
@@ -31,8 +33,8 @@ const Publish = ({ page }: Props) => {
             className='border border-blue-600 text-blue-600 px-2 rounded-sm'
           >Preview Change</Link>
         </div>
-        <div className='flex gap-2'>
-          ?
+        <div className='flex gap-2 items-center'>
+          <FaMapPin />
           <label>Status:</label>
           <label className='font-semibold'>{statusMap[status]}</label>
           {
@@ -64,8 +66,8 @@ const Publish = ({ page }: Props) => {
             </div>
           </div>
         }
-        <div className='flex gap-2'>
-          ?
+        <div className='flex gap-2 items-center'>
+          <FaCalendarDays />
           <label>Publised on:</label>
           <label className='font-semibold'>{year + "/" + month + "/" + day}</label>
           {

@@ -76,8 +76,6 @@ export type SiteIdentifyType = {
   logoLink: string;
 };
 
-export type CompItems = string[];
-
 export type TopbarType = {
   topbarEnable: boolean;
   topbarLayoutHeight: number;
@@ -117,7 +115,11 @@ export type UserType = {
   user_active: number;
 };
 
-export type TypeType = {
+export type CategoryType = {
+  category_id: number;
+  category_name: string;
+  category_slug: string;
+  category_des: string;
+  category_parent: number;
   type_id: number;
-  type_name: string;
 };

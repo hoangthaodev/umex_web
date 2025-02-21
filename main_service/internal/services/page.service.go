@@ -61,7 +61,7 @@ func (ps *PageService) GetPageByUser(userId int64, limit int32, offset int32) ([
 	})
 }
 
-func (ps *PageService) GetPageByType(typeId int64, limit int32, offset int32) ([]database.TbPage, error) {
+func (ps *PageService) GetPageByType(typeId int32, limit int32, offset int32) ([]database.TbPage, error) {
 	queries := database.New(global.Mysql)
 
 	return queries.GetPageByType(context.Background(), database.GetPageByTypeParams{
@@ -71,7 +71,7 @@ func (ps *PageService) GetPageByType(typeId int64, limit int32, offset int32) ([
 	})
 }
 
-func (ps *PageService) GetPageByTypeNStatus(typeId int64, pageStatus int32, limit int32, offset int32) ([]database.TbPage, error) {
+func (ps *PageService) GetPageByTypeNStatus(typeId int32, pageStatus int32, limit int32, offset int32) ([]database.TbPage, error) {
 	queries := database.New(global.Mysql)
 
 	return queries.GetPageByTypeNStatus(context.Background(), database.GetPageByTypeNStatusParams{
@@ -115,7 +115,7 @@ func (ps *PageService) GetPageByPublishYearMonthDay(pagePubYear int32, pagePubMo
 	})
 }
 
-func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, pagePubYear int32, pagePubMonth int32, pagePubDay int32, pageFeatureImage int64, pageTrash int32, userId int64, typeId int64, tempId int32) error {
+func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, pagePubYear int32, pagePubMonth int32, pagePubDay int32, pageFeatureImage int64, pageTrash int32, userId int64, typeId int32, tempId int32) error {
 	queries := database.New(global.Mysql)
 
 	return queries.CreateNewPage(context.Background(), database.CreateNewPageParams{
@@ -136,7 +136,7 @@ func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageCont
 	})
 }
 
-func (ps *PageService) UpdatePage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, pagePubYear int32, pagePubMonth int32, pagePubDay int32, pageFeatureImage int64, pageTrash int32, userId int64, typeId int64, tempId int32, pageId int64) error {
+func (ps *PageService) UpdatePage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, pagePubYear int32, pagePubMonth int32, pagePubDay int32, pageFeatureImage int64, pageTrash int32, userId int64, typeId int32, tempId int32, pageId int64) error {
 	queries := database.New(global.Mysql)
 
 	return queries.UpdatePage(context.Background(), database.UpdatePageParams{

@@ -10,3 +10,11 @@ export const statusMap: Record<number, string> = {
   1: "Pending Review",
   2: "Draft",
 };
+
+export const typeMap: Record<number, string> = {
+  1: "page",
+  2: "post",
+  3: "block",
+  4: "portfolio",
+  5: "product",
+};

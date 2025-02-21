@@ -59,7 +59,7 @@ func (cs *CategoryService) GetCategoryByParent(parentId int64) (*pb.ManyCategory
 	})
 }
 
-func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, catDes string, catParent int64, typeId int64) (*pb.MessageResponse, error) {
+func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, catDes string, catParent int64, typeId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -73,7 +73,7 @@ func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, cat
 	})
 }
 
-func (cs *CategoryService) UpdateCategory(catId int64, catName string, catSlug string, catDes string, catParent int64, typeId int64) (*pb.MessageResponse, error) {
+func (cs *CategoryService) UpdateCategory(catId int64, catName string, catSlug string, catDes string, catParent int64, typeId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 

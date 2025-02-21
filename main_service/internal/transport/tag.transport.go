@@ -61,7 +61,7 @@ func (tt *TagTransport) GetTagById(c context.Context, in *pb.NumbRequest) (*pb.T
 }
 
 func (tt *TagTransport) GetTagByType(c context.Context, in *pb.NumbRequest) (*pb.ManyTagResponse, error) {
-	res, err := tt.TagService.GetTagByType(in.Numb)
+	res, err := tt.TagService.GetTagByType(int32(in.Numb))
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.ManyTagResponse{

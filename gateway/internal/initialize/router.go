@@ -47,7 +47,6 @@ func InitRouter() {
 		adminRouter.InitMenuRouter(mainGroup)
 		adminRouter.InitMenuLocationRouter(mainGroup)
 		adminRouter.InitCategoryRouter(mainGroup)
-		adminRouter.InitTypeRouter(mainGroup)
 		adminRouter.InitTagRouter(mainGroup)
 		adminRouter.InitPagetagRouter(mainGroup)
 		adminRouter.InitPageRouter(mainGroup)

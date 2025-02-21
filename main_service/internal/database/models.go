@@ -19,7 +19,7 @@ type TbCategory struct {
 	CategorySlug        string
 	CategoryDescription string
 	CategoryParent      int64
-	TypeID              int64
+	TypeID              int32
 	CreatedAt           int64
 	UpdatedAt           int64
 }
@@ -74,7 +74,7 @@ type TbPage struct {
 	PageFeatureImage int64
 	PageTrash        int32
 	UserID           int64
-	TypeID           int64
+	TypeID           int32
 	TemplateID       int32
 	CreatedAt        int64
 	UpdatedAt        int64
@@ -97,7 +97,7 @@ type TbTag struct {
 	TagName        string
 	TagSlug        string
 	TagDescription string
-	TypeID         int64
+	TypeID         int32
 	CreatedAt      int64
 	UpdatedAt      int64
 }

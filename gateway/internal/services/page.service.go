@@ -76,7 +76,7 @@ func (ps *PageService) GetPageByUser(userId int64, limit int32, offset int32) (*
 	})
 }
 
-func (ps *PageService) GetPageByType(typeId int64, limit int32, offset int32) (*pb.ManyPageResponse, error) {
+func (ps *PageService) GetPageByType(typeId int32, limit int32, offset int32) (*pb.ManyPageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -88,7 +88,7 @@ func (ps *PageService) GetPageByType(typeId int64, limit int32, offset int32) (*
 	})
 }
 
-func (ps *PageService) GetPageByTypeNStatus(typeId int64, pageStatus int32, limit int32, offset int32) (*pb.ManyPageResponse, error) {
+func (ps *PageService) GetPageByTypeNStatus(typeId int32, pageStatus int32, limit int32, offset int32) (*pb.ManyPageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -140,7 +140,7 @@ func (ps *PageService) GetPageByPublishYearMonthDay(year int32, month int32, day
 	})
 }
 
-func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, pageTrash int32, userId int64, typeId int64, tempId int32) (*pb.MessageResponse, error) {
+func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, pageTrash int32, userId int64, typeId int32, tempId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -162,7 +162,7 @@ func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageCont
 	})
 }
 
-func (ps *PageService) UpdatePage(pageId int64, pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, pageTrash int32, userId int64, typeId int64, tempId int32) (*pb.MessageResponse, error) {
+func (ps *PageService) UpdatePage(pageId int64, pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, pageTrash int32, userId int64, typeId int32, tempId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 

@@ -5,7 +5,7 @@ import { checkStatus } from "@/actions/checkstatus";
 import { Bounce, ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@/app/ThemeContext";
 
-// export const metadata = generateMetadata({})
+export const metadata = generateMetadata({})
 
 export default async function RootLayout({
   children,

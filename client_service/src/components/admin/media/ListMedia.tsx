@@ -18,8 +18,8 @@ const ListMedia = ({ className }: Props) => {
   }, [listImages])
 
   return (
-    <div className='overflow-auto h-[620px]'>
-      <div className={`${className} grid grid-cols-3 grid-rows-6 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2`}>
+    <div className={`overflow-auto h-[60vh]`}>
+      <div className={`${className} flex flex-wrap gap-2`}>
         {
           isLoading &&
           (
@@ -34,7 +34,7 @@ const ListMedia = ({ className }: Props) => {
         {
           listImages && listImages.map(image => (
             <div id={image.image_id.toString()} key={image.image_id}
-              className={`h-24 p-2 ${selected === image.image_id ? "border-2 border-blue-700" : "border border-gray-400"}`}
+              className={`w-24 h-24 p-2 ${selected === image.image_id ? "border-2 border-blue-700" : "border border-gray-400"}`}
               onClick={() => {
                 setSelected(image.image_id)
                 setImageSelected(image)

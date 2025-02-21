@@ -2,11 +2,11 @@
 
 import { cookies } from "next/headers";
 
-export const GetTypeById = async (typeId: number) => {
+export const GetCategoryByPage = async (pageId: number) => {
   try {
     const access_token = (await cookies()).get("access_token")?.value || "";
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/types/${typeId}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/pagecategories/page/${pageId}`,
       {
         method: "GET",
         headers: {
@@ -17,12 +17,12 @@ export const GetTypeById = async (typeId: number) => {
     const data = await res.json();
     const dataParse = JSON.parse(JSON.stringify(data));
     if (dataParse.code !== 2000) {
-      console.log("fail GetTypeById::", dataParse);
+      console.log("fail GetCategoryByPage::", dataParse);
       return null;
     }
-    return dataParse.data.type;
+    return dataParse.data.categories;
   } catch (error) {
-    console.error(error);
+    console.log("error::", error);
     return null;
   }
 };

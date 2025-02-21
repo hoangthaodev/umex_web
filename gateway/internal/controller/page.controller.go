@@ -39,7 +39,7 @@ func (pc *PageController) GetPageByTypeNStatus(c *gin.Context) {
 	status := c.Query("status")
 	limit := c.Query("limit")
 	offset := c.Query("offset")
-	res, err := pc.PageService.GetPageByTypeNStatus(utils.StringToInt64(typeId), utils.StringToInt32(status), utils.StringToInt32(limit), utils.StringToInt32(offset))
+	res, err := pc.PageService.GetPageByTypeNStatus(utils.StringToInt32(typeId), utils.StringToInt32(status), utils.StringToInt32(limit), utils.StringToInt32(offset))
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -124,7 +124,7 @@ func (pc *PageController) GetPageByType(c *gin.Context) {
 	typeId := c.Param("id")
 	limit := c.Query("limit")
 	offset := c.Query("offset")
-	res, err := pc.PageService.GetPageByType(utils.StringToInt64(typeId), utils.StringToInt32(limit), utils.StringToInt32(offset))
+	res, err := pc.PageService.GetPageByType(utils.StringToInt32(typeId), utils.StringToInt32(limit), utils.StringToInt32(offset))
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return

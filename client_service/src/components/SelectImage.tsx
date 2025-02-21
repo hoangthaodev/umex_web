@@ -47,9 +47,7 @@ const SelectImage = ({ image, setImage }: Props) => {
       </div>
       {
         isSelectMedia && (
-          <div className='fixed w-full h-full z-50 top-0 left-0 flex items-center justify-center bg-inherit'>
-            <MediaSelect setIsSelectMedia={setIsSelectMedia} setImage={setImage} />
-          </div>
+          <MediaSelect setIsSelectMedia={setIsSelectMedia} setImage={setImage} />
         )
       }
     </div>

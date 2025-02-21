@@ -49,17 +49,12 @@ type Pagetag struct {
 	TagId     int64 `json:"tag_id"`
 }
 
-type Type struct {
-	TypeId   int64  `json:"type_id"`
-	TypeName string `json:"type_name"`
-}
-
 type Tag struct {
 	TagId          int64  `json:"tag_id"`
 	TagName        string `json:"tag_name"`
 	TagSlug        string `json:"tag_slug"`
 	TagDescription string `json:"tag_description"`
-	TypeId         int64  `json:"type_id"`
+	TypeId         int32  `json:"type_id"`
 }
 
 type Page struct {
@@ -75,7 +70,7 @@ type Page struct {
 	PageImage       int64  `json:"page_image"`
 	PageTrash       int32  `json:"page_trash"`
 	UserId          int64  `json:"user_id"`
-	TypeId          int64  `json:"type_id"`
+	TypeId          int32  `json:"type_id"`
 	CatId           int64  `json:"category_id"`
 	TempId          int32  `json:"template_id"`
 }
@@ -86,7 +81,7 @@ type Category struct {
 	CatSlug   string `json:"category_slug"`
 	CatDes    string `json:"category_des"`
 	CatParent int64  `json:"category_parent"`
-	TypeId    int64  `json:"type_id"`
+	TypeId    int32  `json:"type_id"`
 }
 
 type Pagecategory struct {

@@ -208,7 +208,7 @@ message Category{
   string category_slug =3;
   string category_description =4;
   int64 category_parent =5;
-  int64 type_id = 6;
+  int32 type_id = 6;
 }
 
 message CategoryResponse{
@@ -245,7 +245,7 @@ message Page{
   int64 page_feature_image =10;
   int32 page_trash =11;
   int64 user_id =12;
-  int64 type_id =13;
+  int32 type_id =13;
   int32 template_id =14;
   int32 limit =15;
   int32 offset =16;
@@ -283,7 +283,7 @@ message Tag{
   string tag_name =2;
   string tag_slug =3;
   string tag_description =4;
-  int64 type_id =5;
+  int32 type_id =5;
 }
 
 message ManyTagResponse{
@@ -319,29 +319,6 @@ service PagetagService{
   rpc GetTagByPage(NumbRequest) returns (ManyTagResponse){}
   rpc CreateNewPagetag(Pagetag) returns (MessageResponse){}
   rpc DeletePagetag(NumbRequest) returns (MessageResponse){}
-}
-
-message Type{
-  int64 type_id =1;
-  string type_name =2;
-}
-
-message ManyTypeResponse{
-  int32 code = 1;
-  repeated Type types = 2;
-}
-
-message TypeResponse{
-  int32 code = 1;
-  Type type = 2;
-}
-
-service TypeService{
-  rpc GetAllType(google.protobuf.Empty) returns (ManyTypeResponse){}
-  rpc GetTypeById(NumbRequest) returns (TypeResponse){}
-  rpc CreateNewType(Type) returns (MessageResponse){}
-  rpc UpdateType(Type) returns (MessageResponse){}
-  rpc DeleteType(NumbRequest) returns (MessageResponse){}
 }
 
 message Pagecategory{

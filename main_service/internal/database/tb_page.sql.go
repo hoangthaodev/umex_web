@@ -40,7 +40,7 @@ type CreateNewPageParams struct {
 	PageFeatureImage int64
 	PageTrash        int32
 	UserID           int64
-	TypeID           int64
+	TypeID           int32
 	TemplateID       int32
 	CreatedAt        int64
 }
@@ -448,7 +448,7 @@ select page_id, page_title, page_slug, page_content, page_description, page_stat
 `
 
 type GetPageByTypeParams struct {
-	TypeID int64
+	TypeID int32
 	Limit  int32
 	Offset int32
 }
@@ -498,7 +498,7 @@ select page_id, page_title, page_slug, page_content, page_description, page_stat
 `
 
 type GetPageByTypeNStatusParams struct {
-	TypeID     int64
+	TypeID     int32
 	PageStatus int32
 	Limit      int32
 	Offset     int32
@@ -630,7 +630,7 @@ type UpdatePageParams struct {
 	PageFeatureImage int64
 	PageTrash        int32
 	UserID           int64
-	TypeID           int64
+	TypeID           int32
 	TemplateID       int32
 	UpdatedAt        int64
 	PageID           int64

@@ -49,7 +49,7 @@ func (ts *TagService) GetTagBySlug(slug string) (*pb.TagResponse, error) {
 	})
 }
 
-func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string, typeId int64) (*pb.MessageResponse, error) {
+func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string, typeId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -62,7 +62,7 @@ func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string
 	})
 }
 
-func (ts *TagService) UpdateTag(tagId int64, tagName string, tagSlug string, tagDes string, typeId int64) (*pb.MessageResponse, error) {
+func (ts *TagService) UpdateTag(tagId int64, tagName string, tagSlug string, tagDes string, typeId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 

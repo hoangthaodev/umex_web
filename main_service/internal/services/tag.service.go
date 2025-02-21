@@ -22,7 +22,7 @@ func (ts *TagService) GetTagById(tagId int64) (database.TbTag, error) {
 	return queries.GetTagById(context.Background(), tagId)
 }
 
-func (ts *TagService) GetTagByType(typeId int64) ([]database.TbTag, error) {
+func (ts *TagService) GetTagByType(typeId int32) ([]database.TbTag, error) {
 	queries := database.New(global.Mysql)
 
 	return queries.GetTagByType(context.Background(), typeId)
@@ -34,7 +34,7 @@ func (ts *TagService) GetTagBySlug(tagSlug string) (database.TbTag, error) {
 	return queries.GetTagBySlug(context.Background(), tagSlug)
 }
 
-func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string, typeId int64) error {
+func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string, typeId int32) error {
 	queries := database.New(global.Mysql)
 
 	return queries.CreateNewTag(context.Background(), database.CreateNewTagParams{
@@ -46,7 +46,7 @@ func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string
 	})
 }
 
-func (ts *TagService) UpdateTag(tagName string, tagSlug string, tagDes string, typeId int64, tagId int64) error {
+func (ts *TagService) UpdateTag(tagName string, tagSlug string, tagDes string, typeId int32, tagId int64) error {
 	queries := database.New(global.Mysql)
 
 	return queries.UpdateTag(context.Background(), database.UpdateTagParams{

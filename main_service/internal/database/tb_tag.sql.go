@@ -18,7 +18,7 @@ type CreateNewTagParams struct {
 	TagName        string
 	TagSlug        string
 	TagDescription string
-	TypeID         int64
+	TypeID         int32
 	CreatedAt      int64
 }
 
@@ -119,7 +119,7 @@ const getTagByType = `-- name: GetTagByType :many
 select tag_id, tag_name, tag_slug, tag_description, type_id, created_at, updated_at from tb_tag where type_id = ?
 `
 
-func (q *Queries) GetTagByType(ctx context.Context, typeID int64) ([]TbTag, error) {
+func (q *Queries) GetTagByType(ctx context.Context, typeID int32) ([]TbTag, error) {
 	rows, err := q.db.QueryContext(ctx, getTagByType, typeID)
 	if err != nil {
 		return nil, err
@@ -158,7 +158,7 @@ type UpdateTagParams struct {
 	TagName        string
 	TagSlug        string
 	TagDescription string
-	TypeID         int64
+	TypeID         int32
 	UpdatedAt      int64
 	TagID          int64
 }
