@@ -1,14 +1,15 @@
 export const templateMap = {
-  0: "No Sidebar",
-  1: "Left Sidebar",
-  2: "Right Sidebar",
-  3: "Left - Right Sidebar",
+  1: "No Sidebar",
+  2: "Left Sidebar",
+  3: "Right Sidebar",
+  4: "Left - Right Sidebar",
 };
 
 export const statusMap: Record<number, string> = {
-  0: "Published",
-  1: "Pending Review",
-  2: "Draft",
+  1: "Published",
+  2: "Pending Review",
+  3: "Draft",
+  4: "Trash",
 };
 
 export const typeMap: Record<number, string> = {

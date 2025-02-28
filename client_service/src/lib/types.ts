@@ -101,10 +101,8 @@ export type PageType = {
   page_publish_month: number;
   page_publish_day: number;
   page_image: number;
-  page_trash: number;
   user_id: number;
   type_id: number;
-  category_id: number;
   temp_id: number;
 };
 
@@ -121,5 +119,13 @@ export type CategoryType = {
   category_slug: string;
   category_des: string;
   category_parent: number;
+  type_id: number;
+};
+
+export type TagType = {
+  tag_id: number;
+  tag_name: string;
+  tag_slug: string;
+  tag_description: string;
   type_id: number;
 };

@@ -14,7 +14,7 @@ func (as *AuthService) CheckAuth(authorization string) (*pb.AuthResponse, error)
 	defer conn.Close()
 
 	client := pb.NewAuthServiceClient(conn)
-	return client.CheckAuth(context.Background(), &pb.StrRequest{
+	return client.CheckAuth(context.Background(), &pb.MessageRequest{
 		Str: authorization,
 	})
 }

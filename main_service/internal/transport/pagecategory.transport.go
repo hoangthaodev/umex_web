@@ -34,7 +34,6 @@ func (pt *PagecategoryTransport) GetPageByCategory(c context.Context, in *pb.Pag
 		page.PagePublishMonth = p.PagePublishMonth
 		page.PagePublishDay = p.PagePublishDay
 		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
 		page.TypeId = p.TypeID
 		page.TemplateId = p.TemplateID
 

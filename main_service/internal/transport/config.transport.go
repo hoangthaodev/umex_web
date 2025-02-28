@@ -41,7 +41,7 @@ func (ct *ConfigTransport) GetAllConfig(context.Context, *emptypb.Empty) (*pb.Ma
 
 }
 
-func (ct *ConfigTransport) GetConfigByKey(c context.Context, in *pb.StrRequest) (*pb.ConfigResponse, error) {
+func (ct *ConfigTransport) GetConfigByKey(c context.Context, in *pb.MessageRequest) (*pb.ConfigResponse, error) {
 	tbConf, err := ct.ConfigService.GetConfigByKey(in.Str)
 	if err != nil {
 		global.Logger.Error(err.Error())

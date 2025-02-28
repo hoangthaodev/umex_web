@@ -1,4 +1,5 @@
 'use server'
+import { MediaProvider } from '@/app/ux-admin/MediaContext'
 import { SidebarProvider } from '@/app/ux-admin/(admin)/SidebarContext'
 import Footer from '@/components/admin/Footer'
 import Navbar from '@/components/admin/Navbar'
@@ -12,14 +13,16 @@ function AdminLayout({ children }: AdminLayoutType) {
 
   return (
     <SidebarProvider>
-      <div className='flex flex-col h-full'>
-        <Navbar />
-        <main className='flex h-full relative overflow-auto'>
-          <Sidebar />
-          {children}
-        </main>
-        {/* <Footer /> */}
-      </div>
+      <MediaProvider>
+        <div className='flex flex-col h-full'>
+          <Navbar />
+          <main className='flex h-full relative overflow-auto'>
+            <Sidebar />
+            {children}
+          </main>
+          {/* <Footer /> */}
+        </div>
+      </MediaProvider>
     </SidebarProvider>
   )
 }

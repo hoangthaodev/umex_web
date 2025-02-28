@@ -35,7 +35,7 @@ func (ps *PageService) GetPageBySlug(slug string) (*pb.PageResponse, error) {
 	defer conn.Close()
 
 	client := pb.NewPageServiceClient(conn)
-	return client.GetPageBySlug(context.Background(), &pb.StrRequest{
+	return client.GetPageBySlug(context.Background(), &pb.MessageRequest{
 		Str: slug,
 	})
 }
@@ -49,18 +49,6 @@ func (ps *PageService) GetPageByStatus(pageStatus int32, limit int32, offset int
 		PageStatus: pageStatus,
 		Limit:      limit,
 		Offset:     offset,
-	})
-}
-
-func (ps *PageService) GetPageByTrash(pageTrash int32, limit int32, offset int32) (*pb.ManyPageResponse, error) {
-	conn := utils.ConnectToService(global.Config.Server.MainServer)
-	defer conn.Close()
-
-	client := pb.NewPageServiceClient(conn)
-	return client.GetPageByTrash(context.Background(), &pb.Page{
-		PageTrash: pageTrash,
-		Limit:     limit,
-		Offset:    offset,
 	})
 }
 
@@ -140,7 +128,7 @@ func (ps *PageService) GetPageByPublishYearMonthDay(year int32, month int32, day
 	})
 }
 
-func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, pageTrash int32, userId int64, typeId int32, tempId int32) (*pb.MessageResponse, error) {
+func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, userId int64, typeId int32, tempId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -155,14 +143,13 @@ func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageCont
 		PagePublishMonth: month,
 		PagePublishDay:   day,
 		PageFeatureImage: imageId,
-		PageTrash:        pageTrash,
 		UserId:           userId,
 		TypeId:           typeId,
 		TemplateId:       tempId,
 	})
 }
 
-func (ps *PageService) UpdatePage(pageId int64, pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, pageTrash int32, userId int64, typeId int32, tempId int32) (*pb.MessageResponse, error) {
+func (ps *PageService) UpdatePage(pageId int64, pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, userId int64, typeId int32, tempId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -178,7 +165,6 @@ func (ps *PageService) UpdatePage(pageId int64, pageTitle string, pageSlug strin
 		PagePublishMonth: month,
 		PagePublishDay:   day,
 		PageFeatureImage: imageId,
-		PageTrash:        pageTrash,
 		UserId:           userId,
 		TypeId:           typeId,
 		TemplateId:       tempId,
@@ -192,5 +178,26 @@ func (ps *PageService) DeletePage(pageId int64) (*pb.MessageResponse, error) {
 	client := pb.NewPageServiceClient(conn)
 	return client.DeletePage(context.Background(), &pb.NumbRequest{
 		Numb: pageId,
+	})
+}
+
+func (ps *PageService) CountPageByType(typeId int64) (*pb.NumbResponse, error) {
+	conn := utils.ConnectToService(global.Config.Server.MainServer)
+	defer conn.Close()
+
+	client := pb.NewPageServiceClient(conn)
+	return client.CountPageByType(context.Background(), &pb.NumbRequest{
+		Numb: typeId,
+	})
+}
+
+func (ps *PageService) CountPageByTypeNStatus(typeId int32, status int32) (*pb.NumbResponse, error) {
+	conn := utils.ConnectToService(global.Config.Server.MainServer)
+	defer conn.Close()
+
+	client := pb.NewPageServiceClient(conn)
+	return client.CountPageByTypeNStatus(context.Background(), &pb.Page{
+		TypeId:     typeId,
+		PageStatus: status,
 	})
 }

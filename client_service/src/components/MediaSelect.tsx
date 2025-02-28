@@ -1,6 +1,6 @@
 'use client'
 
-import { useMedia } from '@/app/ux-admin/(admin)/media/MediaContext'
+import { useMedia } from '@/app/ux-admin/MediaContext'
 import InfoMedia from '@/components/admin/media/InfoMedia'
 import ListMedia from '@/components/admin/media/ListMedia'
 import Upload from '@/components/admin/media/upload/Upload'

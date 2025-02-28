@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export const GetCategoryByPage = async (pageId: number) => {
+export const getCategoryByPage = async (pageId: number) => {
   try {
     const access_token = (await cookies()).get("access_token")?.value || "";
     const res = await fetch(

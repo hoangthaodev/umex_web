@@ -2,7 +2,7 @@
 
 import { deleteImage, updateImage } from '@/actions/image.action'
 import { deleteImageS3 } from '@/actions/s3Action'
-import { useMedia } from '@/app/ux-admin/(admin)/media/MediaContext'
+import { useMedia } from '@/app/ux-admin/MediaContext'
 import DivDoc from '@/components/DivDoc'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'

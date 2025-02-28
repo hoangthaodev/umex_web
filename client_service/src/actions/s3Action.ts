@@ -7,7 +7,6 @@ import {
   DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import mime from "mime-types";
-import { json } from "stream/consumers";
 
 const s3Client = new S3Client({
   region: process.env.AWS_BUCKET_REGION!,

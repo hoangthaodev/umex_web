@@ -2,7 +2,7 @@
 import { useSidebar } from '@/app/ux-admin/(admin)/SidebarContext'
 import Link from 'next/link'
 import React, { Dispatch, ReactNode, SetStateAction } from 'react'
-import { LuBlocks, LuImagePlay, LuLayoutDashboard, LuPalette } from 'react-icons/lu'
+import { LuBlocks, LuBookOpenCheck, LuImagePlay, LuLayoutDashboard, LuNotebookPen, LuPalette, LuPin, LuScanBarcode } from 'react-icons/lu'
 
 type ItemListType = {
   children?: ReactNode,
@@ -41,7 +41,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className={`${isShowSidebar ? "visible" : "invisible"} absolute z-20 flex flex-col justify-between py-2 bg-gray-600 bg-opacity-95 text-gray-200 h-full`}>
+      <div className={`${isShowSidebar ? "visible" : "invisible"} fixed z-50 flex flex-col justify-between py-2 bg-gray-600 bg-opacity-95 text-gray-200 h-full`}>
         <ul className='whitespace-nowrap '>
           <ItemList
             href='/ux-admin/dashboard'
@@ -65,9 +65,37 @@ const Sidebar = () => {
             setSelected={setSelected}
           />
           <ItemList
+            href='/ux-admin/posts'
+            name='Posts'
+            icon={<LuPin />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <ItemList
+            href='/ux-admin/portfolios'
+            name='Portfolios'
+            icon={<LuBookOpenCheck />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <ItemList
+            href='/ux-admin/pages'
+            name='Pages'
+            icon={<LuNotebookPen />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <ItemList
             href='/ux-admin/blocks'
             name='Blocks'
             icon={<LuBlocks />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <ItemList
+            href='/ux-admin/products'
+            name='Products'
+            icon={<LuScanBarcode />}
             selected={selected}
             setSelected={setSelected}
           />

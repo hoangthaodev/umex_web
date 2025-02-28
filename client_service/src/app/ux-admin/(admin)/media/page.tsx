@@ -1,6 +1,5 @@
 'use server'
 
-import { MediaProvider } from '@/app/ux-admin/(admin)/media/MediaContext'
 import InfoMedia from '@/components/admin/media/InfoMedia'
 import ListMedia from '@/components/admin/media/ListMedia'
 import MediaUpload from '@/components/admin/media/upload/MediaUpload'
@@ -9,18 +8,16 @@ import React from 'react'
 
 const MediaPage = async () => {
   return (
-    <MediaProvider>
-      <div className='flex flex-col w-full'>
-        <div className='p-2'>
-          <MediaUpload />
-        </div>
-        <div className='flex border border-gray-400 w-full'>
-          <ListMedia className='grow p-2' />
-          <DivDoc />
-          <InfoMedia className='p-2 w-1/4' />
-        </div>
+    <div className='flex flex-col w-full'>
+      <div className='p-2'>
+        <MediaUpload />
       </div>
-    </MediaProvider>
+      <div className='flex border border-gray-400 w-full'>
+        <ListMedia className='grow p-2' />
+        <DivDoc />
+        <InfoMedia className='p-2 w-1/4' />
+      </div>
+    </div>
   )
 }
 

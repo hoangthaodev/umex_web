@@ -1,5 +1,5 @@
 'use client'
-import { CreateNewCategory, GetCategoryByType } from '@/actions/category.action'
+import { createNewCategory, getCategoryByType } from '@/actions/category.action'
 import DivNgang from '@/components/DivNgang'
 import { CategoryType } from '@/lib/types'
 import React, { SetStateAction, useEffect, useState } from 'react'
@@ -7,19 +7,19 @@ import slugify from 'slugify'
 
 type Props = {
   typeId: number
-  selectedCategory: CategoryType[] | undefined
-  setSelectedCategory: React.Dispatch<SetStateAction<CategoryType[] | undefined>>
+  selectedCategory: CategoryType[]
+  setSelectedCategory: React.Dispatch<SetStateAction<CategoryType[]>>
 }
 
 const Categories = ({ typeId, selectedCategory, setSelectedCategory }: Props) => {
-  const [categories, setCategories] = useState<CategoryType[] | undefined>(undefined)
+  const [categories, setCategories] = useState<CategoryType[]>([])
   const [isAddNew, setIsAddNew] = useState(false)
   const [newCateName, setNewCateName] = useState('')
   const [newCateParent, setNewParent] = useState(0)
 
   useEffect(() => {
     const data = async () => {
-      const res = await GetCategoryByType(typeId)
+      const res = await getCategoryByType(typeId)
       setCategories(res)
     }
     data()
@@ -28,7 +28,7 @@ const Categories = ({ typeId, selectedCategory, setSelectedCategory }: Props) =>
   const handleAddCategory = async () => {
     if (newCateName.trim() === "") return
 
-    await CreateNewCategory(
+    await createNewCategory(
       newCateName.trim(),
       slugify(newCateName.trim(), { lower: true }),
       "",
@@ -41,7 +41,7 @@ const Categories = ({ typeId, selectedCategory, setSelectedCategory }: Props) =>
 
   return (
     <div className='border border-gray-400'>
-      <h3 className='px-2'>Categories</h3>
+      <h3 className='px-2 bg-gray-300'>Categories</h3>
       <DivNgang />
       <div className='p-2'>
         <ul>

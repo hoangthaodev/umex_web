@@ -1,5 +1,5 @@
 'use server'
-import { MediaProvider } from '@/app/ux-admin/(admin)/media/MediaContext'
+import { MediaProvider } from '@/app/ux-admin/MediaContext'
 import { BreadcrumbProvider } from '@/app/ux-admin/(admin)/theme/BreadcrumbContext'
 import ActionArea from '@/components/admin/theme/actionArea/ActionArea'
 import ShowArea from '@/components/admin/theme/showArea/ShowArea'

@@ -85,7 +85,7 @@ func (tt *TagTransport) GetTagByType(c context.Context, in *pb.NumbRequest) (*pb
 	}, nil
 }
 
-func (tt *TagTransport) GetTagBySlug(c context.Context, in *pb.StrRequest) (*pb.TagResponse, error) {
+func (tt *TagTransport) GetTagBySlug(c context.Context, in *pb.MessageRequest) (*pb.TagResponse, error) {
 	res, err := tt.TagService.GetTagBySlug(in.Str)
 	if err != nil {
 		global.Logger.Error(err.Error())

@@ -1,3 +1,5 @@
+"use server";
+
 export async function getComponentByPosition(position: number) {
   try {
     const result = await fetch(

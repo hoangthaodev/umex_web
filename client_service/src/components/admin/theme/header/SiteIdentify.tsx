@@ -2,7 +2,7 @@
 
 import { updateConfigByKey } from '@/actions/config.action'
 import { useTheme } from '@/app/ThemeContext'
-import { useMedia } from '@/app/ux-admin/(admin)/media/MediaContext'
+import { useMedia } from '@/app/ux-admin/MediaContext'
 import DivNgang from '@/components/DivNgang'
 import InputRange from '@/components/InputRange'
 import MediaSelect from '@/components/MediaSelect'

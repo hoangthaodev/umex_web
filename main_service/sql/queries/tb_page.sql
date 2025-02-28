@@ -10,9 +10,6 @@ select * from tb_page where page_slug = ?;
 -- name: GetPageByStatus :many
 select * from tb_page where page_status = ? limit ? offset ?;
 
--- name: GetPageByTrash :many
-select * from tb_page where page_trash = ? limit ? offset ?;
-
 -- name: GetPageByUser :many
 select * from tb_page where user_id = ? limit ? offset ?;
 
@@ -42,12 +39,11 @@ insert into tb_page(
   page_publish_month,
   page_publish_day,
   page_feature_image,
-  page_trash,
   user_id,
   type_id,
   template_id,
   created_at
-) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+) values (?,?,?,?,?,?,?,?,?,?,?,?,?);
 
 -- name: UpdatePage :exec
 update tb_page set
@@ -60,7 +56,6 @@ update tb_page set
   page_publish_month=?,
   page_publish_day=?,
   page_feature_image=?,
-  page_trash=?,
   user_id =?,
   type_id =?,
   template_id = ?,
@@ -69,3 +64,10 @@ where page_id = ?;
 
 -- name: DeletePage :exec
 delete from tb_page where page_id = ?;
+
+-- name: CountPageByType :one
+select count(*) from tb_page where type_id = ?;
+
+-- name: CountPageByTypeNStatus :one
+select count(*) from tb_page where type_id = ? and page_status = ?;
+

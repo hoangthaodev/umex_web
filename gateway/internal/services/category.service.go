@@ -34,7 +34,7 @@ func (cs *CategoryService) GetCategoryBySlug(catSlug string) (*pb.CategoryRespon
 	defer conn.Close()
 
 	client := pb.NewCategoryServiceClient(conn)
-	return client.GetCategoryBySlug(context.Background(), &pb.StrRequest{
+	return client.GetCategoryBySlug(context.Background(), &pb.MessageRequest{
 		Str: catSlug,
 	})
 }

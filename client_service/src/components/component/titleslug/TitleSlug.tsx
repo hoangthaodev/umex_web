@@ -1,7 +1,8 @@
 'use client'
 import { typeMap } from '@/lib/pageMap'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import slugify from 'slugify'
 
 type Props = {
   typeId: number
@@ -12,9 +13,24 @@ type Props = {
 }
 
 const TitleSlug = ({ typeId, title, setTitle, slug, setSlug }: Props) => {
-  const originUrl = window.location.origin
-  const [editSlug, setEditSlug] = useState(slug)
+  const [isLoading, setIsLoading] = useState(true)
+  const [editSlug, setEditSlug] = useState("")
   const [isEditSlug, setIsEditSlug] = useState(false)
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, [])
+
+  useEffect(() => {
+    if (editSlug === "") {
+      setSlug(slugify(title))
+    }
+  }, [title])
+
+  if (isLoading) {
+    return (<>Loadding ...</>)
+  }
+  const originUrl = window.location.origin
 
   return (
     <div className='flex flex-col gap-2'>
@@ -50,7 +66,7 @@ const TitleSlug = ({ typeId, title, setTitle, slug, setSlug }: Props) => {
               </>
               : <label
                 className='p-1 border border-blue-600 text-blue-600 hover:border-blue-700 hover:text-blue-700 rounded-sm'
-                onClick={() => { setIsEditSlug(true) }}
+                onClick={() => { setIsEditSlug(true); setEditSlug(slug) }}
               >Edit</label>
           }
         </div>

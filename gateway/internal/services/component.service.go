@@ -34,7 +34,7 @@ func (cps *ComponentService) GetComponentByName(name string) (*pb.ComponentRespo
 	defer conn.Close()
 	client := pb.NewComponentServiceClient(conn)
 
-	return client.GetComponentByName(context.Background(), &pb.StrRequest{
+	return client.GetComponentByName(context.Background(), &pb.MessageRequest{
 		Str: name,
 	})
 }

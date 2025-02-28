@@ -61,7 +61,7 @@ func (ct *CategoryTransport) GetCategoryById(c context.Context, in *pb.NumbReque
 	}, nil
 }
 
-func (ct *CategoryTransport) GetCategoryBySlug(c context.Context, in *pb.StrRequest) (*pb.CategoryResponse, error) {
+func (ct *CategoryTransport) GetCategoryBySlug(c context.Context, in *pb.MessageRequest) (*pb.CategoryResponse, error) {
 	res, err := ct.CategoryService.GetCategoryBySlug(in.Str)
 	if err != nil {
 		global.Logger.Error(err.Error())

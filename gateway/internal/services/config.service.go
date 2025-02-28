@@ -24,7 +24,7 @@ func (cs *ConfigService) GetConfigByKey(key string) (*pb.ConfigResponse, error) 
 	defer conn.Close()
 	client := pb.NewConfigServiceClient(conn)
 
-	return client.GetConfigByKey(context.Background(), &pb.StrRequest{
+	return client.GetConfigByKey(context.Background(), &pb.MessageRequest{
 		Str: key,
 	})
 }

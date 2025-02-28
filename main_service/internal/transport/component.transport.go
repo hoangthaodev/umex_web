@@ -63,7 +63,7 @@ func (cpt *ComponentTransport) GetComponentById(c context.Context, in *pb.NumbRe
 	}, nil
 }
 
-func (cpt *ComponentTransport) GetComponentByName(c context.Context, in *pb.StrRequest) (*pb.ComponentResponse, error) {
+func (cpt *ComponentTransport) GetComponentByName(c context.Context, in *pb.MessageRequest) (*pb.ComponentResponse, error) {
 	tbComp, err := cpt.ComponentService.GetComponentByName(in.Str)
 	if err != nil {
 		global.Logger.Error(err.Error())

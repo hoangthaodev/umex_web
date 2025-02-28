@@ -33,7 +33,6 @@ func (pt *PageTransport) GetAllPage(c context.Context, in *pb.Page) (*pb.ManyPag
 		page.PagePublishMonth = p.PagePublishMonth
 		page.PagePublishDay = p.PagePublishDay
 		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
 		page.UserId = p.UserID
 		page.TypeId = p.TypeID
 		page.TemplateId = p.TemplateID
@@ -65,7 +64,6 @@ func (pt *PageTransport) GetPageById(c context.Context, in *pb.NumbRequest) (*pb
 	page.PagePublishMonth = res.PagePublishMonth
 	page.PagePublishDay = res.PagePublishDay
 	page.PageFeatureImage = res.PageFeatureImage
-	page.PageTrash = res.PageTrash
 	page.UserId = res.UserID
 	page.TypeId = res.TypeID
 	page.TemplateId = res.TemplateID
@@ -76,7 +74,7 @@ func (pt *PageTransport) GetPageById(c context.Context, in *pb.NumbRequest) (*pb
 	}, nil
 }
 
-func (pt *PageTransport) GetPageBySlug(c context.Context, in *pb.StrRequest) (*pb.PageResponse, error) {
+func (pt *PageTransport) GetPageBySlug(c context.Context, in *pb.MessageRequest) (*pb.PageResponse, error) {
 	res, err := pt.PageService.GetPageBySlug(in.Str)
 	if err != nil {
 		global.Logger.Error(err.Error())
@@ -95,7 +93,6 @@ func (pt *PageTransport) GetPageBySlug(c context.Context, in *pb.StrRequest) (*p
 	page.PagePublishMonth = res.PagePublishMonth
 	page.PagePublishDay = res.PagePublishDay
 	page.PageFeatureImage = res.PageFeatureImage
-	page.PageTrash = res.PageTrash
 	page.UserId = res.UserID
 	page.TypeId = res.TypeID
 	page.TemplateId = res.TemplateID
@@ -127,42 +124,6 @@ func (pt *PageTransport) GetPageByStatus(c context.Context, in *pb.Page) (*pb.Ma
 		page.PagePublishMonth = p.PagePublishMonth
 		page.PagePublishDay = p.PagePublishDay
 		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
-		page.UserId = p.UserID
-		page.TypeId = p.TypeID
-		page.TemplateId = p.TemplateID
-
-		pages = append(pages, &page)
-	}
-
-	return &pb.ManyPageResponse{
-		Code:  2000,
-		Pages: pages,
-	}, nil
-}
-
-func (pt *PageTransport) GetPageByTrash(c context.Context, in *pb.Page) (*pb.ManyPageResponse, error) {
-	res, err := pt.PageService.GetPageByTrash(in.PageTrash, in.Limit, in.Offset)
-	if err != nil {
-		global.Logger.Error(err.Error())
-		return &pb.ManyPageResponse{
-			Code: 2001,
-		}, nil
-	}
-	var pages []*pb.Page
-	for _, p := range res {
-		var page pb.Page
-		page.PageId = p.PageID
-		page.PageTitle = p.PageTitle
-		page.PageSlug = p.PageSlug
-		page.PageContent = p.PageContent
-		page.PageDescription = p.PageDescription
-		page.PageStatus = p.PageStatus
-		page.PagePublishYear = p.PagePublishYear
-		page.PagePublishMonth = p.PagePublishMonth
-		page.PagePublishDay = p.PagePublishDay
-		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
 		page.UserId = p.UserID
 		page.TypeId = p.TypeID
 		page.TemplateId = p.TemplateID
@@ -197,7 +158,6 @@ func (pt *PageTransport) GetPageByUser(c context.Context, in *pb.Page) (*pb.Many
 		page.PagePublishMonth = p.PagePublishMonth
 		page.PagePublishDay = p.PagePublishDay
 		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
 		page.UserId = p.UserID
 		page.TypeId = p.TypeID
 		page.TemplateId = p.TemplateID
@@ -232,7 +192,6 @@ func (pt *PageTransport) GetPageByType(c context.Context, in *pb.Page) (*pb.Many
 		page.PagePublishMonth = p.PagePublishMonth
 		page.PagePublishDay = p.PagePublishDay
 		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
 		page.UserId = p.UserID
 		page.TypeId = p.TypeID
 		page.TemplateId = p.TemplateID
@@ -267,7 +226,6 @@ func (pt *PageTransport) GetPageByTypeNStatus(c context.Context, in *pb.Page) (*
 		page.PagePublishMonth = p.PagePublishMonth
 		page.PagePublishDay = p.PagePublishDay
 		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
 		page.UserId = p.UserID
 		page.TypeId = p.TypeID
 		page.TemplateId = p.TemplateID
@@ -302,7 +260,6 @@ func (pt *PageTransport) GetPageByPublishYear(c context.Context, in *pb.Page) (*
 		page.PagePublishMonth = p.PagePublishMonth
 		page.PagePublishDay = p.PagePublishDay
 		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
 		page.UserId = p.UserID
 		page.TypeId = p.TypeID
 		page.TemplateId = p.TemplateID
@@ -337,7 +294,6 @@ func (pt *PageTransport) GetPageByPublishYearMonth(c context.Context, in *pb.Pag
 		page.PagePublishMonth = p.PagePublishMonth
 		page.PagePublishDay = p.PagePublishDay
 		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
 		page.UserId = p.UserID
 		page.TypeId = p.TypeID
 		page.TemplateId = p.TemplateID
@@ -372,7 +328,6 @@ func (pt *PageTransport) GetPageByPublishYearMonthDay(c context.Context, in *pb.
 		page.PagePublishMonth = p.PagePublishMonth
 		page.PagePublishDay = p.PagePublishDay
 		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
 		page.UserId = p.UserID
 		page.TypeId = p.TypeID
 		page.TemplateId = p.TemplateID
@@ -387,7 +342,7 @@ func (pt *PageTransport) GetPageByPublishYearMonthDay(c context.Context, in *pb.
 }
 
 func (pt *PageTransport) CreateNewPage(c context.Context, in *pb.Page) (*pb.MessageResponse, error) {
-	err := pt.PageService.CreateNewPage(in.PageTitle, in.PageSlug, in.PageContent, in.PageDescription, in.PageStatus, in.PagePublishYear, in.PagePublishMonth, in.PagePublishDay, in.PageFeatureImage, in.PageTrash, in.UserId, in.TypeId, in.TemplateId)
+	err := pt.PageService.CreateNewPage(in.PageTitle, in.PageSlug, in.PageContent, in.PageDescription, in.PageStatus, in.PagePublishYear, in.PagePublishMonth, in.PagePublishDay, in.PageFeatureImage, in.UserId, in.TypeId, in.TemplateId)
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
@@ -403,7 +358,7 @@ func (pt *PageTransport) CreateNewPage(c context.Context, in *pb.Page) (*pb.Mess
 }
 
 func (pt *PageTransport) UpdatePage(c context.Context, in *pb.Page) (*pb.MessageResponse, error) {
-	err := pt.PageService.UpdatePage(in.PageTitle, in.PageSlug, in.PageContent, in.PageDescription, in.PageStatus, in.PagePublishYear, in.PagePublishMonth, in.PagePublishDay, in.PageFeatureImage, in.PageTrash, in.UserId, in.TypeId, in.TemplateId, in.PageId)
+	err := pt.PageService.UpdatePage(in.PageTitle, in.PageSlug, in.PageContent, in.PageDescription, in.PageStatus, in.PagePublishYear, in.PagePublishMonth, in.PagePublishDay, in.PageFeatureImage, in.UserId, in.TypeId, in.TemplateId, in.PageId)
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
@@ -431,5 +386,33 @@ func (pt *PageTransport) DeletePage(c context.Context, in *pb.NumbRequest) (*pb.
 	return &pb.MessageResponse{
 		Code:    2000,
 		Message: "Page deleted successfully",
+	}, nil
+}
+
+func (pt *PageTransport) CountPageByType(c context.Context, in *pb.NumbRequest) (*pb.NumbResponse, error) {
+	res, err := pt.PageService.CountPageByType(int32(in.Numb))
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.NumbResponse{
+			Code: 2001,
+		}, nil
+	}
+	return &pb.NumbResponse{
+		Code:   2000,
+		Result: res,
+	}, nil
+}
+
+func (pt *PageTransport) CountPageByTypeNStatus(c context.Context, in *pb.Page) (*pb.NumbResponse, error) {
+	res, err := pt.PageService.CountPageByTypeNStatus(in.TypeId, in.PageStatus)
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.NumbResponse{
+			Code: 2001,
+		}, nil
+	}
+	return &pb.NumbResponse{
+		Code:   2000,
+		Result: res,
 	}, nil
 }

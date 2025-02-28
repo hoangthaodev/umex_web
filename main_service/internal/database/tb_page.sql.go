@@ -9,6 +9,33 @@ import (
 	"context"
 )
 
+const countPageByType = `-- name: CountPageByType :one
+select count(*) from tb_page where type_id = ?
+`
+
+func (q *Queries) CountPageByType(ctx context.Context, typeID int32) (int64, error) {
+	row := q.db.QueryRowContext(ctx, countPageByType, typeID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
+const countPageByTypeNStatus = `-- name: CountPageByTypeNStatus :one
+select count(*) from tb_page where type_id = ? and page_status = ?
+`
+
+type CountPageByTypeNStatusParams struct {
+	TypeID     int32
+	PageStatus int32
+}
+
+func (q *Queries) CountPageByTypeNStatus(ctx context.Context, arg CountPageByTypeNStatusParams) (int64, error) {
+	row := q.db.QueryRowContext(ctx, countPageByTypeNStatus, arg.TypeID, arg.PageStatus)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const createNewPage = `-- name: CreateNewPage :exec
 insert into tb_page(
   page_title,
@@ -20,12 +47,11 @@ insert into tb_page(
   page_publish_month,
   page_publish_day,
   page_feature_image,
-  page_trash,
   user_id,
   type_id,
   template_id,
   created_at
-) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+) values (?,?,?,?,?,?,?,?,?,?,?,?,?)
 `
 
 type CreateNewPageParams struct {
@@ -38,7 +64,6 @@ type CreateNewPageParams struct {
 	PagePublishMonth int32
 	PagePublishDay   int32
 	PageFeatureImage int64
-	PageTrash        int32
 	UserID           int64
 	TypeID           int32
 	TemplateID       int32
@@ -56,7 +81,6 @@ func (q *Queries) CreateNewPage(ctx context.Context, arg CreateNewPageParams) er
 		arg.PagePublishMonth,
 		arg.PagePublishDay,
 		arg.PageFeatureImage,
-		arg.PageTrash,
 		arg.UserID,
 		arg.TypeID,
 		arg.TemplateID,
@@ -75,7 +99,7 @@ func (q *Queries) DeletePage(ctx context.Context, pageID int64) error {
 }
 
 const getAllPage = `-- name: GetAllPage :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page limit ? offset ?
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page limit ? offset ?
 `
 
 type GetAllPageParams struct {
@@ -103,7 +127,6 @@ func (q *Queries) GetAllPage(ctx context.Context, arg GetAllPageParams) ([]TbPag
 			&i.PagePublishMonth,
 			&i.PagePublishDay,
 			&i.PageFeatureImage,
-			&i.PageTrash,
 			&i.UserID,
 			&i.TypeID,
 			&i.TemplateID,
@@ -124,7 +147,7 @@ func (q *Queries) GetAllPage(ctx context.Context, arg GetAllPageParams) ([]TbPag
 }
 
 const getPageById = `-- name: GetPageById :one
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where page_id = ?
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_id = ?
 `
 
 func (q *Queries) GetPageById(ctx context.Context, pageID int64) (TbPage, error) {
@@ -141,7 +164,6 @@ func (q *Queries) GetPageById(ctx context.Context, pageID int64) (TbPage, error)
 		&i.PagePublishMonth,
 		&i.PagePublishDay,
 		&i.PageFeatureImage,
-		&i.PageTrash,
 		&i.UserID,
 		&i.TypeID,
 		&i.TemplateID,
@@ -152,7 +174,7 @@ func (q *Queries) GetPageById(ctx context.Context, pageID int64) (TbPage, error)
 }
 
 const getPageByPublishYear = `-- name: GetPageByPublishYear :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where page_publish_year = ? limit ? offset ?
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_publish_year = ? limit ? offset ?
 `
 
 type GetPageByPublishYearParams struct {
@@ -181,7 +203,6 @@ func (q *Queries) GetPageByPublishYear(ctx context.Context, arg GetPageByPublish
 			&i.PagePublishMonth,
 			&i.PagePublishDay,
 			&i.PageFeatureImage,
-			&i.PageTrash,
 			&i.UserID,
 			&i.TypeID,
 			&i.TemplateID,
@@ -202,7 +223,7 @@ func (q *Queries) GetPageByPublishYear(ctx context.Context, arg GetPageByPublish
 }
 
 const getPageByPublishYearMonth = `-- name: GetPageByPublishYearMonth :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where page_publish_year = ? and page_publish_month = ? limit ? offset ?
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_publish_year = ? and page_publish_month = ? limit ? offset ?
 `
 
 type GetPageByPublishYearMonthParams struct {
@@ -237,7 +258,6 @@ func (q *Queries) GetPageByPublishYearMonth(ctx context.Context, arg GetPageByPu
 			&i.PagePublishMonth,
 			&i.PagePublishDay,
 			&i.PageFeatureImage,
-			&i.PageTrash,
 			&i.UserID,
 			&i.TypeID,
 			&i.TemplateID,
@@ -258,7 +278,7 @@ func (q *Queries) GetPageByPublishYearMonth(ctx context.Context, arg GetPageByPu
 }
 
 const getPageByPublishYearMonthDay = `-- name: GetPageByPublishYearMonthDay :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where page_publish_year = ? and page_publish_month = ? and page_publish_day = ? limit ? offset ?
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_publish_year = ? and page_publish_month = ? and page_publish_day = ? limit ? offset ?
 `
 
 type GetPageByPublishYearMonthDayParams struct {
@@ -295,7 +315,6 @@ func (q *Queries) GetPageByPublishYearMonthDay(ctx context.Context, arg GetPageB
 			&i.PagePublishMonth,
 			&i.PagePublishDay,
 			&i.PageFeatureImage,
-			&i.PageTrash,
 			&i.UserID,
 			&i.TypeID,
 			&i.TemplateID,
@@ -316,7 +335,7 @@ func (q *Queries) GetPageByPublishYearMonthDay(ctx context.Context, arg GetPageB
 }
 
 const getPageBySlug = `-- name: GetPageBySlug :one
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where page_slug = ?
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_slug = ?
 `
 
 func (q *Queries) GetPageBySlug(ctx context.Context, pageSlug string) (TbPage, error) {
@@ -333,7 +352,6 @@ func (q *Queries) GetPageBySlug(ctx context.Context, pageSlug string) (TbPage, e
 		&i.PagePublishMonth,
 		&i.PagePublishDay,
 		&i.PageFeatureImage,
-		&i.PageTrash,
 		&i.UserID,
 		&i.TypeID,
 		&i.TemplateID,
@@ -344,7 +362,7 @@ func (q *Queries) GetPageBySlug(ctx context.Context, pageSlug string) (TbPage, e
 }
 
 const getPageByStatus = `-- name: GetPageByStatus :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where page_status = ? limit ? offset ?
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_status = ? limit ? offset ?
 `
 
 type GetPageByStatusParams struct {
@@ -373,57 +391,6 @@ func (q *Queries) GetPageByStatus(ctx context.Context, arg GetPageByStatusParams
 			&i.PagePublishMonth,
 			&i.PagePublishDay,
 			&i.PageFeatureImage,
-			&i.PageTrash,
-			&i.UserID,
-			&i.TypeID,
-			&i.TemplateID,
-			&i.CreatedAt,
-			&i.UpdatedAt,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
-const getPageByTrash = `-- name: GetPageByTrash :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where page_trash = ? limit ? offset ?
-`
-
-type GetPageByTrashParams struct {
-	PageTrash int32
-	Limit     int32
-	Offset    int32
-}
-
-func (q *Queries) GetPageByTrash(ctx context.Context, arg GetPageByTrashParams) ([]TbPage, error) {
-	rows, err := q.db.QueryContext(ctx, getPageByTrash, arg.PageTrash, arg.Limit, arg.Offset)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []TbPage
-	for rows.Next() {
-		var i TbPage
-		if err := rows.Scan(
-			&i.PageID,
-			&i.PageTitle,
-			&i.PageSlug,
-			&i.PageContent,
-			&i.PageDescription,
-			&i.PageStatus,
-			&i.PagePublishYear,
-			&i.PagePublishMonth,
-			&i.PagePublishDay,
-			&i.PageFeatureImage,
-			&i.PageTrash,
 			&i.UserID,
 			&i.TypeID,
 			&i.TemplateID,
@@ -444,7 +411,7 @@ func (q *Queries) GetPageByTrash(ctx context.Context, arg GetPageByTrashParams) 
 }
 
 const getPageByType = `-- name: GetPageByType :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where type_id = ? limit ? offset ?
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where type_id = ? limit ? offset ?
 `
 
 type GetPageByTypeParams struct {
@@ -473,7 +440,6 @@ func (q *Queries) GetPageByType(ctx context.Context, arg GetPageByTypeParams) ([
 			&i.PagePublishMonth,
 			&i.PagePublishDay,
 			&i.PageFeatureImage,
-			&i.PageTrash,
 			&i.UserID,
 			&i.TypeID,
 			&i.TemplateID,
@@ -494,7 +460,7 @@ func (q *Queries) GetPageByType(ctx context.Context, arg GetPageByTypeParams) ([
 }
 
 const getPageByTypeNStatus = `-- name: GetPageByTypeNStatus :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where type_id = ? and page_status = ? limit ? offset ?
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where type_id = ? and page_status = ? limit ? offset ?
 `
 
 type GetPageByTypeNStatusParams struct {
@@ -529,7 +495,6 @@ func (q *Queries) GetPageByTypeNStatus(ctx context.Context, arg GetPageByTypeNSt
 			&i.PagePublishMonth,
 			&i.PagePublishDay,
 			&i.PageFeatureImage,
-			&i.PageTrash,
 			&i.UserID,
 			&i.TypeID,
 			&i.TemplateID,
@@ -550,7 +515,7 @@ func (q *Queries) GetPageByTypeNStatus(ctx context.Context, arg GetPageByTypeNSt
 }
 
 const getPageByUser = `-- name: GetPageByUser :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where user_id = ? limit ? offset ?
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where user_id = ? limit ? offset ?
 `
 
 type GetPageByUserParams struct {
@@ -579,7 +544,6 @@ func (q *Queries) GetPageByUser(ctx context.Context, arg GetPageByUserParams) ([
 			&i.PagePublishMonth,
 			&i.PagePublishDay,
 			&i.PageFeatureImage,
-			&i.PageTrash,
 			&i.UserID,
 			&i.TypeID,
 			&i.TemplateID,
@@ -610,7 +574,6 @@ update tb_page set
   page_publish_month=?,
   page_publish_day=?,
   page_feature_image=?,
-  page_trash=?,
   user_id =?,
   type_id =?,
   template_id = ?,
@@ -628,7 +591,6 @@ type UpdatePageParams struct {
 	PagePublishMonth int32
 	PagePublishDay   int32
 	PageFeatureImage int64
-	PageTrash        int32
 	UserID           int64
 	TypeID           int32
 	TemplateID       int32
@@ -647,7 +609,6 @@ func (q *Queries) UpdatePage(ctx context.Context, arg UpdatePageParams) error {
 		arg.PagePublishMonth,
 		arg.PagePublishDay,
 		arg.PageFeatureImage,
-		arg.PageTrash,
 		arg.UserID,
 		arg.TypeID,
 		arg.TemplateID,

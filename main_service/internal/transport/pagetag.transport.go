@@ -34,7 +34,6 @@ func (pt *PagetagTransport) GetPageByTag(c context.Context, in *pb.Pagetag) (*pb
 		page.PagePublishMonth = p.PagePublishMonth
 		page.PagePublishDay = p.PagePublishDay
 		page.PageFeatureImage = p.PageFeatureImage
-		page.PageTrash = p.PageTrash
 		page.UserId = p.UserID
 		page.TypeId = p.TypeID
 		page.TemplateId = p.TemplateID

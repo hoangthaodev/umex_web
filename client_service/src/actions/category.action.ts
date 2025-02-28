@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export const GetCategoryByType = async (typeId: number) => {
+export const getCategoryByType = async (typeId: number) => {
   try {
     const access_token = (await cookies()).get("access_token")?.value || "";
     const res = await fetch(
@@ -27,7 +27,7 @@ export const GetCategoryByType = async (typeId: number) => {
   }
 };
 
-export const CreateNewCategory = async (
+export const createNewCategory = async (
   name: string,
   slug: string,
   description: string,

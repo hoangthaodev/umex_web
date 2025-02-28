@@ -17,7 +17,7 @@ type AuthTransport struct {
 	services.TokenService
 }
 
-func (at *AuthTransport) CheckAuth(c context.Context, in *pb.StrRequest) (*pb.AuthResponse, error) {
+func (at *AuthTransport) CheckAuth(c context.Context, in *pb.MessageRequest) (*pb.AuthResponse, error) {
 	authorization := in.Str
 
 	// verify decode authorization

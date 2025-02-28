@@ -44,7 +44,7 @@ func (ts *TagService) GetTagBySlug(slug string) (*pb.TagResponse, error) {
 	defer conn.Close()
 
 	client := pb.NewTagServiceClient(conn)
-	return client.GetTagBySlug(context.Background(), &pb.StrRequest{
+	return client.GetTagBySlug(context.Background(), &pb.MessageRequest{
 		Str: slug,
 	})
 }

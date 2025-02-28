@@ -70,7 +70,7 @@ func (q *Queries) GetCategoryByPage(ctx context.Context, pageID int64) ([]TbCate
 }
 
 const getPageByCategory = `-- name: GetPageByCategory :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, page_trash, user_id, type_id, template_id, created_at, updated_at from tb_page where page_id in(
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_id in(
 select page_id from tb_pagecategory where category_id = ?) limit ? offset ?
 `
 
@@ -100,7 +100,6 @@ func (q *Queries) GetPageByCategory(ctx context.Context, arg GetPageByCategoryPa
 			&i.PagePublishMonth,
 			&i.PagePublishDay,
 			&i.PageFeatureImage,
-			&i.PageTrash,
 			&i.UserID,
 			&i.TypeID,
 			&i.TemplateID,

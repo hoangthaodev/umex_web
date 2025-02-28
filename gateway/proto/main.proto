@@ -6,18 +6,25 @@ option go_package = "proto/pb/";
 
 import "google/protobuf/empty.proto";
 
-message MessageResponse {
-  int32 code = 1;
-  string message = 2;
-}
 
 message NumbRequest{
   int64 numb = 1;
 }
 
-message StrRequest{
+message NumbResponse{
+  int32 code = 1;
+  int64 result = 2;
+}
+
+message MessageRequest{
   string str = 1;
 }
+
+message MessageResponse {
+  int32 code = 1;
+  string message = 2;
+}
+
 
 message LoginRequest {
   string username = 1;
@@ -78,7 +85,7 @@ message ConfigResponse{
 
 service ConfigService{
   rpc GetAllConfig(google.protobuf.Empty) returns (ManyConfigResponse){}
-  rpc GetConfigByKey(StrRequest) returns (ConfigResponse){}
+  rpc GetConfigByKey(MessageRequest) returns (ConfigResponse){}
   rpc GetConfigById(NumbRequest) returns (ConfigResponse){}
   rpc CreateNewConfig(Config) returns (MessageResponse){}
   rpc UpdateConfig(Config) returns (MessageResponse){}
@@ -106,7 +113,7 @@ message ComponentResponse{
 service ComponentService{
   rpc GetAllComponent(google.protobuf.Empty) returns (ManyComponentResponse){}
   rpc GetComponentById(NumbRequest) returns (ComponentResponse){}
-  rpc GetComponentByName(StrRequest) returns (ComponentResponse){}
+  rpc GetComponentByName(MessageRequest) returns (ComponentResponse){}
   rpc GetComponentByPosition(NumbRequest) returns (ManyComponentResponse){}
   rpc CreateNewComponent(Component) returns (MessageResponse){}
   rpc UpdateComponent(Component) returns (MessageResponse){}
@@ -126,7 +133,7 @@ message AuthResponse{
 
 service AuthService{
   rpc GetAuthByUserId(NumbRequest) returns (AuthResponse){}
-  rpc CheckAuth(StrRequest) returns (AuthResponse){}
+  rpc CheckAuth(MessageRequest) returns (AuthResponse){}
 }
 
 message Image{
@@ -224,7 +231,7 @@ message ManyCategoryResponse{
 service CategoryService{
   rpc GetAllCategory(google.protobuf.Empty) returns (ManyCategoryResponse){}
   rpc GetCategoryById(NumbRequest) returns (CategoryResponse){}
-  rpc GetCategoryBySlug(StrRequest) returns (CategoryResponse){}
+  rpc GetCategoryBySlug(MessageRequest) returns (CategoryResponse){}
   rpc GetCategoryByType(NumbRequest) returns (ManyCategoryResponse){}
   rpc GetCategoryByParent(NumbRequest) returns (ManyCategoryResponse){}
   rpc CreateNewCategory(Category) returns (MessageResponse){}
@@ -243,12 +250,11 @@ message Page{
   int32 page_publish_month =8;
   int32 page_publish_day =9;
   int64 page_feature_image =10;
-  int32 page_trash =11;
-  int64 user_id =12;
-  int32 type_id =13;
-  int32 template_id =14;
-  int32 limit =15;
-  int32 offset =16;
+  int64 user_id =11;
+  int32 type_id =12;
+  int32 template_id =13;
+  int32 limit =14;
+  int32 offset =15;
 }
 
 message ManyPageResponse{
@@ -264,9 +270,8 @@ message PageResponse{
 service PageService{
   rpc GetAllPage(Page) returns (ManyPageResponse){}
   rpc GetPageById(NumbRequest) returns (PageResponse){}
-  rpc GetPageBySlug(StrRequest) returns (PageResponse){}
+  rpc GetPageBySlug(MessageRequest) returns (PageResponse){}
   rpc GetPageByStatus(Page) returns (ManyPageResponse){}
-  rpc GetPageByTrash(Page) returns (ManyPageResponse){}
   rpc GetPageByUser(Page) returns (ManyPageResponse){}
   rpc GetPageByType(Page) returns (ManyPageResponse){}
   rpc GetPageByTypeNStatus(Page) returns (ManyPageResponse){}
@@ -276,6 +281,8 @@ service PageService{
   rpc CreateNewPage(Page) returns (MessageResponse){}
   rpc UpdatePage(Page) returns (MessageResponse){}
   rpc DeletePage(NumbRequest) returns (MessageResponse){}
+  rpc CountPageByType(NumbRequest) returns (NumbResponse){}
+  rpc CountPageByTypeNStatus(Page) returns (NumbResponse){}
 }
 
 message Tag{
@@ -300,7 +307,7 @@ service TagService{
   rpc GetAllTag(google.protobuf.Empty) returns (ManyTagResponse){}
   rpc GetTagById(NumbRequest) returns (TagResponse){}
   rpc GetTagByType(NumbRequest) returns (ManyTagResponse){}
-  rpc GetTagBySlug(StrRequest) returns (TagResponse){}
+  rpc GetTagBySlug(MessageRequest) returns (TagResponse){}
   rpc CreateNewTag(Tag) returns (MessageResponse){}
   rpc UpdateTag(Tag) returns (MessageResponse){}
   rpc DeleteTag(NumbRequest) returns (MessageResponse){}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useMedia } from '@/app/ux-admin/(admin)/media/MediaContext'
+import { useMedia } from '@/app/ux-admin/MediaContext'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { LuLoaderCircle } from 'react-icons/lu'

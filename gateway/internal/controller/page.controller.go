@@ -108,18 +108,6 @@ func (pc *PageController) GetPageByStatus(c *gin.Context) {
 	response.SuccessResponse(c, int(res.Code), res)
 }
 
-func (pc *PageController) GetPageByTrash(c *gin.Context) {
-	trashId := c.Param("id")
-	limit := c.Query("limit")
-	offset := c.Query("offset")
-	res, err := pc.PageService.GetPageByTrash(utils.StringToInt32(trashId), utils.StringToInt32(limit), utils.StringToInt32(offset))
-	if err != nil {
-		response.ErrorResponse(c, int(res.Code), "")
-		return
-	}
-	response.SuccessResponse(c, int(res.Code), res)
-}
-
 func (pc *PageController) GetPageByType(c *gin.Context) {
 	typeId := c.Param("id")
 	limit := c.Query("limit")
@@ -151,7 +139,7 @@ func (pc *PageController) CreateNewPage(c *gin.Context) {
 		log.Println("error binding page")
 		return
 	}
-	res, err := pc.PageService.CreateNewPage(page.PageTitle, page.PageSlug, page.PageContent, page.PageDescription, page.PageStatus, page.PageYear, page.PageMonth, page.PageDay, page.PageImage, page.PageTrash, page.UserId, page.TypeId, page.TempId)
+	res, err := pc.PageService.CreateNewPage(page.PageTitle, page.PageSlug, page.PageContent, page.PageDescription, page.PageStatus, page.PageYear, page.PageMonth, page.PageDay, page.PageImage, page.UserId, page.TypeId, page.TempId)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -167,7 +155,7 @@ func (pc *PageController) UpdatePage(c *gin.Context) {
 		log.Println("error binding page")
 		return
 	}
-	res, err := pc.PageService.UpdatePage(utils.StringToInt64(pageId), page.PageTitle, page.PageSlug, page.PageContent, page.PageDescription, page.PageStatus, page.PageYear, page.PageMonth, page.PageDay, page.PageImage, page.PageTrash, page.UserId, page.TypeId, page.TempId)
+	res, err := pc.PageService.UpdatePage(utils.StringToInt64(pageId), page.PageTitle, page.PageSlug, page.PageContent, page.PageDescription, page.PageStatus, page.PageYear, page.PageMonth, page.PageDay, page.PageImage, page.UserId, page.TypeId, page.TempId)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -178,6 +166,27 @@ func (pc *PageController) UpdatePage(c *gin.Context) {
 func (pc *PageController) DeletePage(c *gin.Context) {
 	pageId := c.Param("id")
 	res, err := pc.PageService.DeletePage(utils.StringToInt64(pageId))
+	if err != nil {
+		response.ErrorResponse(c, int(res.Code), "")
+		return
+	}
+	response.SuccessResponse(c, int(res.Code), res)
+}
+
+func (pc *PageController) CountPageByType(c *gin.Context) {
+	typeId := c.Param("id")
+	res, err := pc.PageService.CountPageByType(utils.StringToInt64(typeId))
+	if err != nil {
+		response.ErrorResponse(c, int(res.Code), "")
+		return
+	}
+	response.SuccessResponse(c, int(res.Code), res)
+}
+
+func (pc *PageController) CountPageByTypeNStatus(c *gin.Context) {
+	typeId := c.Query("type")
+	status := c.Query("status")
+	res, err := pc.PageService.CountPageByTypeNStatus(utils.StringToInt32(typeId), utils.StringToInt32(status))
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return

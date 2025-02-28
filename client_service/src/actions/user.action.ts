@@ -131,3 +131,13 @@ export async function getUserById(id: number) {
     return null;
   }
 }
+
+export async function getUserFromCookie() {
+  try {
+    const user = (await cookies()).get("user")?.value || "{}";
+    return JSON.parse(user);
+  } catch (error) {
+    console.log("error::", error);
+    return null;
+  }
+}

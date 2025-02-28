@@ -1,7 +1,7 @@
 'use client'
 import { createNewImage } from '@/actions/image.action'
 import uploadS3 from '@/app/hooks/uploadS3'
-import { useMedia } from '@/app/ux-admin/(admin)/media/MediaContext'
+import { useMedia } from '@/app/ux-admin/MediaContext'
 import React, { useRef, useState } from 'react'
 
 type Props = {

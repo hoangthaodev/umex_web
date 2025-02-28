@@ -68,7 +68,6 @@ type Page struct {
 	PageMonth       int32  `json:"page_month"`
 	PageDay         int32  `json:"page_day"`
 	PageImage       int64  `json:"page_image"`
-	PageTrash       int32  `json:"page_trash"`
 	UserId          int64  `json:"user_id"`
 	TypeId          int32  `json:"type_id"`
 	CatId           int64  `json:"category_id"`

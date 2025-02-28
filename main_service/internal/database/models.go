@@ -72,7 +72,6 @@ type TbPage struct {
 	PagePublishMonth int32
 	PagePublishDay   int32
 	PageFeatureImage int64
-	PageTrash        int32
 	UserID           int64
 	TypeID           int32
 	TemplateID       int32
@@ -109,11 +108,6 @@ type TbToken struct {
 	ExpiredToken int64
 	CreatedAt    int64
 	UpdatedAt    int64
-}
-
-type TbType struct {
-	TypeID   int64
-	TypeName string
 }
 
 type TbUser struct {
