@@ -13,7 +13,7 @@ func Authorization() gin.HandlerFunc {
 		res, err := new(services.AuthService).CheckAuth(authorization)
 
 		if err != nil || res.Code != 2000 {
-			response.ErrorResponse(c, 3001, "error: Unauthorized")
+			response.ErrorResponse(c, int(res.Code), "error: Unauthorized")
 			c.Abort()
 			return
 		}

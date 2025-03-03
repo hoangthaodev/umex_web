@@ -4,7 +4,6 @@ import (
 	"context"
 	"main_service/global"
 	"main_service/internal/database"
-	"main_service/internal/utils"
 	"time"
 )
 
@@ -22,29 +21,33 @@ func (ts *TokenService) GetTokenByUserId(userId int64) (database.TbToken, error)
 	return queries.GetTokenByUserId(context.Background(), userId)
 }
 
-func (ts *TokenService) CreateNewToken(userId int64, refreshToken string, expiredToken int64) error {
+func (ts *TokenService) CreateNewToken(userId int64, accessToken string, accessExpired int64, refreshToken string, refreshExpired int64) error {
 	queries := database.New(global.Mysql)
 
-	createAt := utils.TimeToInt64(time.Now())
+	createAt := time.Now().Unix()
 
 	return queries.CreateNewToken(context.Background(), database.CreateNewTokenParams{
-		UserID:       userId,
-		RefreshToken: refreshToken,
-		ExpiredToken: expiredToken,
-		CreatedAt:    createAt,
+		UserID:              userId,
+		AccessToken:         accessToken,
+		AccessTokenExpired:  accessExpired,
+		RefreshToken:        refreshToken,
+		RefreshTokenExpired: refreshExpired,
+		CreatedAt:           createAt,
 	})
 }
 
-func (ts *TokenService) UpdateToken(refreshToken string, expiredToken int64, tokenId int64) error {
+func (ts *TokenService) UpdateToken(accessToken string, accessExpired int64, refreshToken string, refreshExpired int64, tokenId int64) error {
 	queries := database.New(global.Mysql)
 
-	updateAt := utils.TimeToInt64(time.Now())
+	updateAt := time.Now().Unix()
 
 	return queries.UpdateToken(context.Background(), database.UpdateTokenParams{
-		RefreshToken: refreshToken,
-		ExpiredToken: expiredToken,
-		UpdatedAt:    updateAt,
-		TokenID:      tokenId,
+		AccessToken:         accessToken,
+		AccessTokenExpired:  accessExpired,
+		RefreshToken:        refreshToken,
+		RefreshTokenExpired: refreshExpired,
+		UpdatedAt:           updateAt,
+		TokenID:             tokenId,
 	})
 }
 

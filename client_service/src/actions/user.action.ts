@@ -38,7 +38,7 @@ export async function login(username: string, password: string) {
 
     (await cookies()).set("user", JSON.stringify(dataParse.data.user), {
       path: "/",
-      maxAge: 60 * 60 * 24, // 1 days
+      maxAge: 60 * 60 * 24 * 7, // 7 days
       httpOnly: true,
       sameSite: "strict",
     });

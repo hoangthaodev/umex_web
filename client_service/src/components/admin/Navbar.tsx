@@ -12,7 +12,7 @@ const Navbar = async () => {
   const user = JSON.parse(userCookie?.value || '{}')
 
   return (
-    <div className='flex justify-between sticky z-10 top-0 bg-gray-600'>
+    <div className='flex justify-between sticky z-50 top-0 bg-gray-600 h-10'>
       <div className='flex gap-2'>
         <MenuButton className='p-2 text-gray-200 hover:text-blue-500' />
         <Link href={"/"}>

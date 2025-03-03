@@ -1,10 +1,11 @@
+'use client'
 import { getUserById } from '@/actions/user.action';
 import { PageType, UserType } from '@/lib/types'
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 
 type Props = {
+  typeId: number
   item: PageType
   author?: boolean;
   thumbnail?: boolean;
@@ -16,9 +17,9 @@ type Props = {
   comment?: boolean;
 }
 
-const PageTableRow = ({ item, author = false, thumbnail = false, sku = false, stock = false, price = false, categories = false, tag = false, comment = false }: Props) => {
+const PageTableRow = ({ typeId, item, author = false, thumbnail = false, sku = false, stock = false, price = false, categories = false, tag = false, comment = false }: Props) => {
   const [user, setUser] = useState<UserType | undefined>(undefined)
-  const editPageUrl = window.location.pathname + "/" + item.page_id
+  const editPageUrl = process.env.NEXT_PUBLIC_BASE_URL + "/ux-admin/edit/" + typeId + "/" + item.page_id
 
   useEffect(() => {
     const data = async () => {
@@ -39,7 +40,7 @@ const PageTableRow = ({ item, author = false, thumbnail = false, sku = false, st
       {
         author && <td>{user && user.user_name}</td>
       }
-      <td>{item.page_status === (0 || undefined) ? "Published" : "Last Modified"} {item.page_publish_year}/{item.page_publish_month}/{item.page_publish_day}</td>
+      <td>{item.page_status === 1 ? "Published" : "Last Modified"} {item.page_publish_year}/{item.page_publish_month}/{item.page_publish_day}</td>
     </tr>
   )
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"main_service/global"
 	"main_service/internal/services"
+	"main_service/pkg/response"
 	"main_service/proto/pb"
 
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -130,6 +131,31 @@ func (ct *CategoryTransport) GetCategoryByParent(c context.Context, in *pb.NumbR
 
 	return &pb.ManyCategoryResponse{
 		Code:       2000,
+		Categories: categories,
+	}, nil
+}
+
+func (ct *CategoryTransport) GetCategoryByTypeNParent(c context.Context, in *pb.Category) (*pb.ManyCategoryResponse, error) {
+	res, err := ct.CategoryService.GetCategoryByTypeNParent(in.TypeId, in.CategoryId)
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.ManyCategoryResponse{
+			Code: int32(response.ErrCodeGetFail),
+		}, nil
+	}
+	var categories []*pb.Category
+	for _, c := range res {
+		var category pb.Category
+		category.CategoryId = c.CategoryID
+		category.CategoryName = c.CategoryName
+		category.CategorySlug = c.CategorySlug
+		category.TypeId = c.TypeID
+		category.CategoryParent = c.CategoryParent
+
+		categories = append(categories, &category)
+	}
+	return &pb.ManyCategoryResponse{
+		Code:       int32(response.ErrCodeSuccess),
 		Categories: categories,
 	}, nil
 }

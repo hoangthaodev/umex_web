@@ -19,11 +19,12 @@ func (cr *CategoryRouter) InitCategoryRouter(router *gin.RouterGroup) {
 	privateCategoryRouter.Use(middleware.Authorization())
 	privateCategoryRouter.Use(middleware.Permission())
 	{
-		privateCategoryRouter.GET("/:id", cr.CategoryController.GetCategoryById)
+		privateCategoryRouter.GET("/id/:id", cr.CategoryController.GetCategoryById)
 		privateCategoryRouter.GET("/parent/:id", cr.CategoryController.GetCategoryByParent)
 		privateCategoryRouter.GET("/slug/:slug", cr.CategoryController.GetCategoryBySlug)
 		privateCategoryRouter.GET("", cr.CategoryController.GetAllCategory)
 		privateCategoryRouter.GET("/type/:id", cr.CategoryController.GetCategoryByType)
+		privateCategoryRouter.GET("/typenparent/", cr.CategoryController.GetCategoryByTypeNParent)
 		privateCategoryRouter.POST("", cr.CategoryController.CreateNewCategory)
 		privateCategoryRouter.PUT("/:id", cr.CategoryController.UpdateCategory)
 		privateCategoryRouter.DELETE("/:id", cr.CategoryController.DeleteCategory)

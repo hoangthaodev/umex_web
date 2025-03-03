@@ -59,6 +59,17 @@ func (cs *CategoryService) GetCategoryByParent(parentId int64) (*pb.ManyCategory
 	})
 }
 
+func (cs *CategoryService) GetCategoryByTypeNParent(typeId int32, catParent int64) (*pb.ManyCategoryResponse, error) {
+	conn := utils.ConnectToService(global.Config.Server.MainServer)
+	defer conn.Close()
+
+	client := pb.NewCategoryServiceClient(conn)
+	return client.GetCategoryByTypeNParent(context.Background(), &pb.Category{
+		TypeId:         typeId,
+		CategoryParent: catParent,
+	})
+}
+
 func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, catDes string, catParent int64, typeId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()

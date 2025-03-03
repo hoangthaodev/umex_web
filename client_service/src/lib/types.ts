@@ -100,10 +100,10 @@ export type PageType = {
   page_publish_year: number;
   page_publish_month: number;
   page_publish_day: number;
-  page_image: number;
+  page_feature_image: number;
   user_id: number;
   type_id: number;
-  temp_id: number;
+  template_id: number;
 };
 
 export type UserType = {

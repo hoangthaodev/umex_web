@@ -18,7 +18,23 @@ func (uc *UserController) CheckAuth(c *gin.Context) {
 	var authorization = c.GetHeader("Authorization")
 	res, err := uc.AuthService.CheckAuth(authorization)
 	if err != nil || res.Code != 2000 {
-		response.ErrorResponse(c, 3001, "error: Unauthorized")
+		response.ErrorResponse(c, int(res.Code), "error: Unauthorized")
+		c.Abort()
+		return
+	}
+	response.SuccessResponse(c, int(res.Code), res)
+}
+
+func (uc *UserController) RefreshToken(c *gin.Context) {
+	var token utils.RefreshToken
+	err := c.ShouldBindJSON(&token)
+	if err != nil {
+		log.Println("Error binding json refresh token")
+		return
+	}
+	res, err := uc.AuthService.RefreshToken(token.RefreshToken)
+	if err != nil || res.Code != 2000 {
+		response.ErrorResponse(c, int(res.Code), "error: Unauthorized")
 		c.Abort()
 		return
 	}

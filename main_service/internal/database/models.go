@@ -102,12 +102,14 @@ type TbTag struct {
 }
 
 type TbToken struct {
-	TokenID      int64
-	UserID       int64
-	RefreshToken string
-	ExpiredToken int64
-	CreatedAt    int64
-	UpdatedAt    int64
+	TokenID             int64
+	UserID              int64
+	AccessToken         string
+	AccessTokenExpired  int64
+	RefreshToken        string
+	RefreshTokenExpired int64
+	CreatedAt           int64
+	UpdatedAt           int64
 }
 
 type TbUser struct {

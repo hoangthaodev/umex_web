@@ -13,6 +13,9 @@ select * from tb_category where type_id = ?;
 -- name: GetCategoryByParent :many
 select * from tb_category where category_parent = ?;
 
+-- name: GetCategoryByTypeNParent :many
+select * from tb_category where type_id = ? and category_parent = ?;
+
 -- name: CreateNewCategory :exec
 insert into tb_category (category_name, category_slug, category_description, category_parent, type_id, created_at)
 values (?,?,?,?,?,?);

@@ -17,6 +17,7 @@ func (ur *UserRouter) InitUserRouter(router *gin.RouterGroup) {
 	{
 		publicUserRouter.GET("/checkauth", ur.CheckAuth)
 		publicUserRouter.POST("/login", ur.Login)
+		publicUserRouter.POST("/token/refresh", ur.RefreshToken)
 	}
 
 	// private router

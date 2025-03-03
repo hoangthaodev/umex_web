@@ -40,6 +40,15 @@ func (cs *CategoryService) GetCategoryByParent(catParent int64) ([]database.TbCa
 	return queries.GetCategoryByParent(context.Background(), catParent)
 }
 
+func (cs *CategoryService) GetCategoryByTypeNParent(typeId int32, catParent int64) ([]database.TbCategory, error) {
+	queries := database.New(global.Mysql)
+
+	return queries.GetCategoryByTypeNParent(context.Background(), database.GetCategoryByTypeNParentParams{
+		TypeID:         typeId,
+		CategoryParent: catParent,
+	})
+}
+
 func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, catDes string, catParent int64, typeId int32) error {
 	queries := database.New(global.Mysql)
 

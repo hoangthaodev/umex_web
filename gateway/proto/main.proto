@@ -134,6 +134,7 @@ message AuthResponse{
 service AuthService{
   rpc GetAuthByUserId(NumbRequest) returns (AuthResponse){}
   rpc CheckAuth(MessageRequest) returns (AuthResponse){}
+  rpc RefreshToken(MessageRequest) returns (LoginResponse){}
 }
 
 message Image{
@@ -234,6 +235,7 @@ service CategoryService{
   rpc GetCategoryBySlug(MessageRequest) returns (CategoryResponse){}
   rpc GetCategoryByType(NumbRequest) returns (ManyCategoryResponse){}
   rpc GetCategoryByParent(NumbRequest) returns (ManyCategoryResponse){}
+  rpc GetCategoryByTypeNParent(Category) returns (ManyCategoryResponse){}
   rpc CreateNewCategory(Category) returns (MessageResponse){}
   rpc UpdateCategory(Category) returns (MessageResponse){}
   rpc DeleteCategory(NumbRequest) returns (MessageResponse){}

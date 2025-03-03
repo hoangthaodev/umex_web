@@ -13,7 +13,7 @@ func CreateAccessToken(payload any) (string, error) {
 	accessSecret := []byte(global.Config.Server.PublishKey)
 	claims := jwt.MapClaims{
 		"payload":    payload,
-		"expires_at": utils.TimeToInt64(time.Now().Add(24 * time.Hour)),
+		"expired_at": time.Now().Add(24 * time.Hour).Unix(),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -25,7 +25,7 @@ func CreateRefreshToken(payload any) (string, error) {
 
 	claims := jwt.MapClaims{
 		"payload":    payload,
-		"expires_at": utils.TimeToInt64(time.Now().Add(7 * 24 * time.Hour)),
+		"expired_at": time.Now().Add(7 * 24 * time.Hour).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(refreshSecret)
@@ -55,26 +55,32 @@ func VerifyToken(tokenString string, secretKey []byte) (jwt.MapClaims, error) {
 func CreateTokenPair(payload any) (*utils.TokenPairStruct, error) {
 	accessToken, err := CreateAccessToken(payload)
 	if err != nil {
-		return &utils.TokenPairStruct{}, err
+		return nil, err
 	}
 	refreshToken, err := CreateRefreshToken(payload)
 	if err != nil {
-		return &utils.TokenPairStruct{}, err
+		return nil, err
 	}
 
-	refreshSecret := []byte(global.Config.Server.PrivateKey)
-	token, err := VerifyToken(refreshToken, refreshSecret)
-
+	accessSecret := []byte(global.Config.Server.PublishKey)
+	accessDecode, err := VerifyToken(accessToken, accessSecret)
 	if err != nil {
-		return &utils.TokenPairStruct{}, err
+		return nil, err
+	}
+	refreshSecret := []byte(global.Config.Server.PrivateKey)
+	refreshDecode, err := VerifyToken(refreshToken, refreshSecret)
+	if err != nil {
+		return nil, err
 	}
 
-	refreshExpires := token["expires_at"].(float64)
+	accessExpired := accessDecode["expired_at"].(float64)
+	refreshExpired := refreshDecode["expired_at"].(float64)
 
 	return &utils.TokenPairStruct{
 		AccessToken:    accessToken,
+		AccessExpired:  int64(accessExpired),
 		RefreshToken:   refreshToken,
-		RefreshExpires: int64(refreshExpires),
+		RefreshExpired: int64(refreshExpired),
 	}, err
 
 }

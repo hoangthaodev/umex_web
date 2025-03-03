@@ -16,8 +16,8 @@ const FeaturedImage = ({ imageId, setImageId }: Props) => {
   const [selectedImage, setSelectedImage] = useState<ImageType | undefined>(undefined)
 
   useEffect(() => {
-    getImageById(imageId).then(res => {
-      setSelectedImage(res)
+    getImageById(imageId).then(data => {
+      data && setSelectedImage(data)
     })
   }, [imageId])
 
@@ -31,7 +31,7 @@ const FeaturedImage = ({ imageId, setImageId }: Props) => {
     <div className='flex flex-col border border-gray-400'>
       <h3 className='px-2 bg-gray-300'>Featured Image</h3>
       <DivNgang />
-      <div className='flex justify-center'>
+      <div className='flex p-2 justify-center'>
         {
           selectedImage &&
           <div className='flex flex-col items-center'>

@@ -10,21 +10,25 @@ import (
 )
 
 const createNewToken = `-- name: CreateNewToken :exec
-insert into tb_token (user_id, refresh_token, expired_token, created_at) values(?,?,?,?)
+insert into tb_token (user_id, access_token, access_token_expired, refresh_token, refresh_token_expired, created_at) values(?,?,?,?,?,?)
 `
 
 type CreateNewTokenParams struct {
-	UserID       int64
-	RefreshToken string
-	ExpiredToken int64
-	CreatedAt    int64
+	UserID              int64
+	AccessToken         string
+	AccessTokenExpired  int64
+	RefreshToken        string
+	RefreshTokenExpired int64
+	CreatedAt           int64
 }
 
 func (q *Queries) CreateNewToken(ctx context.Context, arg CreateNewTokenParams) error {
 	_, err := q.db.ExecContext(ctx, createNewToken,
 		arg.UserID,
+		arg.AccessToken,
+		arg.AccessTokenExpired,
 		arg.RefreshToken,
-		arg.ExpiredToken,
+		arg.RefreshTokenExpired,
 		arg.CreatedAt,
 	)
 	return err
@@ -40,7 +44,7 @@ func (q *Queries) DeleteToken(ctx context.Context, tokenID int64) error {
 }
 
 const getTokenById = `-- name: GetTokenById :one
-select token_id, user_id, refresh_token, expired_token, created_at, updated_at from tb_token where token_id = ?
+select token_id, user_id, access_token, access_token_expired, refresh_token, refresh_token_expired, created_at, updated_at from tb_token where token_id = ?
 `
 
 func (q *Queries) GetTokenById(ctx context.Context, tokenID int64) (TbToken, error) {
@@ -49,8 +53,10 @@ func (q *Queries) GetTokenById(ctx context.Context, tokenID int64) (TbToken, err
 	err := row.Scan(
 		&i.TokenID,
 		&i.UserID,
+		&i.AccessToken,
+		&i.AccessTokenExpired,
 		&i.RefreshToken,
-		&i.ExpiredToken,
+		&i.RefreshTokenExpired,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -58,7 +64,7 @@ func (q *Queries) GetTokenById(ctx context.Context, tokenID int64) (TbToken, err
 }
 
 const getTokenByUserId = `-- name: GetTokenByUserId :one
-select token_id, user_id, refresh_token, expired_token, created_at, updated_at from tb_token where user_id = ?
+select token_id, user_id, access_token, access_token_expired, refresh_token, refresh_token_expired, created_at, updated_at from tb_token where user_id = ?
 `
 
 func (q *Queries) GetTokenByUserId(ctx context.Context, userID int64) (TbToken, error) {
@@ -67,8 +73,10 @@ func (q *Queries) GetTokenByUserId(ctx context.Context, userID int64) (TbToken, 
 	err := row.Scan(
 		&i.TokenID,
 		&i.UserID,
+		&i.AccessToken,
+		&i.AccessTokenExpired,
 		&i.RefreshToken,
-		&i.ExpiredToken,
+		&i.RefreshTokenExpired,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -76,20 +84,24 @@ func (q *Queries) GetTokenByUserId(ctx context.Context, userID int64) (TbToken, 
 }
 
 const updateToken = `-- name: UpdateToken :exec
-update tb_token set refresh_token = ?, expired_token = ?, updated_at = ? where token_id = ?
+update tb_token set access_token =?, access_token_expired =?, refresh_token = ?, refresh_token_expired = ?, updated_at = ? where token_id = ?
 `
 
 type UpdateTokenParams struct {
-	RefreshToken string
-	ExpiredToken int64
-	UpdatedAt    int64
-	TokenID      int64
+	AccessToken         string
+	AccessTokenExpired  int64
+	RefreshToken        string
+	RefreshTokenExpired int64
+	UpdatedAt           int64
+	TokenID             int64
 }
 
 func (q *Queries) UpdateToken(ctx context.Context, arg UpdateTokenParams) error {
 	_, err := q.db.ExecContext(ctx, updateToken,
+		arg.AccessToken,
+		arg.AccessTokenExpired,
 		arg.RefreshToken,
-		arg.ExpiredToken,
+		arg.RefreshTokenExpired,
 		arg.UpdatedAt,
 		arg.TokenID,
 	)

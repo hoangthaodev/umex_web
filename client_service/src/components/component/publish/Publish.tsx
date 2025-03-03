@@ -2,8 +2,9 @@
 import DivNgang from '@/components/DivNgang'
 import { statusMap } from '@/lib/pageMap'
 import { PageType } from '@/lib/types'
+import { LoaderCircle } from 'lucide-react'
 import Link from 'next/link'
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useEffect, useState } from 'react'
 import { FaMapPin } from 'react-icons/fa'
 import { FaCalendarDays } from 'react-icons/fa6'
 
@@ -19,15 +20,22 @@ type Props = {
   setPublishDay: React.Dispatch<SetStateAction<number>>
   handleMoveToTrash: () => void
   handleSave: () => void
+  isChanged: boolean
+  isSaving: boolean
+  setIsChanged: React.Dispatch<SetStateAction<boolean>>
 }
 
-const Publish = ({ page, status, setStatus, publishYear, setPublishYear, publishMonth, setPublishMonth, publishDay, setPublishDay, handleMoveToTrash, handleSave }: Props) => {
+const Publish = ({ setIsChanged, isSaving, isChanged, page, status, setStatus, publishYear, setPublishYear, publishMonth, setPublishMonth, publishDay, setPublishDay, handleMoveToTrash, handleSave }: Props) => {
   const [isEditStatus, setIsEditStatus] = useState(false)
   const [editStatus, setEditStatus] = useState(status)
   const [isEditDate, setIsEditDate] = useState(false)
   const [editYear, setEditYear] = useState(publishYear)
   const [editMonth, setEditMonth] = useState(publishMonth)
   const [editDay, setEditDay] = useState(publishDay)
+
+  useEffect(() => {
+    setIsChanged(false)
+  }, [])
 
   return (
     <div className='border border-gray-400 rounded-sm'>
@@ -116,15 +124,26 @@ const Publish = ({ page, status, setStatus, publishYear, setPublishYear, publish
         <div>
           {
             page && (
-              <label className='text-blue-600 underline'
+              <label className='text-blue-600 underline cursor-pointer'
                 onClick={handleMoveToTrash}
               >Move to Trash</label>
             )
           }
         </div>
-        <button className='bg-blue-600 px-2 py-1 rounded-sm text-gray-100'
-          onClick={handleSave}
-        >Save</button>
+        <div className='flex items-center gap-2'>
+          {
+            isSaving && <LoaderCircle className='text-gray-500 animate-spin' />
+          }
+          {
+            isChanged ?
+              <button className='bg-blue-600 px-2 py-1 rounded-sm text-gray-100'
+                onClick={handleSave}
+              >Save</button>
+              :
+              <button className='bg-blue-400 px-2 cursor-auto py-1 rounded-sm text-gray-100'
+              >Save</button>
+          }
+        </div>
       </div>
     </div>
   )

@@ -67,3 +67,31 @@ export const createNewCategory = async (
     return null;
   }
 };
+
+export async function getCategoryByTypeNParent(
+  typeId: number,
+  parentId: number
+) {
+  try {
+    const access_token = (await cookies()).get("access_token")?.value || "";
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/categories/typenparent/?type=${typeId}&parent=${parentId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: access_token,
+        },
+      }
+    );
+    const data = await res.json();
+    const dataParse = JSON.parse(JSON.stringify(data));
+    if (dataParse.code !== 2000) {
+      console.log("fail GetCategoryByTypeNParent::", dataParse);
+      return null;
+    }
+    return dataParse.data.categories;
+  } catch (error) {
+    console.log("error::", error);
+    return null;
+  }
+}

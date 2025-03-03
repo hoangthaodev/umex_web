@@ -13,24 +13,19 @@ type Props = {
 }
 
 const TitleSlug = ({ typeId, title, setTitle, slug, setSlug }: Props) => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [editSlug, setEditSlug] = useState("")
+  const [editSlug, setEditSlug] = useState(slug)
   const [isEditSlug, setIsEditSlug] = useState(false)
 
   useEffect(() => {
-    setIsLoading(false)
-  }, [])
-
-  useEffect(() => {
     if (editSlug === "") {
-      setSlug(slugify(title))
+      setSlug(slugify(title, {
+        lower: true,
+        locale: "vi",
+      }))
     }
   }, [title])
 
-  if (isLoading) {
-    return (<>Loadding ...</>)
-  }
-  const originUrl = window.location.origin
+  const originUrl = process.env.NEXT_PUBLIC_BASE_URL || "#"
 
   return (
     <div className='flex flex-col gap-2'>
@@ -41,7 +36,7 @@ const TitleSlug = ({ typeId, title, setTitle, slug, setSlug }: Props) => {
         Permalink:
         <Link
           className='underline text-blue-600 hover:text-blue-700'
-          href={originUrl}
+          href={originUrl + "/" + typeMap[typeId] + "/" + slug}
         >
           {originUrl + "/" + typeMap[typeId] + "/"}
           {!isEditSlug && slug}

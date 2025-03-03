@@ -192,6 +192,47 @@ func (q *Queries) GetCategoryByType(ctx context.Context, typeID int32) ([]TbCate
 	return items, nil
 }
 
+const getCategoryByTypeNParent = `-- name: GetCategoryByTypeNParent :many
+select category_id, category_name, category_slug, category_description, category_parent, type_id, created_at, updated_at from tb_category where type_id = ? and category_parent = ?
+`
+
+type GetCategoryByTypeNParentParams struct {
+	TypeID         int32
+	CategoryParent int64
+}
+
+func (q *Queries) GetCategoryByTypeNParent(ctx context.Context, arg GetCategoryByTypeNParentParams) ([]TbCategory, error) {
+	rows, err := q.db.QueryContext(ctx, getCategoryByTypeNParent, arg.TypeID, arg.CategoryParent)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []TbCategory
+	for rows.Next() {
+		var i TbCategory
+		if err := rows.Scan(
+			&i.CategoryID,
+			&i.CategoryName,
+			&i.CategorySlug,
+			&i.CategoryDescription,
+			&i.CategoryParent,
+			&i.TypeID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const updateCategory = `-- name: UpdateCategory :exec
 update tb_category set category_name = ?, category_slug = ?, category_description = ?, category_parent = ?, type_id = ?, updated_at = ? where category_id = ?
 `

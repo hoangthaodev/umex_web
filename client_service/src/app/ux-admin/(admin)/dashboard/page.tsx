@@ -5,7 +5,7 @@ function DashboardPage() {
 
   return (
     <div className='p-2'>
-      DashboardPage page
+      Dashboard
     </div>
   )
 }

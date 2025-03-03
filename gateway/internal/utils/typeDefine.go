@@ -64,14 +64,13 @@ type Page struct {
 	PageContent     string `json:"page_content"`
 	PageDescription string `json:"page_description"`
 	PageStatus      int32  `json:"page_status"`
-	PageYear        int32  `json:"page_year"`
-	PageMonth       int32  `json:"page_month"`
-	PageDay         int32  `json:"page_day"`
+	PageYear        int32  `json:"page_publish_year"`
+	PageMonth       int32  `json:"page_publish_month"`
+	PageDay         int32  `json:"page_publish_day"`
 	PageImage       int64  `json:"page_image"`
 	UserId          int64  `json:"user_id"`
 	TypeId          int32  `json:"type_id"`
-	CatId           int64  `json:"category_id"`
-	TempId          int32  `json:"template_id"`
+	TempId          int32  `json:"temp_id"`
 }
 
 type Category struct {
@@ -87,4 +86,8 @@ type Pagecategory struct {
 	PagecategoryId int64 `json:"pagecategory_id"`
 	PageId         int64 `json:"page_id"`
 	CategoryId     int64 `json:"category_id"`
+}
+
+type RefreshToken struct {
+	RefreshToken string `json:"refresh_token"`
 }

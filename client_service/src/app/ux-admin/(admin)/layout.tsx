@@ -16,7 +16,7 @@ function AdminLayout({ children }: AdminLayoutType) {
       <MediaProvider>
         <div className='flex flex-col h-full'>
           <Navbar />
-          <main className='flex h-full relative overflow-auto'>
+          <main className='flex grow'>
             <Sidebar />
             {children}
           </main>

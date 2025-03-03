@@ -974,6 +974,7 @@ var ComponentService_ServiceDesc = grpc.ServiceDesc{
 const (
 	AuthService_GetAuthByUserId_FullMethodName = "/pb.AuthService/GetAuthByUserId"
 	AuthService_CheckAuth_FullMethodName       = "/pb.AuthService/CheckAuth"
+	AuthService_RefreshToken_FullMethodName    = "/pb.AuthService/RefreshToken"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -982,6 +983,7 @@ const (
 type AuthServiceClient interface {
 	GetAuthByUserId(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*AuthResponse, error)
 	CheckAuth(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*AuthResponse, error)
+	RefreshToken(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 }
 
 type authServiceClient struct {
@@ -1012,12 +1014,23 @@ func (c *authServiceClient) CheckAuth(ctx context.Context, in *MessageRequest, o
 	return out, nil
 }
 
+func (c *authServiceClient) RefreshToken(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, AuthService_RefreshToken_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
 type AuthServiceServer interface {
 	GetAuthByUserId(context.Context, *NumbRequest) (*AuthResponse, error)
 	CheckAuth(context.Context, *MessageRequest) (*AuthResponse, error)
+	RefreshToken(context.Context, *MessageRequest) (*LoginResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -1033,6 +1046,9 @@ func (UnimplementedAuthServiceServer) GetAuthByUserId(context.Context, *NumbRequ
 }
 func (UnimplementedAuthServiceServer) CheckAuth(context.Context, *MessageRequest) (*AuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAuth not implemented")
+}
+func (UnimplementedAuthServiceServer) RefreshToken(context.Context, *MessageRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -1091,6 +1107,24 @@ func _AuthService_CheckAuth_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).RefreshToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_RefreshToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).RefreshToken(ctx, req.(*MessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1105,6 +1139,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckAuth",
 			Handler:    _AuthService_CheckAuth_Handler,
+		},
+		{
+			MethodName: "RefreshToken",
+			Handler:    _AuthService_RefreshToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1836,14 +1874,15 @@ var MenuLocationService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	CategoryService_GetAllCategory_FullMethodName      = "/pb.CategoryService/GetAllCategory"
-	CategoryService_GetCategoryById_FullMethodName     = "/pb.CategoryService/GetCategoryById"
-	CategoryService_GetCategoryBySlug_FullMethodName   = "/pb.CategoryService/GetCategoryBySlug"
-	CategoryService_GetCategoryByType_FullMethodName   = "/pb.CategoryService/GetCategoryByType"
-	CategoryService_GetCategoryByParent_FullMethodName = "/pb.CategoryService/GetCategoryByParent"
-	CategoryService_CreateNewCategory_FullMethodName   = "/pb.CategoryService/CreateNewCategory"
-	CategoryService_UpdateCategory_FullMethodName      = "/pb.CategoryService/UpdateCategory"
-	CategoryService_DeleteCategory_FullMethodName      = "/pb.CategoryService/DeleteCategory"
+	CategoryService_GetAllCategory_FullMethodName           = "/pb.CategoryService/GetAllCategory"
+	CategoryService_GetCategoryById_FullMethodName          = "/pb.CategoryService/GetCategoryById"
+	CategoryService_GetCategoryBySlug_FullMethodName        = "/pb.CategoryService/GetCategoryBySlug"
+	CategoryService_GetCategoryByType_FullMethodName        = "/pb.CategoryService/GetCategoryByType"
+	CategoryService_GetCategoryByParent_FullMethodName      = "/pb.CategoryService/GetCategoryByParent"
+	CategoryService_GetCategoryByTypeNParent_FullMethodName = "/pb.CategoryService/GetCategoryByTypeNParent"
+	CategoryService_CreateNewCategory_FullMethodName        = "/pb.CategoryService/CreateNewCategory"
+	CategoryService_UpdateCategory_FullMethodName           = "/pb.CategoryService/UpdateCategory"
+	CategoryService_DeleteCategory_FullMethodName           = "/pb.CategoryService/DeleteCategory"
 )
 
 // CategoryServiceClient is the client API for CategoryService service.
@@ -1855,6 +1894,7 @@ type CategoryServiceClient interface {
 	GetCategoryBySlug(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*CategoryResponse, error)
 	GetCategoryByType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
 	GetCategoryByParent(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
+	GetCategoryByTypeNParent(ctx context.Context, in *Category, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
 	CreateNewCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*MessageResponse, error)
 	UpdateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*MessageResponse, error)
 	DeleteCategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
@@ -1918,6 +1958,16 @@ func (c *categoryServiceClient) GetCategoryByParent(ctx context.Context, in *Num
 	return out, nil
 }
 
+func (c *categoryServiceClient) GetCategoryByTypeNParent(ctx context.Context, in *Category, opts ...grpc.CallOption) (*ManyCategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyCategoryResponse)
+	err := c.cc.Invoke(ctx, CategoryService_GetCategoryByTypeNParent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *categoryServiceClient) CreateNewCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*MessageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(MessageResponse)
@@ -1957,6 +2007,7 @@ type CategoryServiceServer interface {
 	GetCategoryBySlug(context.Context, *MessageRequest) (*CategoryResponse, error)
 	GetCategoryByType(context.Context, *NumbRequest) (*ManyCategoryResponse, error)
 	GetCategoryByParent(context.Context, *NumbRequest) (*ManyCategoryResponse, error)
+	GetCategoryByTypeNParent(context.Context, *Category) (*ManyCategoryResponse, error)
 	CreateNewCategory(context.Context, *Category) (*MessageResponse, error)
 	UpdateCategory(context.Context, *Category) (*MessageResponse, error)
 	DeleteCategory(context.Context, *NumbRequest) (*MessageResponse, error)
@@ -1984,6 +2035,9 @@ func (UnimplementedCategoryServiceServer) GetCategoryByType(context.Context, *Nu
 }
 func (UnimplementedCategoryServiceServer) GetCategoryByParent(context.Context, *NumbRequest) (*ManyCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryByParent not implemented")
+}
+func (UnimplementedCategoryServiceServer) GetCategoryByTypeNParent(context.Context, *Category) (*ManyCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryByTypeNParent not implemented")
 }
 func (UnimplementedCategoryServiceServer) CreateNewCategory(context.Context, *Category) (*MessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewCategory not implemented")
@@ -2105,6 +2159,24 @@ func _CategoryService_GetCategoryByParent_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CategoryService_GetCategoryByTypeNParent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Category)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).GetCategoryByTypeNParent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CategoryService_GetCategoryByTypeNParent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).GetCategoryByTypeNParent(ctx, req.(*Category))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CategoryService_CreateNewCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Category)
 	if err := dec(in); err != nil {
@@ -2185,6 +2257,10 @@ var CategoryService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCategoryByParent",
 			Handler:    _CategoryService_GetCategoryByParent_Handler,
+		},
+		{
+			MethodName: "GetCategoryByTypeNParent",
+			Handler:    _CategoryService_GetCategoryByTypeNParent_Handler,
 		},
 		{
 			MethodName: "CreateNewCategory",

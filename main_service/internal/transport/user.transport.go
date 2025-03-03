@@ -6,6 +6,7 @@ import (
 	"main_service/internal/auth"
 	"main_service/internal/services"
 	"main_service/internal/utils"
+	"main_service/pkg/response"
 	"main_service/proto/pb"
 
 	"golang.org/x/crypto/bcrypt"
@@ -24,7 +25,7 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.LoginResponse{
-			Code: 3001,
+			Code: int32(response.ErrCodeUserInputFail),
 		}, nil
 	}
 
@@ -32,14 +33,14 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.LoginResponse{
-			Code: 3001,
+			Code: int32(response.ErrCodeUserInputFail),
 		}, nil
 	}
 
 	if user.UserActive == 0 {
 		global.Logger.Error("user inactive")
 		return &pb.LoginResponse{
-			Code: 3002,
+			Code: int32(response.ErrCodeUserPermisionFail),
 		}, nil
 	}
 
@@ -51,29 +52,29 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.LoginResponse{
-			Code: 2002,
+			Code: int32(response.ErrCodeCreateFail),
 		}, nil
 	}
 	token, err := ut.TokenService.GetTokenByUserId(user.UserID)
 	if err != nil {
-		err = ut.TokenService.CreateNewToken(user.UserID, tokenPair.RefreshToken, tokenPair.RefreshExpires)
+		err = ut.TokenService.CreateNewToken(user.UserID, tokenPair.AccessToken, tokenPair.AccessExpired, tokenPair.RefreshToken, tokenPair.RefreshExpired)
 		if err != nil {
 			global.Logger.Error(err.Error())
 			return &pb.LoginResponse{
-				Code: 2002,
+				Code: int32(response.ErrCodeCreateFail),
 			}, nil
 		}
 	} else {
-		err = ut.TokenService.UpdateToken(tokenPair.RefreshToken, tokenPair.RefreshExpires, token.TokenID)
+		err = ut.TokenService.UpdateToken(tokenPair.AccessToken, tokenPair.AccessExpired, tokenPair.RefreshToken, tokenPair.RefreshExpired, token.TokenID)
 		if err != nil {
 			global.Logger.Error(err.Error())
 			return &pb.LoginResponse{
-				Code: 2003,
+				Code: int32(response.ErrCodeUpdateFail),
 			}, nil
 		}
 	}
 	return &pb.LoginResponse{
-		Code: 2000,
+		Code: int32(response.ErrCodeSuccess),
 		User: &pb.User{
 			UserId:    user.UserID,
 			UserName:  user.UserName,
@@ -89,13 +90,13 @@ func (ut *UserTransport) Logout(c context.Context, in *pb.NumbRequest) (*pb.Mess
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
-			Code:    2004,
+			Code:    int32(response.ErrCodeDeleteFail),
 			Message: "error deleting token",
 		}, nil
 	}
 
 	return &pb.MessageResponse{
-		Code:    2000,
+		Code:    int32(response.ErrCodeSuccess),
 		Message: "logout success",
 	}, nil
 }
@@ -105,7 +106,7 @@ func (ut *UserTransport) GetAllUser(context.Context, *emptypb.Empty) (*pb.ManyUs
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.ManyUserResponse{
-			Code: 2001,
+			Code: int32(response.ErrCodeGetFail),
 		}, nil
 	}
 
@@ -122,7 +123,7 @@ func (ut *UserTransport) GetAllUser(context.Context, *emptypb.Empty) (*pb.ManyUs
 	}
 
 	return &pb.ManyUserResponse{
-		Code:  2000,
+		Code:  int32(response.ErrCodeSuccess),
 		Users: users,
 	}, nil
 }
@@ -132,7 +133,7 @@ func (ut *UserTransport) GetUserById(c context.Context, in *pb.NumbRequest) (*pb
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.UserResponse{
-			Code: 2001,
+			Code: int32(response.ErrCodeGetFail),
 		}, nil
 	}
 
@@ -143,7 +144,7 @@ func (ut *UserTransport) GetUserById(c context.Context, in *pb.NumbRequest) (*pb
 	user.UserActive = int32(tbuser.UserActive)
 
 	return &pb.UserResponse{
-		Code: 2000,
+		Code: int32(response.ErrCodeSuccess),
 		User: &user,
 	}, nil
 }
@@ -154,7 +155,7 @@ func (ut *UserTransport) CreateNewUser(c context.Context, in *pb.User) (*pb.Mess
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
-			Code:    2002,
+			Code:    int32(response.ErrCodeCreateFail),
 			Message: "error creating user",
 		}, nil
 	}
@@ -163,7 +164,7 @@ func (ut *UserTransport) CreateNewUser(c context.Context, in *pb.User) (*pb.Mess
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
-			Code:    2001,
+			Code:    int32(response.ErrCodeGetFail),
 			Message: "error getting user",
 		}, nil
 	}
@@ -172,13 +173,13 @@ func (ut *UserTransport) CreateNewUser(c context.Context, in *pb.User) (*pb.Mess
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
-			Code:    2002,
+			Code:    int32(response.ErrCodeCreateFail),
 			Message: "error creating auth",
 		}, nil
 	}
 
 	return &pb.MessageResponse{
-		Code:    2000,
+		Code:    int32(response.ErrCodeSuccess),
 		Message: "create user success",
 	}, nil
 }
@@ -188,13 +189,13 @@ func (ut *UserTransport) UpdateUser(c context.Context, in *pb.User) (*pb.Message
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
-			Code:    2003,
+			Code:    int32(response.ErrCodeUpdateFail),
 			Message: "error updating user",
 		}, nil
 	}
 
 	return &pb.MessageResponse{
-		Code:    2000,
+		Code:    int32(response.ErrCodeSuccess),
 		Message: "update user success",
 	}, nil
 }
@@ -204,13 +205,13 @@ func (ut *UserTransport) DeleteUser(c context.Context, in *pb.NumbRequest) (*pb.
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{
-			Code:    2004,
+			Code:    int32(response.ErrCodeDeleteFail),
 			Message: "error deleting user",
 		}, nil
 	}
 
 	return &pb.MessageResponse{
-		Code:    2000,
+		Code:    int32(response.ErrCodeSuccess),
 		Message: "delete user success",
 	}, nil
 }

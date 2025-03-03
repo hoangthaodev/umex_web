@@ -62,6 +62,17 @@ func (cc *CategoryController) GetCategoryByType(c *gin.Context) {
 	response.SuccessResponse(c, int(res.Code), res)
 }
 
+func (cc *CategoryController) GetCategoryByTypeNParent(c *gin.Context) {
+	typeId := c.Query("type")
+	parentId := c.Query("parent")
+	res, err := cc.CategoryService.GetCategoryByTypeNParent(utils.StringToInt32(typeId), utils.StringToInt64(parentId))
+	if err != nil {
+		response.ErrorResponse(c, int(res.Code), "")
+		return
+	}
+	response.SuccessResponse(c, int(res.Code), res)
+}
+
 func (cc *CategoryController) CreateNewCategory(c *gin.Context) {
 	var newCat utils.Category
 	err := c.ShouldBindJSON(&newCat)

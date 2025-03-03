@@ -3,8 +3,10 @@
 create table tb_token (
   token_id bigint not null auto_increment,
   user_id bigint not null unique,
+  access_token varchar(255) not null,
+  access_token_expired bigint not null,
   refresh_token varchar(255) not null,
-  expired_token bigint not null,
+  refresh_token_expired bigint not null,
   created_at bigint not null,
   updated_at bigint not null default 0,
   primary key (token_id),

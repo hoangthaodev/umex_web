@@ -30,7 +30,7 @@ const Tags = ({ typeId, selectedTags, setSelectedTags }: Props) => {
 
   useEffect(() => {
     getTagByType(typeId).then((data: TagType[]) => {
-      setTags(data)
+      data && setTags(data)
     })
   }, [])
 
@@ -100,27 +100,29 @@ const Tags = ({ typeId, selectedTags, setSelectedTags }: Props) => {
     <div className='flex flex-col border border-gray-400'>
       <h3 className='px-2 bg-gray-300'>Tags</h3>
       <div className='p-2 flex flex-col gap-2'>
-        <div className='flex gap-1 flex-wrap'>
-          <input
-            className='border border-gray-400 rounded-sm px-2 w-[80%]'
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            autoComplete="off"
-            role="combobox"
-            aria-autocomplete="list"
-            aria-expanded={isExpanded}
-            aria-owns="suggestions-list"
-            aria-describedby="input-description"
-          />
-          <label className='border border-blue-600 text-blue-600 rounded-sm px-2 py-1'
-            onClick={handleAddTags}
-          >Add</label>
+        <div className='flex gap-1 flex-col'>
+          <div className='flex gap-1'>
+            <input
+              className='border border-gray-400 rounded-sm px-2 w-[80%]'
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              autoComplete="off"
+              role="combobox"
+              aria-autocomplete="list"
+              aria-expanded={isExpanded}
+              aria-owns="suggestions-list"
+              aria-describedby="input-description"
+            />
+            <label className='border border-blue-600 text-blue-600 rounded-sm px-2 py-1'
+              onClick={handleAddTags}
+            >Add</label>
+          </div>
 
           {/* Danh sách gợi ý */}
           {isExpanded && filteredSuggestions.length > 0 && (
             <ul
-              className='visible bg-gray-100 border border-blue-500 w-[80%]'
+              className='visible bg-gray-100 border border-blue-500 h-52 overflow-y-auto'
               id="suggestions-list" role="listbox">
               {filteredSuggestions.map((suggestion, index) => (
                 <li

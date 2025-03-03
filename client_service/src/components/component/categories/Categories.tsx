@@ -1,5 +1,5 @@
 'use client'
-import { createNewCategory, getCategoryByType } from '@/actions/category.action'
+import { createNewCategory, getCategoryByType, getCategoryByTypeNParent } from '@/actions/category.action'
 import DivNgang from '@/components/DivNgang'
 import { CategoryType } from '@/lib/types'
 import React, { SetStateAction, useEffect, useState } from 'react'
@@ -18,12 +18,10 @@ const Categories = ({ typeId, selectedCategory, setSelectedCategory }: Props) =>
   const [newCateParent, setNewParent] = useState(0)
 
   useEffect(() => {
-    const data = async () => {
-      const res = await getCategoryByType(typeId)
-      setCategories(res)
-    }
-    data()
-  }, [isAddNew])
+    getCategoryByType(typeId).then(data => {
+      data && setCategories(data)
+    })
+  }, [])
 
   const handleAddCategory = async () => {
     if (newCateName.trim() === "") return
@@ -36,7 +34,66 @@ const Categories = ({ typeId, selectedCategory, setSelectedCategory }: Props) =>
       typeId
     )
 
+    getCategoryByType(typeId).then(data => {
+      setCategories(data)
+    })
+
     setIsAddNew(false)
+  }
+
+  const handleChangeSelectedCategory = (checked: boolean, item: CategoryType) => {
+    if (checked) {
+      const newSelectedCategory = selectedCategory.filter((i) => i.category_id !== item.category_id)
+      setSelectedCategory(newSelectedCategory)
+    } else {
+      setSelectedCategory([...selectedCategory, item])
+    }
+  }
+
+  type CategoryTreeType = CategoryType & {
+    children: CategoryTreeType[]
+  }
+
+  const buildCategoryTree = (categoryArr: CategoryType[], parent: number = 0): CategoryTreeType[] => {
+    return categoryArr.filter(i => (i.category_parent || 0) === parent)
+      .map(i => ({
+        ...i,
+        children: buildCategoryTree(categoryArr, i.category_id)
+      })
+      )
+  }
+
+
+  const categoryTree = buildCategoryTree(categories)
+
+  const CategoryNode = ({ ml = 0, node }: { ml?: number, node: CategoryTreeType }) => {
+    const isChecked = selectedCategory.some(i => i.category_id === node.category_id)
+    const item: CategoryType = {
+      category_id: node.category_id,
+      category_name: node.category_name,
+      category_slug: node.category_slug,
+      category_des: node.category_des,
+      category_parent: node.category_parent,
+      type_id: node.type_id
+    }
+
+    return (
+      <>
+        <li
+          onClick={() => { handleChangeSelectedCategory(isChecked, item) }}
+          className='flex gap-2 items-center'
+          style={{ marginLeft: ml * 15 }}
+        >
+          <input type="checkbox" checked={isChecked}
+            onChange={() => { handleChangeSelectedCategory(isChecked, item) }}
+          />
+          {node.category_name}
+        </li>
+        {
+          node.children && node.children.map((i, index) => <CategoryNode ml={ml + 1} key={index} node={i} />)
+        }
+      </>
+    )
   }
 
   return (
@@ -46,27 +103,9 @@ const Categories = ({ typeId, selectedCategory, setSelectedCategory }: Props) =>
       <div className='p-2'>
         <ul>
           {
-            categories && categories.map((i) => {
-              const isChecked = selectedCategory?.findIndex((j) => j.category_id === i.category_id) !== -1
+            categoryTree && categoryTree.map((i, index) => {
               return (
-                <li
-                  onClick={
-                    () => {
-                      const newSelectedCategory = isChecked ? selectedCategory?.filter((j) => j.category_id !== i.category_id) : [...selectedCategory, i]
-                      setSelectedCategory(newSelectedCategory)
-                    }
-                  }
-                  key={i.category_id} className='flex gap-2 items-center'>
-                  <input type="checkbox" checked={isChecked}
-                    onChange={
-                      () => {
-                        const newSelectedCategory = isChecked ? selectedCategory?.filter((j) => j.category_id !== i.category_id) : [...selectedCategory, i]
-                        setSelectedCategory(newSelectedCategory)
-                      }
-                    }
-                  />
-                  {i.category_name}
-                </li>
+                <CategoryNode key={index} node={i} />
               )
             })
           }

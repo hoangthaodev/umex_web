@@ -20,6 +20,7 @@ type JWTPayloadStruct struct {
 
 type TokenPairStruct struct {
 	AccessToken    string `json:"access_token"`
+	AccessExpired  int64  `json:"access_expired"`
 	RefreshToken   string `json:"refresh_token"`
-	RefreshExpires int64  `json:"reflesh_expires"`
+	RefreshExpired int64  `json:"refresh_expired"`
 }

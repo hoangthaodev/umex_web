@@ -23,7 +23,7 @@ const ItemList = (props: ItemListType) => {
     <li className={`${props.className}`}>
       <Link
         href={props.href}
-        className={`flex gap-2 px-2 py-1 items-center hover:text-blue-600 ${props.selected == props.name ? "text-blue-500" : ""}`}
+        className={`flex gap-2 px-2 py-1 items-center hover:text-blue-600 ${props.selected == props.name ? "text-blue-500" : "text-gray-200"}`}
         onClick={handleOnclick}
       >
         {props.icon}
@@ -41,7 +41,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className={`${isShowSidebar ? "visible" : "invisible"} fixed z-50 flex flex-col justify-between py-2 bg-gray-600 bg-opacity-95 text-gray-200 h-full`}>
+      <div className={`${isShowSidebar ? "visible" : "invisible"} fixed z-50 flex flex-col py-2 bg-gray-600 bg-opacity-95 h-full`}>
         <ul className='whitespace-nowrap '>
           <ItemList
             href='/ux-admin/dashboard'
@@ -101,7 +101,7 @@ const Sidebar = () => {
           />
         </ul>
       </div>
-      <div className={`${isShowSidebar ? "visible" : "invisible"} absolute z-10 w-full h-full`}
+      <div className={`${isShowSidebar ? "visible" : "invisible"} fixed z-10 w-full h-full`}
         onClick={() => { setShowSidebar(false) }}
       />
     </>

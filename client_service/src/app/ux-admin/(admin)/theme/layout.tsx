@@ -16,7 +16,7 @@ const SettingLayout = async ({ children }: Props) => {
     <BreadcrumbProvider>
       <MediaProvider>
         <div className='flex w-full bg-gray-100'>
-          <div className='w-full sm:w-80 border-r border-gray-400 text-sm overflow-y-auto pb-10 flex flex-col'>
+          <div className='w-full h-[calc(100vh-2.5rem)] sm:w-80 border-r border-gray-400 text-sm overflow-y-auto pb-10 flex flex-col'>
             <Breadcrumb />
             {children}
           </div>

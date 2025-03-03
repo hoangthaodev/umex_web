@@ -27,3 +27,13 @@ func (as *AuthService) GetAuthByUserId(userId int64) (*pb.AuthResponse, error) {
 		Numb: userId,
 	})
 }
+
+func (as *AuthService) RefreshToken(refreshToken string) (*pb.LoginResponse, error) {
+	conn := utils.ConnectToService(global.Config.Server.MainServer)
+	defer conn.Close()
+	client := pb.NewAuthServiceClient(conn)
+
+	return client.RefreshToken(context.Background(), &pb.MessageRequest{
+		Str: refreshToken,
+	})
+}

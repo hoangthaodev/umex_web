@@ -5,6 +5,7 @@ import (
 	"gateway/global"
 	"gateway/internal/utils"
 	"gateway/proto/pb"
+	"log"
 )
 
 type PageService struct{}
@@ -152,6 +153,8 @@ func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageCont
 func (ps *PageService) UpdatePage(pageId int64, pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, userId int64, typeId int32, tempId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
+
+	log.Printf("year: %d, month: %d, day: %d", year, month, day)
 
 	client := pb.NewPageServiceClient(conn)
 	return client.UpdatePage(context.Background(), &pb.Page{

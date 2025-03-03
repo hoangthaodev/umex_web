@@ -1,6 +1,5 @@
 'use client'
 import { countPageByType, countPageByTypeNStatus, getPageByType, getPageByTypeNStatus } from '@/actions/page.action'
-import { getUserById } from '@/actions/user.action';
 import PageTableRow from '@/components/PageTableRow';
 import { PageType } from '@/lib/types'
 import React, { useEffect, useState } from 'react'
@@ -140,7 +139,7 @@ const PageTable = ({ typeId, tableId, author = false, thumbnail = false, sku = f
           {
             dataMap && dataMap.map((i, index) => {
               return (
-                <PageTableRow key={index} item={i} author={author} thumbnail={thumbnail} sku={sku} stock={stock} price={price} categories={categories} tag={tag} comment={comment} />
+                <PageTableRow typeId={typeId} key={index} item={i} author={author} thumbnail={thumbnail} sku={sku} stock={stock} price={price} categories={categories} tag={tag} comment={comment} />
               )
             })
           }

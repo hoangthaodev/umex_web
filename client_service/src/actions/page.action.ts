@@ -47,7 +47,6 @@ export const getPageById = async (pageId: number) => {
       console.log("fail GetPageById::", dataParse);
       return null;
     }
-
     return dataParse.data.page;
   } catch (error) {
     console.log("error::", error);
@@ -88,7 +87,7 @@ export async function updatePage(
       temp_id,
     });
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/pages`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/pages/${page_id}`,
       {
         method: "PUT",
         headers: {
@@ -163,7 +162,6 @@ export async function getPageByTypeNStatus(
     );
 
     const data = await res.json();
-    console.log("data::", data);
     const dataParse = JSON.parse(JSON.stringify(data));
 
     if (dataParse.code !== 2000) {
@@ -223,6 +221,61 @@ export async function countPageByTypeNStatus(typeId: number, status: number) {
       return null;
     }
     return dataParse.data.result;
+  } catch (error) {
+    console.log("error::", error);
+    return null;
+  }
+}
+
+export async function createNewPage(
+  page_title: string,
+  page_slug: string,
+  page_content: string,
+  page_description: string,
+  page_status: number,
+  page_publish_year: number,
+  page_publish_month: number,
+  page_publish_day: number,
+  page_image: number,
+  user_id: number,
+  type_id: number,
+  temp_id: number
+) {
+  try {
+    const access_token = (await cookies()).get("access_token")?.value || "";
+    const body = JSON.stringify({
+      page_title,
+      page_slug,
+      page_content,
+      page_description,
+      page_status,
+      page_publish_year,
+      page_publish_month,
+      page_publish_day,
+      page_image,
+      user_id,
+      type_id,
+      temp_id,
+    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/pages`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: access_token,
+        },
+        body: body,
+      }
+    );
+
+    const data = await res.json();
+    const dataParse = JSON.parse(JSON.stringify(data));
+    if (dataParse.code !== 2000) {
+      console.log("fail createNewPage::", dataParse);
+      return null;
+    }
+    return dataParse.data;
   } catch (error) {
     console.log("error::", error);
     return null;
