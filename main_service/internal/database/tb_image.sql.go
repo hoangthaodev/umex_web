@@ -96,6 +96,25 @@ func (q *Queries) GetImageById(ctx context.Context, imageID int64) (TbImage, err
 	return i, err
 }
 
+const getImageByUrl = `-- name: GetImageByUrl :one
+select image_id, image_url, image_title, image_alt, image_caption, created_at, updated_at from tb_image where image_url = ?
+`
+
+func (q *Queries) GetImageByUrl(ctx context.Context, imageUrl string) (TbImage, error) {
+	row := q.db.QueryRowContext(ctx, getImageByUrl, imageUrl)
+	var i TbImage
+	err := row.Scan(
+		&i.ImageID,
+		&i.ImageUrl,
+		&i.ImageTitle,
+		&i.ImageAlt,
+		&i.ImageCaption,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const updateImage = `-- name: UpdateImage :exec
 update tb_image
 set image_title = ?, image_url = ?, image_alt = ?, image_caption = ?, updated_at = ?

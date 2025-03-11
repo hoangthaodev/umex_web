@@ -1,61 +1,59 @@
 'use client'
 
-import { updateConfigByKey } from '@/actions/config.action'
+import { getImageById } from '@/actions/image.action'
 import { useTheme } from '@/app/ThemeContext'
 import { useMedia } from '@/app/ux-admin/MediaContext'
 import DivNgang from '@/components/DivNgang'
 import InputRange from '@/components/InputRange'
 import MediaSelect from '@/components/MediaSelect'
 import { SetBreadcrumb } from '@/components/SetBreadcrumb'
+import { ImageType } from '@/lib/types'
 import Image from 'next/image'
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
+import React, { useEffect, useState } from 'react'
 
 const SiteIdentify = () => {
   const { title, description, logo, favicon, isDisplayBelowLogo, setTitle, setDescription, setLogo, setFavicon, setIsDisplayBelowLogo
     , logoContainerWidth, setLogoContainerWidth, logoMaxWidth, setLogoMaxWidth, logoPadding, setLogoPadding, logoLink, setLogoLink
   } = useTheme()
-  const [isSelectMedia, setIsSelectMedia] = useState(false)
-  const { setImageSelected } = useMedia()
-  const [isWhat, setIsWhat] = useState<string | undefined>(undefined)
+  const [logoImage, setLogoImage] = useState<ImageType | undefined>(undefined)
+  const [faviconImage, setFaviconImage] = useState<ImageType | undefined>(undefined)
+  const [isLogoSelect, setIsLogoSelect] = useState(false)
+  const [isFaviconSelect, setIsFaviconSelect] = useState(false)
 
-  const handleChangeLogo = () => {
-    setIsSelectMedia(true)
-    setImageSelected(logo)
-    setIsWhat("logo")
-  }
-
-  const handleChangeFavicon = () => {
-    setIsSelectMedia(true)
-    setImageSelected(favicon)
-    setIsWhat("favicon")
-  }
-
-  const handleSaveChange = async () => {
-    const data = JSON.stringify({
-      title,
-      description,
-      logo: logo ? logo.image_id : undefined,
-      favicon: favicon ? favicon.image_id : undefined,
-      isDisplayBelowLogo,
-      logoContainerWidth, setLogoContainerWidth, logoMaxWidth, setLogoMaxWidth, logoPadding, setLogoPadding, logoLink, setLogoLink
+  useEffect(() => {
+    logo > 0 && getImageById(logo).then(data => {
+      setLogoImage(data)
     })
-    await updateConfigByKey("header_siteidentify", data)
+  }, [logo])
 
-    toast.success("Save Change Successfully!")
-  }
+  useEffect(() => {
+    favicon > 0 && getImageById(favicon).then(data => {
+      setFaviconImage(data)
+    })
+  }, [favicon])
+
+  useEffect(() => {
+    if (isLogoSelect) return
+    logoImage && setLogo(logoImage.image_id)
+  }, [isLogoSelect])
+
+  useEffect(() => {
+    if (isFaviconSelect) return
+    faviconImage && setFavicon(faviconImage.image_id)
+  }, [isFaviconSelect])
 
   return (
 
     <div className='p-2 border-t border-gray-400'>
-
-      {/* select media */}
+      {/* select Media */}
       {
-        isSelectMedia && (
-          <MediaSelect setIsSelectMedia={setIsSelectMedia} isWhat={isWhat} logo={setLogo} favicon={setFavicon} />
-        )
+        isLogoSelect &&
+        <MediaSelect setIsSelectMedia={setIsLogoSelect} setImage={setLogoImage} />
       }
-
+      {
+        isFaviconSelect &&
+        <MediaSelect setIsSelectMedia={setIsFaviconSelect} setImage={setFaviconImage} />
+      }
       {/* main */}
       <SetBreadcrumb breadcrumb={[
         { name: "Customizing", link: "/ux-admin/theme" },
@@ -84,7 +82,7 @@ const SiteIdentify = () => {
           <div className='w-32 h-32 flex items-center border border-gray-500 my-2'>
             <Image
               alt='logo'
-              src={logo?.image_url || "/"}
+              src={logoImage?.image_url || "/"}
               width={100}
               height={100}
               className='w-full h-auto'
@@ -95,7 +93,7 @@ const SiteIdentify = () => {
           </div>
           <button
             className='text-sm justify-center items-center w-full py-2 border border-gray-400 bg-gray-300 rounded-sm'
-            onClick={handleChangeLogo}
+            onClick={() => { setIsLogoSelect(true) }}
           >
             Change Logo
           </button>
@@ -125,7 +123,7 @@ const SiteIdentify = () => {
           <div className='w-20 h-20 flex items-center border border-gray-500 my-2'>
             <Image
               alt='favicon'
-              src={favicon?.image_url || "/"}
+              src={faviconImage?.image_url || "/"}
               width={100}
               height={100}
               className='w-full h-auto'
@@ -135,16 +133,13 @@ const SiteIdentify = () => {
             />
           </div>
           <button className='m-2 p-2 text-sm justify-center items-center border border-gray-400 bg-gray-300 rounded-sm'
-            onClick={handleChangeFavicon}
+            onClick={() => { setIsFaviconSelect(true) }}
           >
             Change icon
           </button>
         </div>
         <DivNgang className='my-2' />
       </div>
-      <button className='float-right bg-blue-700 text-gray-200 hover:bg-blue-800 text-sm py-1 px-2 rounded-md'
-        onClick={handleSaveChange}
-      >Save Change</button>
     </div>
   )
 }

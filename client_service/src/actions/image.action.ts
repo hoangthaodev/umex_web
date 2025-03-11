@@ -143,7 +143,7 @@ export async function createNewImage(url: string) {
       return null;
     }
 
-    return dataParse.data;
+    return dataParse.data.image;
   } catch (error) {
     console.log("error::", error);
     return null;

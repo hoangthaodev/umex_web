@@ -52,6 +52,7 @@ type TbImage struct {
 type TbMenu struct {
 	MenuID    int64
 	MenuName  string
+	MenuSlug  string
 	MenuValue string
 }
 
@@ -80,15 +81,17 @@ type TbPage struct {
 }
 
 type TbPagecategory struct {
-	PagecategoryID int64
-	PageID         int64
-	CategoryID     int64
+	PagecategoryID   int64
+	PageID           int64
+	CategoryID       int64
+	PagecategorySlug string
 }
 
 type TbPagetag struct {
-	PagetagID int64
-	PageID    int64
-	TagID     int64
+	PagetagID   int64
+	PageID      int64
+	TagID       int64
+	PagetagSlug string
 }
 
 type TbTag struct {
@@ -113,12 +116,13 @@ type TbToken struct {
 }
 
 type TbUser struct {
-	UserID       int64
-	UserName     string
-	UserPassword string
-	UserEmail    string
+	UserID          int64
+	UserName        string
+	UserDisplayName string
+	UserPassword    string
+	UserEmail       string
 	// 0: inactive, 1: active
-	UserActive int8
+	UserActive int32
 	CreatedAt  int64
 	UpdatedAt  int64
 }

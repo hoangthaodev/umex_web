@@ -39,7 +39,7 @@ func (cs *ConfigService) GetConfigById(confId int64) (*pb.ConfigResponse, error)
 	})
 }
 
-func (cs *ConfigService) CreateNewConfig(key string, value string, style string) (*pb.MessageResponse, error) {
+func (cs *ConfigService) CreateNewConfig(key string, value string, style string) (*pb.ConfigResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 	client := pb.NewConfigServiceClient(conn)

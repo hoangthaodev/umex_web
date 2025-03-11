@@ -1,5 +1,4 @@
 'use client'
-import { updateConfigByKey } from '@/actions/config.action';
 import { useTheme } from '@/app/ThemeContext';
 import DivNgang from '@/components/DivNgang';
 import InputRange from '@/components/InputRange';
@@ -7,28 +6,12 @@ import SelectOption from '@/components/SelectOption';
 import { SetBreadcrumb } from '@/components/SetBreadcrumb'
 import { listFont, listFontWeight } from '@/lib/fontMap';
 import React from 'react'
-import { toast } from 'react-toastify';
 
 type Props = {}
 
 const Typography = (props: Props) => {
   const { fontHeadline, fontHeadlineWeight, fontBase, fontBaseWeight, fontBaseSize, fontNavigation, fontNavigationWeight,
     setFontHeadline, setFontHeadlineWeight, setFontBase, setFontBaseWeight, setFontBaseSize, setFontNavigation, setFontNavigationWeight } = useTheme()
-
-  const handleSaveChange = async () => {
-    const data = JSON.stringify({
-      fontHeadline,
-      fontHeadlineWeight,
-      fontBase,
-      fontBaseWeight,
-      fontBaseSize,
-      fontNavigation,
-      fontNavigationWeight,
-    })
-    await updateConfigByKey("style_typography", data)
-
-    toast.success("Save Change Successfully!")
-  }
 
   return (
     <div>
@@ -80,11 +63,6 @@ const Typography = (props: Props) => {
             <SelectOption label='Font Weight' value={fontNavigationWeight} setValue={setFontNavigationWeight} arrayOption={listFontWeight[fontNavigation]} />
           </div>
         </div>
-      </div>
-      <div className='px-2'>
-        <button className='float-right bg-blue-700 text-gray-200 hover:bg-blue-800 text-sm py-1 px-2 rounded-md'
-          onClick={handleSaveChange}
-        >Save Change</button>
       </div>
     </div>
   )

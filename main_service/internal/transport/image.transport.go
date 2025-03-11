@@ -4,6 +4,7 @@ import (
 	"context"
 	"main_service/global"
 	"main_service/internal/services"
+	"main_service/pkg/response"
 	"main_service/proto/pb"
 
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -60,18 +61,24 @@ func (it *ImageTransport) GetImageById(c context.Context, in *pb.NumbRequest) (*
 		},
 	}, nil
 }
-func (it *ImageTransport) CreateNewImage(c context.Context, in *pb.Image) (*pb.MessageResponse, error) {
-	err := it.ImageService.CreateNewImage(in.ImageTitle, in.ImageUrl, in.ImageAlt, in.ImageCaption)
+func (it *ImageTransport) CreateNewImage(c context.Context, in *pb.Image) (*pb.ImageResponse, error) {
+	res, err := it.ImageService.CreateNewImage(in.ImageTitle, in.ImageUrl, in.ImageAlt, in.ImageCaption)
 	if err != nil {
 		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code: 2002,
+		return &pb.ImageResponse{
+			Code: int32(response.ErrCodeCreateFail),
 		}, nil
 	}
+	var image pb.Image
+	image.ImageId = res.ImageID
+	image.ImageUrl = res.ImageUrl
+	image.ImageTitle = res.ImageTitle
+	image.ImageAlt = res.ImageAlt
+	image.ImageCaption = res.ImageCaption
 
-	return &pb.MessageResponse{
-		Code:    2000,
-		Message: "New image created",
+	return &pb.ImageResponse{
+		Code:  int32(response.ErrCodeSuccess),
+		Image: &image,
 	}, nil
 }
 func (it *ImageTransport) UpdateImage(c context.Context, in *pb.Image) (*pb.MessageResponse, error) {

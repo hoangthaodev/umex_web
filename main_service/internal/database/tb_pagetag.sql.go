@@ -10,16 +10,17 @@ import (
 )
 
 const createNewPagetag = `-- name: CreateNewPagetag :exec
-insert into tb_pagetag (page_id, tag_id) values (?, ?)
+insert into tb_pagetag (page_id, tag_id, pagetag_slug) values (?, ?,?)
 `
 
 type CreateNewPagetagParams struct {
-	PageID int64
-	TagID  int64
+	PageID      int64
+	TagID       int64
+	PagetagSlug string
 }
 
 func (q *Queries) CreateNewPagetag(ctx context.Context, arg CreateNewPagetagParams) error {
-	_, err := q.db.ExecContext(ctx, createNewPagetag, arg.PageID, arg.TagID)
+	_, err := q.db.ExecContext(ctx, createNewPagetag, arg.PageID, arg.TagID, arg.PagetagSlug)
 	return err
 }
 
@@ -32,42 +33,24 @@ func (q *Queries) DeletePagetag(ctx context.Context, pagetagID int64) error {
 	return err
 }
 
-const getPageByTag = `-- name: GetPageByTag :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_id in(
-select page_id from tb_pagetag where tag_id = ?) limit ? offset ?
+const getPagetagByPage = `-- name: GetPagetagByPage :many
+select pagetag_id, page_id, tag_id, pagetag_slug from tb_pagetag where page_id = ?
 `
 
-type GetPageByTagParams struct {
-	TagID  int64
-	Limit  int32
-	Offset int32
-}
-
-func (q *Queries) GetPageByTag(ctx context.Context, arg GetPageByTagParams) ([]TbPage, error) {
-	rows, err := q.db.QueryContext(ctx, getPageByTag, arg.TagID, arg.Limit, arg.Offset)
+func (q *Queries) GetPagetagByPage(ctx context.Context, pageID int64) ([]TbPagetag, error) {
+	rows, err := q.db.QueryContext(ctx, getPagetagByPage, pageID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []TbPage
+	var items []TbPagetag
 	for rows.Next() {
-		var i TbPage
+		var i TbPagetag
 		if err := rows.Scan(
+			&i.PagetagID,
 			&i.PageID,
-			&i.PageTitle,
-			&i.PageSlug,
-			&i.PageContent,
-			&i.PageDescription,
-			&i.PageStatus,
-			&i.PagePublishYear,
-			&i.PagePublishMonth,
-			&i.PagePublishDay,
-			&i.PageFeatureImage,
-			&i.UserID,
-			&i.TypeID,
-			&i.TemplateID,
-			&i.CreatedAt,
-			&i.UpdatedAt,
+			&i.TagID,
+			&i.PagetagSlug,
 		); err != nil {
 			return nil, err
 		}
@@ -82,28 +65,40 @@ func (q *Queries) GetPageByTag(ctx context.Context, arg GetPageByTagParams) ([]T
 	return items, nil
 }
 
-const getTagByPage = `-- name: GetTagByPage :many
-select tag_id, tag_name, tag_slug, tag_description, type_id, created_at, updated_at from tb_tag where tag_id in(
-select tag_id from tb_pagetag where page_id = ?)
+const getPagetagBySlug = `-- name: GetPagetagBySlug :one
+select pagetag_id, page_id, tag_id, pagetag_slug from tb_pagetag where pagetag_slug = ?
 `
 
-func (q *Queries) GetTagByPage(ctx context.Context, pageID int64) ([]TbTag, error) {
-	rows, err := q.db.QueryContext(ctx, getTagByPage, pageID)
+func (q *Queries) GetPagetagBySlug(ctx context.Context, pagetagSlug string) (TbPagetag, error) {
+	row := q.db.QueryRowContext(ctx, getPagetagBySlug, pagetagSlug)
+	var i TbPagetag
+	err := row.Scan(
+		&i.PagetagID,
+		&i.PageID,
+		&i.TagID,
+		&i.PagetagSlug,
+	)
+	return i, err
+}
+
+const getPagetagByTag = `-- name: GetPagetagByTag :many
+select pagetag_id, page_id, tag_id, pagetag_slug from tb_pagetag where tag_id = ?
+`
+
+func (q *Queries) GetPagetagByTag(ctx context.Context, tagID int64) ([]TbPagetag, error) {
+	rows, err := q.db.QueryContext(ctx, getPagetagByTag, tagID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []TbTag
+	var items []TbPagetag
 	for rows.Next() {
-		var i TbTag
+		var i TbPagetag
 		if err := rows.Scan(
+			&i.PagetagID,
+			&i.PageID,
 			&i.TagID,
-			&i.TagName,
-			&i.TagSlug,
-			&i.TagDescription,
-			&i.TypeID,
-			&i.CreatedAt,
-			&i.UpdatedAt,
+			&i.PagetagSlug,
 		); err != nil {
 			return nil, err
 		}

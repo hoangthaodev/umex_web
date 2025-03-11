@@ -2,9 +2,11 @@ package services
 
 import (
 	"context"
+	"fmt"
 	"main_service/global"
 	"main_service/internal/database"
 	"main_service/internal/utils"
+	"strings"
 	"time"
 )
 
@@ -34,16 +36,20 @@ func (ts *TagService) GetTagBySlug(tagSlug string) (database.TbTag, error) {
 	return queries.GetTagBySlug(context.Background(), tagSlug)
 }
 
-func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string, typeId int32) error {
+func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string, typeId int32) (database.TbTag, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.CreateNewTag(context.Background(), database.CreateNewTagParams{
+	err := queries.CreateNewTag(context.Background(), database.CreateNewTagParams{
 		TagName:        tagName,
 		TagSlug:        tagSlug,
 		TagDescription: tagDes,
 		TypeID:         typeId,
 		CreatedAt:      utils.TimeToInt64(time.Now()),
 	})
+	if err != nil {
+		return database.TbTag{}, err
+	}
+	return ts.GetTagBySlug(tagSlug)
 }
 
 func (ts *TagService) UpdateTag(tagName string, tagSlug string, tagDes string, typeId int32, tagId int64) error {
@@ -63,4 +69,23 @@ func (ts *TagService) DeleteTag(tagId int64) error {
 	queries := database.New(global.Mysql)
 
 	return queries.DeleteTag(context.Background(), tagId)
+}
+
+func (ts *TagService) GetTagByManyId(listId []int64) ([]byte, error) {
+	if len(listId) == 0 {
+		return nil, fmt.Errorf("listId is empty")
+	}
+	queries := database.New(global.Mysql)
+
+	placeholders := make([]string, len(listId))
+	for i := range listId {
+		placeholders[i] = "?"
+	}
+	queryString := fmt.Sprintf("SELECT * FROM tb_tag WHERE tag_id in (%s)", strings.Join(placeholders, ","))
+	args := make([]interface{}, len(listId))
+	for i, id := range listId {
+		args[i] = id
+	}
+
+	return queries.QueryByString(context.Background(), queryString, args...)
 }

@@ -4,6 +4,9 @@ select * from tb_page limit ? offset ?;
 -- name: GetPageById :one
 select * from tb_page where page_id = ?;
 
+-- name: GetPageByManyId :many
+select * from tb_page where page_id IN (/*SLICE:page_ids*/?) limit ? offset ?;
+
 -- name: GetPageBySlug :one
 select * from tb_page where page_slug = ?;
 

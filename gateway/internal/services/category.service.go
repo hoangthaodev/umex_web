@@ -70,7 +70,7 @@ func (cs *CategoryService) GetCategoryByTypeNParent(typeId int32, catParent int6
 	})
 }
 
-func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, catDes string, catParent int64, typeId int32) (*pb.MessageResponse, error) {
+func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, catDes string, catParent int64, typeId int32) (*pb.CategoryResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -106,5 +106,19 @@ func (cs *CategoryService) DeleteCategory(catId int64) (*pb.MessageResponse, err
 	client := pb.NewCategoryServiceClient(conn)
 	return client.DeleteCategory(context.Background(), &pb.NumbRequest{
 		Numb: catId,
+	})
+}
+
+func (cs *CategoryService) GetCategoryByManyId(listId []int64) (*pb.ManyCategoryResponse, error) {
+	conn := utils.ConnectToService(global.Config.Server.MainServer)
+	defer conn.Close()
+
+	client := pb.NewCategoryServiceClient(conn)
+	var numbs []*pb.NumbRequest
+	for _, id := range listId {
+		numbs = append(numbs, &pb.NumbRequest{Numb: id})
+	}
+	return client.GetCategoryByManyId(context.Background(), &pb.ManyNumbRequest{
+		Numbs: numbs,
 	})
 }

@@ -275,7 +275,33 @@ export async function createNewPage(
       console.log("fail createNewPage::", dataParse);
       return null;
     }
-    return dataParse.data;
+    return dataParse.data.page;
+  } catch (error) {
+    console.log("error::", error);
+    return null;
+  }
+}
+
+export async function getPageByManyId(listId: number[]) {
+  if (listId.length <= 0) return;
+  try {
+    const access_token = (await cookies()).get("access_token")?.value || "";
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/page/ids/?ids=${listId.join(",")}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: access_token,
+        },
+      }
+    );
+    const data = await res.json();
+    const dataParse = JSON.parse(JSON.stringify(data));
+    if (dataParse.code !== 2000) {
+      console.log("fail getPageByManyId::", dataParse);
+      return null;
+    }
+    return dataParse.data.pages;
   } catch (error) {
     console.log("error::", error);
     return null;

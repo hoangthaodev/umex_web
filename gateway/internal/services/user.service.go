@@ -50,29 +50,32 @@ func (us *UserService) GetUserById(userId int64) (*pb.UserResponse, error) {
 	})
 }
 
-func (us *UserService) CreateNewUser(userName string, password string, email string) (*pb.MessageResponse, error) {
+func (us *UserService) CreateNewUser(userName string, password string, email string, active int32, displayName string) (*pb.UserResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 	client := pb.NewUserServiceClient(conn)
 
 	return client.CreateNewUser(context.Background(), &pb.User{
-		UserName:     userName,
-		UserPassword: password,
-		UserEmail:    email,
+		UserName:        userName,
+		UserPassword:    password,
+		UserEmail:       email,
+		UserActive:      active,
+		UserDisplayName: displayName,
 	})
 }
 
-func (us *UserService) UpdateUser(userId int64, userName string, password string, email string, active int32) (*pb.MessageResponse, error) {
+func (us *UserService) UpdateUser(userId int64, userName string, password string, email string, active int32, displayName string) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 	client := pb.NewUserServiceClient(conn)
 
 	return client.UpdateUser(context.Background(), &pb.User{
-		UserId:       userId,
-		UserName:     userName,
-		UserPassword: password,
-		UserEmail:    email,
-		UserActive:   active,
+		UserId:          userId,
+		UserName:        userName,
+		UserPassword:    password,
+		UserEmail:       email,
+		UserActive:      active,
+		UserDisplayName: displayName,
 	})
 }
 

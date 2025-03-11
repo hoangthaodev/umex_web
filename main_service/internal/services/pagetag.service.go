@@ -8,29 +8,36 @@ import (
 
 type PagetagService struct{}
 
-func (pts *PagetagService) GetPageByTag(tagId int64, limit int32, offset int32) ([]database.TbPage, error) {
+func (pts *PagetagService) GetPagetagByTag(tagId int64) ([]database.TbPagetag, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.GetPageByTag(context.Background(), database.GetPageByTagParams{
-		TagID:  tagId,
-		Limit:  limit,
-		Offset: offset,
-	})
+	return queries.GetPagetagByTag(context.Background(), tagId)
 }
 
-func (pts *PagetagService) GetTagByPage(pageId int64) ([]database.TbTag, error) {
+func (pts *PagetagService) GetPagetagByPage(pageId int64) ([]database.TbPagetag, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.GetTagByPage(context.Background(), pageId)
+	return queries.GetPagetagByPage(context.Background(), pageId)
 }
 
-func (pts *PagetagService) CreateNewPagetag(pageId int64, tagId int64) error {
+func (pts *PagetagService) GetPagetagBySlug(slug string) (database.TbPagetag, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.CreateNewPagetag(context.Background(), database.CreateNewPagetagParams{
-		PageID: pageId,
-		TagID:  tagId,
+	return queries.GetPagetagBySlug(context.Background(), slug)
+}
+
+func (pts *PagetagService) CreateNewPagetag(pageId int64, tagId int64, slug string) (database.TbPagetag, error) {
+	queries := database.New(global.Mysql)
+
+	err := queries.CreateNewPagetag(context.Background(), database.CreateNewPagetagParams{
+		PageID:      pageId,
+		TagID:       tagId,
+		PagetagSlug: slug,
 	})
+	if err != nil {
+		return database.TbPagetag{}, err
+	}
+	return pts.GetPagetagBySlug(slug)
 }
 
 func (pts *PagetagService) DeletePagetag(pagetagId int64) error {

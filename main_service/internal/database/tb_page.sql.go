@@ -173,6 +173,55 @@ func (q *Queries) GetPageById(ctx context.Context, pageID int64) (TbPage, error)
 	return i, err
 }
 
+const getPageByManyId = `-- name: GetPageByManyId :many
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_id IN (/*SLICE:page_ids*/?) limit ? offset ?
+`
+
+type GetPageByManyIdParams struct {
+	PageID int64
+	Limit  int32
+	Offset int32
+}
+
+func (q *Queries) GetPageByManyId(ctx context.Context, arg GetPageByManyIdParams) ([]TbPage, error) {
+	rows, err := q.db.QueryContext(ctx, getPageByManyId, arg.PageID, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []TbPage
+	for rows.Next() {
+		var i TbPage
+		if err := rows.Scan(
+			&i.PageID,
+			&i.PageTitle,
+			&i.PageSlug,
+			&i.PageContent,
+			&i.PageDescription,
+			&i.PageStatus,
+			&i.PagePublishYear,
+			&i.PagePublishMonth,
+			&i.PagePublishDay,
+			&i.PageFeatureImage,
+			&i.UserID,
+			&i.TypeID,
+			&i.TemplateID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getPageByPublishYear = `-- name: GetPageByPublishYear :many
 select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_publish_year = ? limit ? offset ?
 `

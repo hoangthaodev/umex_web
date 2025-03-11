@@ -20,20 +20,32 @@ func (ms *MenuService) GetMenuById(menuId int64) (database.TbMenu, error) {
 	return queries.GetMenuById(context.Background(), menuId)
 }
 
-func (ms *MenuService) CreateNewMenu(menuName string, menuValue string) error {
+func (ms *MenuService) GetMenuBySlug(menuSlug string) (database.TbMenu, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.CreateNewMenu(context.Background(), database.CreateNewMenuParams{
-		MenuName:  menuName,
-		MenuValue: menuValue,
-	})
+	return queries.GetMenuBySlug(context.Background(), menuSlug)
 }
 
-func (ms *MenuService) UpdateMenu(menuName string, menuValue string, menuId int64) error {
+func (ms *MenuService) CreateNewMenu(menuName string, menuSlug string, menuValue string) (database.TbMenu, error) {
+	queries := database.New(global.Mysql)
+
+	err := queries.CreateNewMenu(context.Background(), database.CreateNewMenuParams{
+		MenuName:  menuName,
+		MenuSlug:  menuSlug,
+		MenuValue: menuValue,
+	})
+	if err != nil {
+		return database.TbMenu{}, err
+	}
+	return ms.GetMenuBySlug(menuSlug)
+}
+
+func (ms *MenuService) UpdateMenu(menuName string, menuSlug string, menuValue string, menuId int64) error {
 	queries := database.New(global.Mysql)
 
 	return queries.UpdateMenu(context.Background(), database.UpdateMenuParams{
 		MenuName:  menuName,
+		MenuSlug:  menuSlug,
 		MenuValue: menuValue,
 		MenuID:    menuId,
 	})

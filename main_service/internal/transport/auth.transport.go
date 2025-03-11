@@ -124,7 +124,7 @@ func (at *AuthTransport) CheckAuth(c context.Context, in *pb.MessageRequest) (*p
 	}
 
 	// get permission
-	auth, err := at.AuthService.GetAuthByUserId(userId)
+	auth, err := at.AuthService.GetAuthByUser(userId)
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.AuthResponse{
@@ -153,7 +153,7 @@ func (at *AuthTransport) GetAuthByUserId(c context.Context, in *pb.NumbRequest) 
 			Code: int32(response.ErrCodeGetFail),
 		}, nil
 	}
-	auth, err := at.AuthService.GetAuthByUserId(userId)
+	auth, err := at.AuthService.GetAuthByUser(userId)
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.AuthResponse{

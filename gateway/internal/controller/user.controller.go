@@ -78,7 +78,7 @@ func (uc *UserController) CreateNewUser(c *gin.Context) {
 		return
 	}
 
-	res, err := uc.UserService.CreateNewUser(user.Username, user.Password, user.Email)
+	res, err := uc.UserService.CreateNewUser(user.Username, user.Password, user.Email, user.UserActive, user.UserDisplayName)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -119,7 +119,7 @@ func (uc *UserController) UpdateUser(c *gin.Context) {
 		return
 	}
 
-	res, err := uc.UserService.UpdateUser(userId, user.Username, user.Password, user.Email, user.UserActive)
+	res, err := uc.UserService.UpdateUser(userId, user.Username, user.Password, user.Email, user.UserActive, user.UserDisplayName)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return

@@ -1,23 +1,15 @@
 'use client'
-import { getConfigByKey } from '@/actions/config.action'
-import { useBreadcrumb } from '@/app/ux-admin/(admin)/theme/BreadcrumbContext'
-import { ConfigType } from '@/lib/types'
+import { useTheme } from '@/app/ThemeContext'
+import { SetBreadcrumb } from '@/components/SetBreadcrumb'
 import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { FaHome, FaPenFancy } from 'react-icons/fa'
 import { IoDocument } from 'react-icons/io5'
 import { LuArrowDown, LuArrowUp, LuChevronRight, LuLayoutTemplate, LuMenu, LuPaintbrush } from 'react-icons/lu'
 
 const ThemeSetting = () => {
   const router = useRouter()
-  const { setBreadcrumb } = useBreadcrumb()
-  useEffect(() => {
-    const getBRC = async () => {
-      const result: ConfigType = await getConfigByKey("site_name")
-      setBreadcrumb([{ name: result.config_value, link: "/" }])
-    }
-    getBRC()
-  }, [])
+  const { title } = useTheme()
 
   const ItemList = ({ link, name, icon }: { link: string, name: string, icon: any }) => {
     return (
@@ -36,6 +28,7 @@ const ThemeSetting = () => {
 
   return (
     <div className='bg-white'>
+      <SetBreadcrumb breadcrumb={[{ name: title, link: "/" }]} />
       <ul>
         <ItemList link='/ux-admin/theme/header' name='Header' icon={<LuArrowUp size={20} />} />
         <ItemList link='/ux-admin/theme/layout' name='Layout' icon={<LuLayoutTemplate size={20} />} />

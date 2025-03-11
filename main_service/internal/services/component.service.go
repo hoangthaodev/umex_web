@@ -32,15 +32,19 @@ func (cps *ComponentService) GetComponentByPosition(position int32) ([]database.
 	return queries.GetComponentByPosition(context.Background(), position)
 }
 
-func (cps *ComponentService) CreateNewComponent(compName string, position int32, compIndex int32, compMap string) error {
+func (cps *ComponentService) CreateNewComponent(compName string, position int32, compIndex int32, compMap string) (database.TbComponent, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.CreateNewComponent(context.Background(), database.CreateNewComponentParams{
+	err := queries.CreateNewComponent(context.Background(), database.CreateNewComponentParams{
 		ComponentName:     compName,
 		ComponentPosition: position,
 		ComponentIndex:    compIndex,
 		ComponentMap:      compMap,
 	})
+	if err != nil {
+		return database.TbComponent{}, err
+	}
+	return cps.GetComponentByName(compName)
 }
 
 func (cps *ComponentService) UpdateComponent(compName string, position int32, compIndex int32, compId int64) error {

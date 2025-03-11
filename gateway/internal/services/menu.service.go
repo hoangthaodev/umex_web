@@ -29,7 +29,7 @@ func (ms *MenuService) GetMenuById(menuId int64) (*pb.MenuResponse, error) {
 	})
 }
 
-func (ms *MenuService) CreateNewMenu(menuName string, menuValue string) (*pb.MessageResponse, error) {
+func (ms *MenuService) CreateNewMenu(menuName string, menuValue string, menuSlug string) (*pb.MenuResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -37,10 +37,11 @@ func (ms *MenuService) CreateNewMenu(menuName string, menuValue string) (*pb.Mes
 	return client.CreateNewMenu(context.Background(), &pb.Menu{
 		MenuName:  menuName,
 		MenuValue: menuValue,
+		MenuSlug:  menuSlug,
 	})
 }
 
-func (ms *MenuService) UpdateMenu(menuId int64, menuName string, menuValue string) (*pb.MessageResponse, error) {
+func (ms *MenuService) UpdateMenu(menuId int64, menuName string, menuValue string, menuSlug string) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -48,6 +49,7 @@ func (ms *MenuService) UpdateMenu(menuId int64, menuName string, menuValue strin
 	return client.UpdateMenu(context.Background(), &pb.Menu{
 		MenuId:    menuId,
 		MenuName:  menuName,
+		MenuSlug:  menuSlug,
 		MenuValue: menuValue,
 	})
 }

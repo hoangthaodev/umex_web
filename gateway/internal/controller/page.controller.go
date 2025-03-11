@@ -34,6 +34,17 @@ func (pc *PageController) GetPageById(c *gin.Context) {
 	response.SuccessResponse(c, int(res.Code), res)
 }
 
+func (pc *PageController) GetPageByManyId(c *gin.Context) {
+	listId := c.Query("ids")
+	ids := utils.StringToInt64Slice(listId)
+	res, err := pc.PageService.GetPageByManyId(ids)
+	if err != nil {
+		response.ErrorResponse(c, int(res.Code), "")
+		return
+	}
+	response.SuccessResponse(c, int(res.Code), res)
+}
+
 func (pc *PageController) GetPageByTypeNStatus(c *gin.Context) {
 	typeId := c.Query("type")
 	status := c.Query("status")

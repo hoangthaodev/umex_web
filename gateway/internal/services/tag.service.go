@@ -49,7 +49,7 @@ func (ts *TagService) GetTagBySlug(slug string) (*pb.TagResponse, error) {
 	})
 }
 
-func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string, typeId int32) (*pb.MessageResponse, error) {
+func (ts *TagService) CreateNewTag(tagName string, tagSlug string, tagDes string, typeId int32) (*pb.TagResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -83,5 +83,19 @@ func (ts *TagService) DeleteTag(tagId int64) (*pb.MessageResponse, error) {
 	client := pb.NewTagServiceClient(conn)
 	return client.DeleteTag(context.Background(), &pb.NumbRequest{
 		Numb: tagId,
+	})
+}
+
+func (ts *TagService) GetTagByManyId(listId []int64) (*pb.ManyTagResponse, error) {
+	conn := utils.ConnectToService(global.Config.Server.MainServer)
+	defer conn.Close()
+
+	client := pb.NewTagServiceClient(conn)
+	var numbs []*pb.NumbRequest
+	for _, id := range listId {
+		numbs = append(numbs, &pb.NumbRequest{Numb: id})
+	}
+	return client.GetTagByManyId(context.Background(), &pb.ManyNumbRequest{
+		Numbs: numbs,
 	})
 }

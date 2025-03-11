@@ -37,7 +37,7 @@ func (us *UserService) GetUserByEmail(email string) (database.TbUser, error) {
 	return queries.GetUserByEmail(context.Background(), email)
 }
 
-func (us *UserService) CreateNewUser(userName string, password string, email string) error {
+func (us *UserService) CreateNewUser(userName string, password string, email string, active int32, displayName string) (database.TbUser, error) {
 	queries := database.New(global.Mysql)
 
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
@@ -47,15 +47,21 @@ func (us *UserService) CreateNewUser(userName string, password string, email str
 	}
 	createAt := utils.TimeToInt64(time.Now())
 
-	return queries.CreateNewUser(context.Background(), database.CreateNewUserParams{
-		UserName:     userName,
-		UserPassword: string(passwordHash),
-		UserEmail:    email,
-		CreatedAt:    createAt,
+	err = queries.CreateNewUser(context.Background(), database.CreateNewUserParams{
+		UserName:        userName,
+		UserPassword:    string(passwordHash),
+		UserEmail:       email,
+		UserDisplayName: displayName,
+		UserActive:      active,
+		CreatedAt:       createAt,
 	})
+	if err != nil {
+		return database.TbUser{}, err
+	}
+	return us.GetUserByUsername(userName)
 }
 
-func (us *UserService) UpdateUser(userName string, password string, email string, active int8, userId int64) error {
+func (us *UserService) UpdateUser(userName string, password string, email string, active int32, displayName string, userId int64) error {
 	queries := database.New(global.Mysql)
 
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
@@ -66,12 +72,13 @@ func (us *UserService) UpdateUser(userName string, password string, email string
 	updateAt := utils.TimeToInt64(time.Now())
 
 	return queries.UpdateUser(context.Background(), database.UpdateUserParams{
-		UserName:     userName,
-		UserPassword: string(passwordHash),
-		UserEmail:    email,
-		UserActive:   active,
-		UpdatedAt:    updateAt,
-		UserID:       userId,
+		UserName:        userName,
+		UserPassword:    string(passwordHash),
+		UserEmail:       email,
+		UserActive:      active,
+		UserDisplayName: displayName,
+		UpdatedAt:       updateAt,
+		UserID:          userId,
 	})
 }
 

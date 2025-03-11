@@ -4,6 +4,7 @@ import (
 	"context"
 	"main_service/global"
 	"main_service/internal/services"
+	"main_service/pkg/response"
 	"main_service/proto/pb"
 
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -56,22 +57,28 @@ func (mt *MenuTransport) GetMenuById(c context.Context, in *pb.NumbRequest) (*pb
 	}, nil
 }
 
-func (mt *MenuTransport) CreateNewMenu(c context.Context, in *pb.Menu) (*pb.MessageResponse, error) {
-	err := mt.MenuService.CreateNewMenu(in.MenuName, in.MenuValue)
+func (mt *MenuTransport) CreateNewMenu(c context.Context, in *pb.Menu) (*pb.MenuResponse, error) {
+	res, err := mt.MenuService.CreateNewMenu(in.MenuName, in.MenuSlug, in.MenuValue)
 	if err != nil {
 		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code: 2002,
+		return &pb.MenuResponse{
+			Code: int32(response.ErrCodeCreateFail),
 		}, nil
 	}
-	return &pb.MessageResponse{
-		Code:    2000,
-		Message: "New menu created",
+	var menu pb.Menu
+	menu.MenuId = res.MenuID
+	menu.MenuName = res.MenuName
+	menu.MenuSlug = res.MenuSlug
+	menu.MenuValue = res.MenuValue
+
+	return &pb.MenuResponse{
+		Code: int32(response.ErrCodeSuccess),
+		Menu: &menu,
 	}, nil
 }
 
 func (mt *MenuTransport) UpdateMenu(c context.Context, in *pb.Menu) (*pb.MessageResponse, error) {
-	err := mt.MenuService.UpdateMenu(in.MenuName, in.MenuValue, in.MenuId)
+	err := mt.MenuService.UpdateMenu(in.MenuName, in.MenuSlug, in.MenuValue, in.MenuId)
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{

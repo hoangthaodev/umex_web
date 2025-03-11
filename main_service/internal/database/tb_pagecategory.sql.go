@@ -10,16 +10,17 @@ import (
 )
 
 const createNewPagecategory = `-- name: CreateNewPagecategory :exec
-insert into tb_pagecategory (page_id, category_id) values (?, ?)
+insert into tb_pagecategory (page_id, category_id, pagecategory_slug) values (?, ?,?)
 `
 
 type CreateNewPagecategoryParams struct {
-	PageID     int64
-	CategoryID int64
+	PageID           int64
+	CategoryID       int64
+	PagecategorySlug string
 }
 
 func (q *Queries) CreateNewPagecategory(ctx context.Context, arg CreateNewPagecategoryParams) error {
-	_, err := q.db.ExecContext(ctx, createNewPagecategory, arg.PageID, arg.CategoryID)
+	_, err := q.db.ExecContext(ctx, createNewPagecategory, arg.PageID, arg.CategoryID, arg.PagecategorySlug)
 	return err
 }
 
@@ -32,29 +33,24 @@ func (q *Queries) DeletePagecategory(ctx context.Context, pagecategoryID int64) 
 	return err
 }
 
-const getCategoryByPage = `-- name: GetCategoryByPage :many
-select category_id, category_name, category_slug, category_description, category_parent, type_id, created_at, updated_at from tb_category where category_id in(
-select category_id from tb_pagecategory where page_id = ?)
+const getPagecategoryByPage = `-- name: GetPagecategoryByPage :many
+select pagecategory_id, page_id, category_id, pagecategory_slug from tb_pagecategory where page_id = ?
 `
 
-func (q *Queries) GetCategoryByPage(ctx context.Context, pageID int64) ([]TbCategory, error) {
-	rows, err := q.db.QueryContext(ctx, getCategoryByPage, pageID)
+func (q *Queries) GetPagecategoryByPage(ctx context.Context, pageID int64) ([]TbPagecategory, error) {
+	rows, err := q.db.QueryContext(ctx, getPagecategoryByPage, pageID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []TbCategory
+	var items []TbPagecategory
 	for rows.Next() {
-		var i TbCategory
+		var i TbPagecategory
 		if err := rows.Scan(
+			&i.PagecategoryID,
+			&i.PageID,
 			&i.CategoryID,
-			&i.CategoryName,
-			&i.CategorySlug,
-			&i.CategoryDescription,
-			&i.CategoryParent,
-			&i.TypeID,
-			&i.CreatedAt,
-			&i.UpdatedAt,
+			&i.PagecategorySlug,
 		); err != nil {
 			return nil, err
 		}
@@ -69,42 +65,40 @@ func (q *Queries) GetCategoryByPage(ctx context.Context, pageID int64) ([]TbCate
 	return items, nil
 }
 
-const getPageByCategory = `-- name: GetPageByCategory :many
-select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_id in(
-select page_id from tb_pagecategory where category_id = ?) limit ? offset ?
+const getPagecategoryBySlug = `-- name: GetPagecategoryBySlug :one
+select pagecategory_id, page_id, category_id, pagecategory_slug from tb_pagecategory where pagecategory_slug = ?
 `
 
-type GetPageByCategoryParams struct {
-	CategoryID int64
-	Limit      int32
-	Offset     int32
+func (q *Queries) GetPagecategoryBySlug(ctx context.Context, pagecategorySlug string) (TbPagecategory, error) {
+	row := q.db.QueryRowContext(ctx, getPagecategoryBySlug, pagecategorySlug)
+	var i TbPagecategory
+	err := row.Scan(
+		&i.PagecategoryID,
+		&i.PageID,
+		&i.CategoryID,
+		&i.PagecategorySlug,
+	)
+	return i, err
 }
 
-func (q *Queries) GetPageByCategory(ctx context.Context, arg GetPageByCategoryParams) ([]TbPage, error) {
-	rows, err := q.db.QueryContext(ctx, getPageByCategory, arg.CategoryID, arg.Limit, arg.Offset)
+const getPagecategoryCategory = `-- name: GetPagecategoryCategory :many
+select pagecategory_id, page_id, category_id, pagecategory_slug from tb_pagecategory where category_id = ?
+`
+
+func (q *Queries) GetPagecategoryCategory(ctx context.Context, categoryID int64) ([]TbPagecategory, error) {
+	rows, err := q.db.QueryContext(ctx, getPagecategoryCategory, categoryID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []TbPage
+	var items []TbPagecategory
 	for rows.Next() {
-		var i TbPage
+		var i TbPagecategory
 		if err := rows.Scan(
+			&i.PagecategoryID,
 			&i.PageID,
-			&i.PageTitle,
-			&i.PageSlug,
-			&i.PageContent,
-			&i.PageDescription,
-			&i.PageStatus,
-			&i.PagePublishYear,
-			&i.PagePublishMonth,
-			&i.PagePublishDay,
-			&i.PageFeatureImage,
-			&i.UserID,
-			&i.TypeID,
-			&i.TemplateID,
-			&i.CreatedAt,
-			&i.UpdatedAt,
+			&i.CategoryID,
+			&i.PagecategorySlug,
 		); err != nil {
 			return nil, err
 		}

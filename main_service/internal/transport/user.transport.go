@@ -57,7 +57,7 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 	}
 	token, err := ut.TokenService.GetTokenByUserId(user.UserID)
 	if err != nil {
-		err = ut.TokenService.CreateNewToken(user.UserID, tokenPair.AccessToken, tokenPair.AccessExpired, tokenPair.RefreshToken, tokenPair.RefreshExpired)
+		_, err = ut.TokenService.CreateNewToken(user.UserID, tokenPair.AccessToken, tokenPair.AccessExpired, tokenPair.RefreshToken, tokenPair.RefreshExpired)
 		if err != nil {
 			global.Logger.Error(err.Error())
 			return &pb.LoginResponse{
@@ -149,43 +149,38 @@ func (ut *UserTransport) GetUserById(c context.Context, in *pb.NumbRequest) (*pb
 	}, nil
 }
 
-func (ut *UserTransport) CreateNewUser(c context.Context, in *pb.User) (*pb.MessageResponse, error) {
+func (ut *UserTransport) CreateNewUser(c context.Context, in *pb.User) (*pb.UserResponse, error) {
 
-	err := ut.UserService.CreateNewUser(in.UserName, in.UserPassword, in.UserEmail)
+	res, err := ut.UserService.CreateNewUser(in.UserName, in.UserPassword, in.UserEmail, in.UserActive, in.UserDisplayName)
 	if err != nil {
 		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code:    int32(response.ErrCodeCreateFail),
-			Message: "error creating user",
+		return &pb.UserResponse{
+			Code: int32(response.ErrCodeCreateFail),
 		}, nil
 	}
 
-	user, err := ut.UserService.GetUserByUsername(in.UserName)
+	_, err = ut.AuthService.CreateNewAuth(res.UserID, int32(111))
 	if err != nil {
 		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code:    int32(response.ErrCodeGetFail),
-			Message: "error getting user",
+		return &pb.UserResponse{
+			Code: int32(response.ErrCodeCreateFail),
 		}, nil
 	}
+	var user pb.User
+	user.UserId = res.UserID
+	user.UserName = res.UserName
+	user.UserEmail = res.UserEmail
+	user.UserActive = res.UserActive
+	user.UserDisplayName = res.UserDisplayName
 
-	err = ut.AuthService.CreateNewAuth(user.UserID, int32(111))
-	if err != nil {
-		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code:    int32(response.ErrCodeCreateFail),
-			Message: "error creating auth",
-		}, nil
-	}
-
-	return &pb.MessageResponse{
-		Code:    int32(response.ErrCodeSuccess),
-		Message: "create user success",
+	return &pb.UserResponse{
+		Code: int32(response.ErrCodeSuccess),
+		User: &user,
 	}, nil
 }
 
 func (ut *UserTransport) UpdateUser(c context.Context, in *pb.User) (*pb.MessageResponse, error) {
-	err := ut.UserService.UpdateUser(in.UserName, in.UserPassword, in.UserEmail, int8(in.UserActive), in.UserId)
+	err := ut.UserService.UpdateUser(in.UserName, in.UserPassword, in.UserEmail, in.UserActive, in.UserDisplayName, in.UserId)
 	if err != nil {
 		global.Logger.Error(err.Error())
 		return &pb.MessageResponse{

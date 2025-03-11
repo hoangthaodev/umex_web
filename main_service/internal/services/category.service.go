@@ -2,9 +2,11 @@ package services
 
 import (
 	"context"
+	"fmt"
 	"main_service/global"
 	"main_service/internal/database"
 	"main_service/internal/utils"
+	"strings"
 	"time"
 )
 
@@ -49,10 +51,10 @@ func (cs *CategoryService) GetCategoryByTypeNParent(typeId int32, catParent int6
 	})
 }
 
-func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, catDes string, catParent int64, typeId int32) error {
+func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, catDes string, catParent int64, typeId int32) (database.TbCategory, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.CreateNewCategory(context.Background(), database.CreateNewCategoryParams{
+	err := queries.CreateNewCategory(context.Background(), database.CreateNewCategoryParams{
 		CategoryName:        catName,
 		CategorySlug:        catSlug,
 		CategoryDescription: catDes,
@@ -60,6 +62,10 @@ func (cs *CategoryService) CreateNewCategory(catName string, catSlug string, cat
 		TypeID:              typeId,
 		CreatedAt:           utils.TimeToInt64(time.Now()),
 	})
+	if err != nil {
+		return database.TbCategory{}, err
+	}
+	return cs.GetCategoryBySlug(catSlug)
 }
 
 func (cs *CategoryService) UpdateCategory(catName string, catSlug string, catDes string, catParent int64, typeId int32, catId int64) error {
@@ -80,4 +86,23 @@ func (cs *CategoryService) DeleteCategory(catId int64) error {
 	queries := database.New(global.Mysql)
 
 	return queries.DeleteCategory(context.Background(), catId)
+}
+
+func (cs *CategoryService) GetCategoryByManyId(listId []int64) ([]byte, error) {
+	if len(listId) == 0 {
+		return nil, fmt.Errorf("listId is empty")
+	}
+	queries := database.New(global.Mysql)
+
+	placeholders := make([]string, len(listId))
+	for i := range listId {
+		placeholders[i] = "?"
+	}
+	queryString := fmt.Sprintf("SELECT * FROM tb_category WHERE category_id in (%s)", strings.Join(placeholders, ", "))
+	args := make([]interface{}, len(listId))
+	for i, id := range listId {
+		args[i] = id
+	}
+
+	return queries.QueryByString(context.Background(), queryString, args...)
 }

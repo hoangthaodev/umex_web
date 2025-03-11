@@ -4,6 +4,7 @@ import (
 	"context"
 	"main_service/global"
 	"main_service/internal/services"
+	"main_service/pkg/response"
 	"main_service/proto/pb"
 
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -83,18 +84,23 @@ func (ct *ConfigTransport) GetConfigById(c context.Context, in *pb.NumbRequest) 
 	}, nil
 }
 
-func (ct *ConfigTransport) CreateNewConfig(c context.Context, in *pb.Config) (*pb.MessageResponse, error) {
-	err := ct.ConfigService.CreateNewConfig(in.ConfigKey, in.ConfigValue, in.ConfigStyle)
+func (ct *ConfigTransport) CreateNewConfig(c context.Context, in *pb.Config) (*pb.ConfigResponse, error) {
+	res, err := ct.ConfigService.CreateNewConfig(in.ConfigKey, in.ConfigValue, in.ConfigStyle)
 	if err != nil {
 		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code: 2002,
+		return &pb.ConfigResponse{
+			Code: int32(response.ErrCodeCreateFail),
 		}, nil
 	}
+	var config pb.Config
+	config.ConfigId = res.ConfigID
+	config.ConfigKey = res.ConfigKey
+	config.ConfigValue = res.ConfigValue
+	config.ConfigStyle = res.ConfigStyle
 
-	return &pb.MessageResponse{
-		Code:    2000,
-		Message: "new config created",
+	return &pb.ConfigResponse{
+		Code:   int32(response.ErrCodeSuccess),
+		Config: &config,
 	}, nil
 }
 

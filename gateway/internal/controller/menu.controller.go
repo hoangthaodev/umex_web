@@ -40,7 +40,7 @@ func (mc *MenuController) CreateNewMenu(c *gin.Context) {
 		return
 	}
 
-	res, err := mc.MenuService.CreateNewMenu(menu.MenuName, menu.MenuValue)
+	res, err := mc.MenuService.CreateNewMenu(menu.MenuName, menu.MenuValue, menu.MenuSlug)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -57,7 +57,7 @@ func (mc *MenuController) UpdateMenu(c *gin.Context) {
 		return
 	}
 
-	res, err := mc.MenuService.UpdateMenu(utils.StringToInt64(id), menu.MenuName, menu.MenuValue)
+	res, err := mc.MenuService.UpdateMenu(utils.StringToInt64(id), menu.MenuName, menu.MenuValue, menu.MenuSlug)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return

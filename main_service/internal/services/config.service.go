@@ -26,14 +26,18 @@ func (cs *ConfigService) GetConfigByKey(key string) (database.TbConfig, error) {
 	return queries.GetConfigByKey(context.Background(), key)
 }
 
-func (cs *ConfigService) CreateNewConfig(key string, value string, style string) error {
+func (cs *ConfigService) CreateNewConfig(key string, value string, style string) (database.TbConfig, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.CreateNewConfig(context.Background(), database.CreateNewConfigParams{
+	err := queries.CreateNewConfig(context.Background(), database.CreateNewConfigParams{
 		ConfigKey:   key,
 		ConfigValue: value,
 		ConfigStyle: style,
 	})
+	if err != nil {
+		return database.TbConfig{}, err
+	}
+	return cs.GetConfigByKey(key)
 }
 
 func (cs *ConfigService) UpdateConfig(key string, value string, style string, configId int64) error {

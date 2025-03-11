@@ -21,6 +21,7 @@ func (pc *PageRouter) InitPageRouter(router *gin.RouterGroup) {
 		privatePageRouter.GET("", pc.PageController.GetAllPage)
 		privatePageRouter.GET("/typenstatus/", pc.PageController.GetPageByTypeNStatus)
 		privatePageRouter.GET("/id/:id", pc.PageController.GetPageById)
+		privatePageRouter.GET("/ids/", pc.PageController.GetPageByManyId)
 		privatePageRouter.GET("/year/", pc.PageController.GetPageByPublishYear)
 		privatePageRouter.GET("/month/", pc.PageController.GetPageByPublishYearMonth)
 		privatePageRouter.GET("/day/", pc.PageController.GetPageByPublishYearMonthDay)

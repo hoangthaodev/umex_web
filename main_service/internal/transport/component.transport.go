@@ -4,6 +4,7 @@ import (
 	"context"
 	"main_service/global"
 	"main_service/internal/services"
+	"main_service/pkg/response"
 	"main_service/proto/pb"
 
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -112,28 +113,31 @@ func (cpt *ComponentTransport) GetComponentByPosition(c context.Context, in *pb.
 	}, nil
 }
 
-func (cpt *ComponentTransport) CreateNewComponent(c context.Context, in *pb.Component) (*pb.MessageResponse, error) {
+func (cpt *ComponentTransport) CreateNewComponent(c context.Context, in *pb.Component) (*pb.ComponentResponse, error) {
 	res, err := cpt.ComponentService.GetComponentByPosition(in.ComponentPosition)
 	if err != nil {
 		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code:    2001,
-			Message: "error getting component by position",
+		return &pb.ComponentResponse{
+			Code: int32(response.ErrCodeGetFail),
 		}, nil
 	}
 
-	err = cpt.ComponentService.CreateNewComponent(in.ComponentName, in.ComponentPosition, int32(len(res)+1), in.ComponentMap)
+	comp, err := cpt.ComponentService.CreateNewComponent(in.ComponentName, in.ComponentPosition, int32(len(res)+1), in.ComponentMap)
 	if err != nil {
 		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code:    2002,
-			Message: "error creating new component",
+		return &pb.ComponentResponse{
+			Code: int32(response.ErrCodeCreateFail),
 		}, nil
 	}
-
-	return &pb.MessageResponse{
-		Code:    2000,
-		Message: "new component created",
+	var component pb.Component
+	component.ComponentId = comp.ComponentID
+	component.ComponentName = comp.ComponentName
+	component.ComponentPosition = comp.ComponentPosition
+	component.ComponentIndex = comp.ComponentIndex
+	component.ComponentMap = comp.ComponentMap
+	return &pb.ComponentResponse{
+		Code:      int32(response.ErrCodeSuccess),
+		Component: &component,
 	}, nil
 }
 

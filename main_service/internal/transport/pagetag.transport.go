@@ -4,6 +4,7 @@ import (
 	"context"
 	"main_service/global"
 	"main_service/internal/services"
+	"main_service/pkg/response"
 	"main_service/proto/pb"
 )
 
@@ -12,76 +13,69 @@ type PagetagTransport struct {
 	services.PagetagService
 }
 
-func (pt *PagetagTransport) GetPageByTag(c context.Context, in *pb.Pagetag) (*pb.ManyPageResponse, error) {
-	res, err := pt.PagetagService.GetPageByTag(in.TagId, in.Limit, in.Offset)
+func (pt *PagetagTransport) GetPagetagByTag(c context.Context, in *pb.NumbRequest) (*pb.ManyPagetagResponse, error) {
+	res, err := pt.PagetagService.GetPagetagByTag(in.Numb)
 	if err != nil {
 		global.Logger.Error(err.Error())
-		return &pb.ManyPageResponse{
-			Code: 2001,
-		}, err
-	}
-	var pages []*pb.Page
-	for _, p := range res {
-		var page pb.Page
-		page.PageId = p.PageID
-		page.PageTitle = p.PageTitle
-		page.PageSlug = p.PageSlug
-		page.PageContent = p.PageContent
-		page.PageDescription = p.PageDescription
-		page.PageStatus = p.PageStatus
-		page.UserId = p.UserID
-		page.PagePublishYear = p.PagePublishYear
-		page.PagePublishMonth = p.PagePublishMonth
-		page.PagePublishDay = p.PagePublishDay
-		page.PageFeatureImage = p.PageFeatureImage
-		page.UserId = p.UserID
-		page.TypeId = p.TypeID
-		page.TemplateId = p.TemplateID
-
-		pages = append(pages, &page)
-	}
-	return &pb.ManyPageResponse{
-		Code:  2000,
-		Pages: pages,
-	}, nil
-}
-
-func (pt *PagetagTransport) GetTagByPage(c context.Context, in *pb.NumbRequest) (*pb.ManyTagResponse, error) {
-	res, err := pt.PagetagService.GetTagByPage(in.Numb)
-	if err != nil {
-		global.Logger.Error(err.Error())
-		return &pb.ManyTagResponse{
-			Code: 2001,
-		}, err
-	}
-	var tags []*pb.Tag
-	for _, t := range res {
-		var tag pb.Tag
-		tag.TagId = t.TagID
-		tag.TagName = t.TagName
-		tag.TagSlug = t.TagSlug
-		tag.TagDescription = t.TagDescription
-		tag.TypeId = t.TypeID
-
-		tags = append(tags, &tag)
-	}
-	return &pb.ManyTagResponse{
-		Code: 2000,
-		Tags: tags,
-	}, nil
-}
-
-func (pt *PagetagTransport) CreateNewPagetag(c context.Context, in *pb.Pagetag) (*pb.MessageResponse, error) {
-	err := pt.PagetagService.CreateNewPagetag(in.PageId, in.TagId)
-	if err != nil {
-		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code: 2002,
+		return &pb.ManyPagetagResponse{
+			Code: int32(response.ErrCodeGetFail),
 		}, nil
 	}
-	return &pb.MessageResponse{
-		Code:    2000,
-		Message: "New pagetag created",
+	var pageTags []*pb.Pagetag
+	for _, p := range res {
+		var pageTag pb.Pagetag
+		pageTag.PagetagId = p.PagetagID
+		pageTag.PageId = p.PageID
+		pageTag.TagId = p.TagID
+
+		pageTags = append(pageTags, &pageTag)
+	}
+	return &pb.ManyPagetagResponse{
+		Code:     int32(response.ErrCodeSuccess),
+		Pagetags: pageTags,
+	}, nil
+}
+
+func (pt *PagetagTransport) GetPagetagByPage(c context.Context, in *pb.NumbRequest) (*pb.ManyPagetagResponse, error) {
+	res, err := pt.PagetagService.GetPagetagByPage(in.Numb)
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.ManyPagetagResponse{
+			Code: int32(response.ErrCodeGetFail),
+		}, nil
+	}
+	var pageTags []*pb.Pagetag
+	for _, p := range res {
+		var pageTag pb.Pagetag
+		pageTag.PagetagId = p.PagetagID
+		pageTag.PageId = p.PageID
+		pageTag.TagId = p.TagID
+
+		pageTags = append(pageTags, &pageTag)
+	}
+	return &pb.ManyPagetagResponse{
+		Code:     int32(response.ErrCodeSuccess),
+		Pagetags: pageTags,
+	}, nil
+}
+
+func (pt *PagetagTransport) CreateNewPagetag(c context.Context, in *pb.Pagetag) (*pb.PagetagResponse, error) {
+	res, err := pt.PagetagService.CreateNewPagetag(in.PageId, in.TagId, in.PagetagSlug)
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.PagetagResponse{
+			Code: int32(response.ErrCodeCreateFail),
+		}, nil
+	}
+	var pagetag pb.Pagetag
+	pagetag.PagetagId = res.PagetagID
+	pagetag.PageId = res.PageID
+	pagetag.TagId = res.TagID
+	pagetag.PagetagSlug = res.PagetagSlug
+
+	return &pb.PagetagResponse{
+		Code:    int32(response.ErrCodeSuccess),
+		Pagetag: &pagetag,
 	}, nil
 }
 

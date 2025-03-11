@@ -1,12 +1,10 @@
 'use client'
 import CompItem from '@/components/CompItem';
-import DraggableItem from '@/components/DraggableItem';
-import { CompItems, ComponentType } from '@/lib/types';
 import React from 'react'
 
 type Props = {
   className?: string;
-  compItems: CompItems;
+  compItems: string[];
 }
 
 const CompZone = ({ className, compItems }: Props) => {

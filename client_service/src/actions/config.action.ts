@@ -80,16 +80,3 @@ export async function updateConfigByKey(
     return null;
   }
 }
-
-export const getConfigFromAllConfigByKey = async (
-  allConfig: ConfigType[],
-  key: string
-) => {
-  try {
-    const config = allConfig.find((item) => item.config_key === key);
-    return config;
-  } catch (error) {
-    console.log("error::", error);
-    return null;
-  }
-};

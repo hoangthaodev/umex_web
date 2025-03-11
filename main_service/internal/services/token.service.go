@@ -21,12 +21,12 @@ func (ts *TokenService) GetTokenByUserId(userId int64) (database.TbToken, error)
 	return queries.GetTokenByUserId(context.Background(), userId)
 }
 
-func (ts *TokenService) CreateNewToken(userId int64, accessToken string, accessExpired int64, refreshToken string, refreshExpired int64) error {
+func (ts *TokenService) CreateNewToken(userId int64, accessToken string, accessExpired int64, refreshToken string, refreshExpired int64) (database.TbToken, error) {
 	queries := database.New(global.Mysql)
 
 	createAt := time.Now().Unix()
 
-	return queries.CreateNewToken(context.Background(), database.CreateNewTokenParams{
+	err := queries.CreateNewToken(context.Background(), database.CreateNewTokenParams{
 		UserID:              userId,
 		AccessToken:         accessToken,
 		AccessTokenExpired:  accessExpired,
@@ -34,6 +34,10 @@ func (ts *TokenService) CreateNewToken(userId int64, accessToken string, accessE
 		RefreshTokenExpired: refreshExpired,
 		CreatedAt:           createAt,
 	})
+	if err != nil {
+		return database.TbToken{}, err
+	}
+	return ts.GetTokenByUserId(userId)
 }
 
 func (ts *TokenService) UpdateToken(accessToken string, accessExpired int64, refreshToken string, refreshExpired int64, tokenId int64) error {

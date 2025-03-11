@@ -47,3 +47,12 @@ func TimeToInt64(in time.Time) int64 {
 	return int64Time
 
 }
+
+func StrToInt64(str string) int64 {
+	int64Str, err := strconv.ParseInt(str, 10, 64)
+	if err != nil {
+		global.Logger.Error(fmt.Sprintf("Error parsing time, err:: %v", err))
+		int64Str = 0
+	}
+	return int64Str
+}

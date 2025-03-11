@@ -1,9 +1,11 @@
 'use client'
+import { getImageById } from "@/actions/image.action"
 import { useTheme } from "@/app/ThemeContext"
 import DeskHeader from "@/components/admin/theme/showArea/header/DeskHeader"
 import MobHeader from "@/components/admin/theme/showArea/header/MobHeader"
 import { getFontMap } from "@/lib/fontMap"
-import { CSSProperties, useEffect } from "react"
+import { ImageType } from "@/lib/types"
+import { CSSProperties, useEffect, useState } from "react"
 
 const ShowArea = () => {
   const { isMobile, themeMode, layoutMode, backgroundImage, backgroundsColor, containerWidth, dropShadow, contentBackground, siteWidth, backgroundRepeat,
@@ -11,6 +13,13 @@ const ShowArea = () => {
     primaryColor, secondaryColor, successColor, alertColor, baseColor, headlineColor, linkColor, linkColorHover,
     backdropColor, drawerWidth
   } = useTheme()
+  const [bgImage, setBgImage] = useState<ImageType | undefined>(undefined)
+
+  useEffect(() => {
+    backgroundImage > 0 && getImageById(backgroundImage).then(data => {
+      setBgImage(data)
+    })
+  }, [backgroundImage])
 
   let rootClass: CSSProperties | undefined
   let siteClass: CSSProperties | undefined
@@ -43,10 +52,10 @@ const ShowArea = () => {
         backgroundColor: backgroundsColor,
       }
     }
-    if (backgroundImage) {
+    if (bgImage) {
       rootClass = {
         ...rootClass,
-        backgroundImage: `url('${backgroundImage?.image_url}')`,
+        backgroundImage: `url('${bgImage.image_url}')`,
         backgroundPosition: "center",
       }
       if (backgroundRepeat === "0") {

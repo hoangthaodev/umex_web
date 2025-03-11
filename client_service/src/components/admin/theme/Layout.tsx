@@ -14,8 +14,8 @@ type Props = {
   setLayoutTextColor: React.Dispatch<SetStateAction<string>>
   layoutBackgroundColor: string | undefined
   setLayoutBackgroundColor: React.Dispatch<SetStateAction<string | undefined>>
-  layoutImage: ImageType | undefined
-  setLayoutImage: React.Dispatch<SetStateAction<ImageType | undefined>>
+  layoutImage: number
+  setLayoutImage: React.Dispatch<SetStateAction<number>>
   layoutRepeat: number
   setLayoutRepeat: React.Dispatch<SetStateAction<number>>
   layoutHeightMin: number
@@ -48,7 +48,7 @@ const Layout = ({ layoutHeightMin, layoutHeightMax, layoutHeightDefault, layoutR
           <SelectImage image={layoutImage} setImage={setLayoutImage} />
         </div>
         {
-          layoutImage && (
+          layoutImage > 0 && (
             <div className='flex flex-col gap-2'>
               <h3>Background Repeat</h3>
               <div className='flex bg-gray-50 text-sm border border-gray-300 rounded-md w-fit'>

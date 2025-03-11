@@ -111,6 +111,7 @@ export type UserType = {
   user_name: string;
   user_email: string;
   user_active: number;
+  user_display_name: string;
 };
 
 export type CategoryType = {
@@ -128,4 +129,18 @@ export type TagType = {
   tag_slug: string;
   tag_description: string;
   type_id: number;
+};
+
+export type PageCategoryType = {
+  pagecategory_id: number;
+  page_id: number;
+  category_id: number;
+  pagecategory_slug: string;
+};
+
+export type PageTagType = {
+  pagetag_id: number;
+  page_id: number;
+  tag_id: number;
+  pagetag_slug: string;
 };

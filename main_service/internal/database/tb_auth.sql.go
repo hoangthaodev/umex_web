@@ -50,12 +50,12 @@ func (q *Queries) GetAuthById(ctx context.Context, authID int64) (TbAuth, error)
 	return i, err
 }
 
-const getAuthByUserId = `-- name: GetAuthByUserId :one
+const getAuthByUser = `-- name: GetAuthByUser :one
 select auth_id, user_id, role_id, created_at, updated_at from tb_auth where user_id = ?
 `
 
-func (q *Queries) GetAuthByUserId(ctx context.Context, userID int64) (TbAuth, error) {
-	row := q.db.QueryRowContext(ctx, getAuthByUserId, userID)
+func (q *Queries) GetAuthByUser(ctx context.Context, userID int64) (TbAuth, error) {
+	row := q.db.QueryRowContext(ctx, getAuthByUser, userID)
 	var i TbAuth
 	err := row.Scan(
 		&i.AuthID,

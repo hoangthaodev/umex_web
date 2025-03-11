@@ -1,14 +1,11 @@
 'use client'
-import { updateConfigByKey } from '@/actions/config.action'
-import { useBreadcrumb } from '@/app/ux-admin/(admin)/theme/BreadcrumbContext'
 import { useTheme } from '@/app/ThemeContext'
 import SelectColor from '@/components/SelectColor'
 import SelectImage from '@/components/SelectImage'
-import TextColor from '@/components/TextColor'
 import { listLayoutMode } from '@/lib/styleMap'
-import React, { useEffect } from 'react'
-import { toast } from 'react-toastify'
+import React from 'react'
 import ThemeMode from '@/components/ThemeMode'
+import { SetBreadcrumb } from '@/components/SetBreadcrumb'
 
 type Props = {}
 
@@ -18,33 +15,13 @@ const ThemeLayout = (props: Props) => {
     backgroundImage, setBackgroundImage, contentBackground, setContentBackground,
     backgroundRepeat, setBackgroundRepeat
   } = useTheme()
-  const { setBreadcrumb } = useBreadcrumb()
 
-  useEffect(() => {
-    setBreadcrumb([
-      { name: "Customizing", link: "/ux-admin/theme" },
-      { name: "Layout", link: "/ux-admin/theme/layout" }
-    ])
-  }, [])
-
-  const handleSaveChange = async () => {
-    const data = JSON.stringify({
-      themeMode,
-      layoutMode,
-      dropShadow,
-      siteWidth,
-      containerWidth,
-      backgroundsColor,
-      backgroundImage: backgroundImage ? backgroundImage.image_id : undefined,
-      contentBackground,
-      backgroundRepeat,
-    })
-    await updateConfigByKey("layout", data)
-
-    toast.success("Save Change Successfully!")
-  }
   return (
     <div className='p-2 flex flex-col gap-4'>
+      <SetBreadcrumb breadcrumb={[
+        { name: "Customizing", link: "/ux-admin/theme" },
+        { name: "Layout", link: "/ux-admin/theme/layout" }
+      ]} />
       <div className='flex flex-col gap-2'>
         <h3>Layout Mode</h3>
         <p className='text-xs italic text-gray-500'>Select Full width or boxed layout.</p>
@@ -87,7 +64,7 @@ const ThemeLayout = (props: Props) => {
               <SelectImage image={backgroundImage} setImage={setBackgroundImage} />
             </div>
             {
-              backgroundImage && (
+              backgroundImage > 0 && (
                 <div className='flex flex-col'>
                   <h3>Background Repeat</h3>
                   <div className='flex flex-wrap text-xs border border-gray-400'>
@@ -119,11 +96,6 @@ const ThemeLayout = (props: Props) => {
       <div className='flex flex-col gap-2'>
         <h3>Content Background</h3>
         <SelectColor color={contentBackground} setColor={setContentBackground} />
-      </div>
-      <div className='px-2'>
-        <button className='float-right bg-blue-700 text-gray-200 hover:bg-blue-800 text-sm py-1 px-2 rounded-md'
-          onClick={handleSaveChange}
-        >Save Change</button>
       </div>
     </div>
   )

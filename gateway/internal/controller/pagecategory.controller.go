@@ -13,11 +13,9 @@ type PagecategoryController struct {
 	services.PagecategoryService
 }
 
-func (pc *PagecategoryController) GetPageByCategory(c *gin.Context) {
+func (pc *PagecategoryController) GetPagecategoryByCategory(c *gin.Context) {
 	catId := c.Param("id")
-	limit := c.Query("limit")
-	offset := c.Query("offset")
-	res, err := pc.PagecategoryService.GetPageByCategory(utils.StringToInt64(catId), utils.StringToInt32(limit), utils.StringToInt32(offset))
+	res, err := pc.PagecategoryService.GetPagecategoryByCategory(utils.StringToInt64(catId))
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -25,9 +23,9 @@ func (pc *PagecategoryController) GetPageByCategory(c *gin.Context) {
 	response.SuccessResponse(c, int(res.Code), res)
 }
 
-func (pc *PagecategoryController) GetCategoryByPage(c *gin.Context) {
+func (pc *PagecategoryController) GetPagecategoryByPage(c *gin.Context) {
 	pageId := c.Param("id")
-	res, err := pc.PagecategoryService.GetCategoryByPage(utils.StringToInt64(pageId))
+	res, err := pc.PagecategoryService.GetPagecategoryByPage(utils.StringToInt64(pageId))
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -42,7 +40,7 @@ func (pc *PagecategoryController) CreateNewPagecategory(c *gin.Context) {
 		log.Println("error binding pagecategory")
 		return
 	}
-	res, err := pc.PagecategoryService.CreateNewPagecategory(pagecategory.PageId, pagecategory.CategoryId)
+	res, err := pc.PagecategoryService.CreateNewPagecategory(pagecategory.PageId, pagecategory.CategoryId, pagecategory.PagecategorySlug)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return

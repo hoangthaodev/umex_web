@@ -7,8 +7,8 @@ import slugify from 'slugify'
 
 type Props = {
   typeId: number
-  selectedCategory: CategoryType[]
-  setSelectedCategory: React.Dispatch<SetStateAction<CategoryType[]>>
+  selectedCategory: number[]
+  setSelectedCategory: React.Dispatch<SetStateAction<number[]>>
 }
 
 const Categories = ({ typeId, selectedCategory, setSelectedCategory }: Props) => {
@@ -28,7 +28,7 @@ const Categories = ({ typeId, selectedCategory, setSelectedCategory }: Props) =>
 
     await createNewCategory(
       newCateName.trim(),
-      slugify(newCateName.trim(), { lower: true }),
+      slugify(newCateName.trim(), { lower: true, locale: "vi" }),
       "",
       newCateParent,
       typeId
@@ -43,10 +43,10 @@ const Categories = ({ typeId, selectedCategory, setSelectedCategory }: Props) =>
 
   const handleChangeSelectedCategory = (checked: boolean, item: CategoryType) => {
     if (checked) {
-      const newSelectedCategory = selectedCategory.filter((i) => i.category_id !== item.category_id)
+      const newSelectedCategory = selectedCategory.filter((i) => i !== item.category_id)
       setSelectedCategory(newSelectedCategory)
     } else {
-      setSelectedCategory([...selectedCategory, item])
+      setSelectedCategory([...selectedCategory, item.category_id])
     }
   }
 
@@ -67,7 +67,7 @@ const Categories = ({ typeId, selectedCategory, setSelectedCategory }: Props) =>
   const categoryTree = buildCategoryTree(categories)
 
   const CategoryNode = ({ ml = 0, node }: { ml?: number, node: CategoryTreeType }) => {
-    const isChecked = selectedCategory.some(i => i.category_id === node.category_id)
+    const isChecked = selectedCategory.includes(node.category_id)
     const item: CategoryType = {
       category_id: node.category_id,
       category_name: node.category_name,

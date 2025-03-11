@@ -11,13 +11,10 @@ import { LuX } from 'react-icons/lu'
 
 type Props = {
   setIsSelectMedia: React.Dispatch<SetStateAction<boolean>>
-  setImage?: React.Dispatch<SetStateAction<ImageType | undefined>>
-  isWhat?: string | undefined
-  logo?: React.Dispatch<SetStateAction<ImageType | undefined>>
-  favicon?: React.Dispatch<SetStateAction<ImageType | undefined>>
+  setImage: React.Dispatch<SetStateAction<ImageType | undefined>>
 }
 
-const MediaSelect = ({ setIsSelectMedia, isWhat, logo, favicon, setImage }: Props) => {
+const MediaSelect = ({ setIsSelectMedia, setImage }: Props) => {
   const [tabActive, setTabActive] = useState(1)
   const { isLoading, imageSelected } = useMedia()
 
@@ -40,12 +37,7 @@ const MediaSelect = ({ setIsSelectMedia, isWhat, logo, favicon, setImage }: Prop
   }, [isLoading])
 
   const handleOnSelect = () => {
-    if (isWhat === "logo") {
-      logo && logo(imageSelected)
-    } else if (isWhat === "favicon") {
-      favicon && favicon(imageSelected)
-    }
-    setImage && setImage(imageSelected)
+    setImage(imageSelected)
     setIsSelectMedia(false)
   }
 

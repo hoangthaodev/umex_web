@@ -2,8 +2,11 @@ package transport
 
 import (
 	"context"
+	"encoding/json"
 	"main_service/global"
 	"main_service/internal/services"
+	"main_service/internal/utils"
+	"main_service/pkg/response"
 	"main_service/proto/pb"
 
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -60,6 +63,45 @@ func (tt *TagTransport) GetTagById(c context.Context, in *pb.NumbRequest) (*pb.T
 	}, nil
 }
 
+func (tt *TagTransport) GetTagByManyId(c context.Context, in *pb.ManyNumbRequest) (*pb.ManyTagResponse, error) {
+	listId := make([]int64, len(in.Numbs))
+	for i, id := range in.Numbs {
+		listId[i] = id.Numb
+	}
+	res, err := tt.TagService.GetTagByManyId(listId)
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.ManyTagResponse{
+			Code: int32(response.ErrCodeGetFail),
+		}, nil
+	}
+	var tags []*pb.Tag
+	var tagsText []*utils.TagText
+	err = json.Unmarshal(res, &tagsText)
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.ManyTagResponse{
+			Code: int32(response.ErrCodeGetFail),
+		}, nil
+	}
+
+	for _, t := range tagsText {
+		var tag pb.Tag
+		tag.TagId = utils.StrToInt64(t.TagId)
+		tag.TagName = t.TagName
+		tag.TagSlug = t.TagSlug
+		tag.TypeId = int32(utils.StrToInt64(t.TypeId))
+		tag.TagDescription = t.TagDescription
+
+		tags = append(tags, &tag)
+	}
+
+	return &pb.ManyTagResponse{
+		Code: int32(response.ErrCodeSuccess),
+		Tags: tags,
+	}, nil
+}
+
 func (tt *TagTransport) GetTagByType(c context.Context, in *pb.NumbRequest) (*pb.ManyTagResponse, error) {
 	res, err := tt.TagService.GetTagByType(int32(in.Numb))
 	if err != nil {
@@ -106,18 +148,24 @@ func (tt *TagTransport) GetTagBySlug(c context.Context, in *pb.MessageRequest) (
 	}, nil
 }
 
-func (tt *TagTransport) CreateNewTag(c context.Context, in *pb.Tag) (*pb.MessageResponse, error) {
-	err := tt.TagService.CreateNewTag(in.TagName, in.TagSlug, in.TagDescription, in.TypeId)
+func (tt *TagTransport) CreateNewTag(c context.Context, in *pb.Tag) (*pb.TagResponse, error) {
+	res, err := tt.TagService.CreateNewTag(in.TagName, in.TagSlug, in.TagDescription, in.TypeId)
 	if err != nil {
 		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code: 2002,
+		return &pb.TagResponse{
+			Code: int32(response.ErrCodeCreateFail),
 		}, nil
 	}
+	var tag pb.Tag
+	tag.TagId = res.TagID
+	tag.TagName = res.TagName
+	tag.TagSlug = res.TagSlug
+	tag.TagDescription = res.TagDescription
+	tag.TypeId = res.TypeID
 
-	return &pb.MessageResponse{
-		Code:    2000,
-		Message: "Tag created",
+	return &pb.TagResponse{
+		Code: int32(response.ErrCodeSuccess),
+		Tag:  &tag,
 	}, nil
 }
 

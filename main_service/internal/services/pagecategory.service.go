@@ -8,29 +8,36 @@ import (
 
 type PagecategoryService struct{}
 
-func (ps *PagecategoryService) GetPageByCategory(catId int64, limit int32, offset int32) ([]database.TbPage, error) {
+func (ps *PagecategoryService) GetPagecategoryByCategory(catId int64) ([]database.TbPagecategory, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.GetPageByCategory(context.Background(), database.GetPageByCategoryParams{
-		CategoryID: catId,
-		Limit:      limit,
-		Offset:     offset,
-	})
+	return queries.GetPagecategoryCategory(context.Background(), catId)
 }
 
-func (ps *PagecategoryService) GetCategoryByPage(pageId int64) ([]database.TbCategory, error) {
+func (ps *PagecategoryService) GetPagecategoryByPage(pageId int64) ([]database.TbPagecategory, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.GetCategoryByPage(context.Background(), pageId)
+	return queries.GetPagecategoryByPage(context.Background(), pageId)
 }
 
-func (ps *PagecategoryService) CreateNewPagecategory(pageId int64, catId int64) error {
+func (ps *PagecategoryService) GetPagecategoryBySlug(slug string) (database.TbPagecategory, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.CreateNewPagecategory(context.Background(), database.CreateNewPagecategoryParams{
-		PageID:     pageId,
-		CategoryID: catId,
+	return queries.GetPagecategoryBySlug(context.Background(), slug)
+}
+
+func (ps *PagecategoryService) CreateNewPagecategory(pageId int64, catId int64, slug string) (database.TbPagecategory, error) {
+	queries := database.New(global.Mysql)
+
+	err := queries.CreateNewPagecategory(context.Background(), database.CreateNewPagecategoryParams{
+		PageID:           pageId,
+		CategoryID:       catId,
+		PagecategorySlug: slug,
 	})
+	if err != nil {
+		return database.TbPagecategory{}, err
+	}
+	return ps.GetPagecategoryBySlug(slug)
 }
 
 func (ps *PagecategoryService) DeletePagecategory(pagecatId int64) error {

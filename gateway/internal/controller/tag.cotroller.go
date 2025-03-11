@@ -32,6 +32,17 @@ func (tc *TagController) GetTagById(c *gin.Context) {
 	response.SuccessResponse(c, int(res.Code), res)
 }
 
+func (tc *TagController) GetTagByManyId(c *gin.Context) {
+	listId := c.Query("ids")
+	ids := utils.StringToInt64Slice(listId)
+	res, err := tc.TagService.GetTagByManyId(ids)
+	if err != nil {
+		response.ErrorResponse(c, int(res.Code), "")
+		return
+	}
+	response.SuccessResponse(c, int(res.Code), res)
+}
+
 func (tc *TagController) GetTagBySlug(c *gin.Context) {
 	slug := c.Param("slug")
 	res, err := tc.TagService.GetTagBySlug(slug)
@@ -56,7 +67,7 @@ func (tc *TagController) CreateNewTag(c *gin.Context) {
 	var newTag utils.Tag
 	err := c.ShouldBindJSON(&newTag)
 	if err != nil {
-		log.Println("Error binding json tag")
+		log.Println("Error binding json tag::", err)
 		return
 	}
 	res, err := tc.TagService.CreateNewTag(newTag.TagName, newTag.TagSlug, newTag.TagDescription, newTag.TypeId)

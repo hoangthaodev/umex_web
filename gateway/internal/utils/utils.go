@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gateway/global"
 	"strconv"
+	"strings"
 
 	"google.golang.org/grpc"
 )
@@ -33,4 +34,13 @@ func StringToInt32(s string) int32 {
 		in = 0
 	}
 	return int32(in)
+}
+
+func StringToInt64Slice(s string) []int64 {
+	arr := strings.Split(s, ",")
+	res := make([]int64, len(arr))
+	for i, val := range arr {
+		res[i] = StringToInt64(val)
+	}
+	return res
 }

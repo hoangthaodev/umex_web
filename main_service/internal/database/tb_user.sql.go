@@ -10,14 +10,16 @@ import (
 )
 
 const createNewUser = `-- name: CreateNewUser :exec
-insert into tb_user (user_name, user_password, user_email, created_at) values(?,?,?,?)
+insert into tb_user (user_name, user_password, user_email, user_active, user_display_name, created_at) values(?, ?,?,?,?,?)
 `
 
 type CreateNewUserParams struct {
-	UserName     string
-	UserPassword string
-	UserEmail    string
-	CreatedAt    int64
+	UserName        string
+	UserPassword    string
+	UserEmail       string
+	UserActive      int32
+	UserDisplayName string
+	CreatedAt       int64
 }
 
 func (q *Queries) CreateNewUser(ctx context.Context, arg CreateNewUserParams) error {
@@ -25,6 +27,8 @@ func (q *Queries) CreateNewUser(ctx context.Context, arg CreateNewUserParams) er
 		arg.UserName,
 		arg.UserPassword,
 		arg.UserEmail,
+		arg.UserActive,
+		arg.UserDisplayName,
 		arg.CreatedAt,
 	)
 	return err
@@ -40,7 +44,7 @@ func (q *Queries) DeleteUser(ctx context.Context, userID int64) error {
 }
 
 const getAllUser = `-- name: GetAllUser :many
-select user_id, user_name, user_password, user_email, user_active, created_at, updated_at from tb_user
+select user_id, user_name, user_display_name, user_password, user_email, user_active, created_at, updated_at from tb_user
 `
 
 func (q *Queries) GetAllUser(ctx context.Context) ([]TbUser, error) {
@@ -55,6 +59,7 @@ func (q *Queries) GetAllUser(ctx context.Context) ([]TbUser, error) {
 		if err := rows.Scan(
 			&i.UserID,
 			&i.UserName,
+			&i.UserDisplayName,
 			&i.UserPassword,
 			&i.UserEmail,
 			&i.UserActive,
@@ -75,7 +80,7 @@ func (q *Queries) GetAllUser(ctx context.Context) ([]TbUser, error) {
 }
 
 const getUserByEmail = `-- name: GetUserByEmail :one
-select user_id, user_name, user_password, user_email, user_active, created_at, updated_at from tb_user where user_email = ?
+select user_id, user_name, user_display_name, user_password, user_email, user_active, created_at, updated_at from tb_user where user_email = ?
 `
 
 func (q *Queries) GetUserByEmail(ctx context.Context, userEmail string) (TbUser, error) {
@@ -84,6 +89,7 @@ func (q *Queries) GetUserByEmail(ctx context.Context, userEmail string) (TbUser,
 	err := row.Scan(
 		&i.UserID,
 		&i.UserName,
+		&i.UserDisplayName,
 		&i.UserPassword,
 		&i.UserEmail,
 		&i.UserActive,
@@ -94,7 +100,7 @@ func (q *Queries) GetUserByEmail(ctx context.Context, userEmail string) (TbUser,
 }
 
 const getUserById = `-- name: GetUserById :one
-select user_id, user_name, user_password, user_email, user_active, created_at, updated_at from tb_user where user_id = ?
+select user_id, user_name, user_display_name, user_password, user_email, user_active, created_at, updated_at from tb_user where user_id = ?
 `
 
 func (q *Queries) GetUserById(ctx context.Context, userID int64) (TbUser, error) {
@@ -103,6 +109,7 @@ func (q *Queries) GetUserById(ctx context.Context, userID int64) (TbUser, error)
 	err := row.Scan(
 		&i.UserID,
 		&i.UserName,
+		&i.UserDisplayName,
 		&i.UserPassword,
 		&i.UserEmail,
 		&i.UserActive,
@@ -113,7 +120,7 @@ func (q *Queries) GetUserById(ctx context.Context, userID int64) (TbUser, error)
 }
 
 const getUserByUsername = `-- name: GetUserByUsername :one
-select user_id, user_name, user_password, user_email, user_active, created_at, updated_at from tb_user where user_name = ?
+select user_id, user_name, user_display_name, user_password, user_email, user_active, created_at, updated_at from tb_user where user_name = ?
 `
 
 func (q *Queries) GetUserByUsername(ctx context.Context, userName string) (TbUser, error) {
@@ -122,6 +129,7 @@ func (q *Queries) GetUserByUsername(ctx context.Context, userName string) (TbUse
 	err := row.Scan(
 		&i.UserID,
 		&i.UserName,
+		&i.UserDisplayName,
 		&i.UserPassword,
 		&i.UserEmail,
 		&i.UserActive,
@@ -132,16 +140,17 @@ func (q *Queries) GetUserByUsername(ctx context.Context, userName string) (TbUse
 }
 
 const updateUser = `-- name: UpdateUser :exec
-update tb_user set user_name = ?, user_password = ?, user_email = ?, user_active = ?, updated_at = ? where user_id = ?
+update tb_user set user_name = ?, user_password = ?, user_email = ?, user_active = ?, user_display_name = ?, updated_at = ? where user_id = ?
 `
 
 type UpdateUserParams struct {
-	UserName     string
-	UserPassword string
-	UserEmail    string
-	UserActive   int8
-	UpdatedAt    int64
-	UserID       int64
+	UserName        string
+	UserPassword    string
+	UserEmail       string
+	UserActive      int32
+	UserDisplayName string
+	UpdatedAt       int64
+	UserID          int64
 }
 
 func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) error {
@@ -150,6 +159,7 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) error {
 		arg.UserPassword,
 		arg.UserEmail,
 		arg.UserActive,
+		arg.UserDisplayName,
 		arg.UpdatedAt,
 		arg.UserID,
 	)

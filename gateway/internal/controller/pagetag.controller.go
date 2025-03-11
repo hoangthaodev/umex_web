@@ -13,11 +13,9 @@ type PagetagController struct {
 	services.PagetagService
 }
 
-func (pc *PagetagController) GetPageByTag(c *gin.Context) {
+func (pc *PagetagController) GetPagetagByTag(c *gin.Context) {
 	tagId := c.Param("id")
-	limit := c.Query("limit")
-	offset := c.Query("offset")
-	res, err := pc.PagetagService.GetPageByTag(utils.StringToInt64(tagId), utils.StringToInt32(limit), utils.StringToInt32(offset))
+	res, err := pc.PagetagService.GetPagetagByTag(utils.StringToInt64(tagId))
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -25,9 +23,9 @@ func (pc *PagetagController) GetPageByTag(c *gin.Context) {
 	response.SuccessResponse(c, int(res.Code), res)
 }
 
-func (pc *PagetagController) GetTagByPage(c *gin.Context) {
+func (pc *PagetagController) GetPagetagByPage(c *gin.Context) {
 	pageId := c.Param("id")
-	res, err := pc.PagetagService.GetTagByPage(utils.StringToInt64(pageId))
+	res, err := pc.PagetagService.GetPagetagByPage(utils.StringToInt64(pageId))
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -42,7 +40,7 @@ func (pc *PagetagController) CreateNewPagetag(c *gin.Context) {
 		log.Println("Error binding pagetag")
 		return
 	}
-	res, err := pc.PagetagService.CreateNewPagetag(pagetag.PageId, pagetag.TagId)
+	res, err := pc.PagetagService.CreateNewPagetag(pagetag.PageId, pagetag.TagId, pagetag.PagetagSlug)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return

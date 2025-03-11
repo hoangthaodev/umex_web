@@ -1,5 +1,5 @@
 'use client'
-import { createNewTag, getTagBySlug, getTagByType } from '@/actions/tag.action'
+import { createNewTag, getTagByManyId, getTagBySlug, getTagByType } from '@/actions/tag.action'
 import Autocomplete from '@/components/component/tags/Autocomplete'
 import { Item } from '@/components/DraggableItem'
 import { TagType } from '@/lib/types'
@@ -9,12 +9,13 @@ import slugify from 'slugify'
 
 type Props = {
   typeId: number
-  selectedTags: TagType[]
-  setSelectedTags: React.Dispatch<SetStateAction<TagType[]>>
+  selectedTags: number[]
+  setSelectedTags: React.Dispatch<SetStateAction<number[]>>
 }
 
 const Tags = ({ typeId, selectedTags, setSelectedTags }: Props) => {
   const [tags, setTags] = useState<TagType[]>([])
+  // const [selectedTagsT, setSelectedTagsT] = useState<TagType[]>([])
 
   const [inputValue, setInputValue] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
@@ -33,6 +34,14 @@ const Tags = ({ typeId, selectedTags, setSelectedTags }: Props) => {
       data && setTags(data)
     })
   }, [])
+
+  // useEffect(() => {
+  //   getTagByManyId(selectedTags).then(data => {
+  //     const dataParse: TagType[] = JSON.parse(JSON.stringify(data))
+  //     setSelectedTagsT(dataParse)
+  //   })
+
+  // }, [selectedTags])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -58,16 +67,19 @@ const Tags = ({ typeId, selectedTags, setSelectedTags }: Props) => {
   };
 
   const AddTag = (name: string, slug: string, description: string, typeId: number) => {
-    createNewTag(name, slug, description, typeId).then((data) => {
-    })
+    var tagId: number | undefined
+    createNewTag(name, slug, description, typeId)
     getTagByType(typeId).then((data: TagType[]) => {
       setTags(data)
     })
     getTagBySlug(slug).then((data: TagType) => {
       if (data) {
-        setSelectedTags([...selectedTags, data])
+        setSelectedTags([...selectedTags, data.tag_id])
+        tagId = data.tag_id
       }
     })
+
+    return tagId
   }
 
   const handleAddTags = () => {
@@ -75,23 +87,22 @@ const Tags = ({ typeId, selectedTags, setSelectedTags }: Props) => {
     if (!values || values.length <= 0) return setInputValue('');
     let newSelected = [...selectedTags]
     values.forEach((i) => {
-      const filtered = newSelected.filter((item) =>
-        item.tag_name.toLowerCase() === i.toLowerCase()
-      );
-      if (!filtered.length) {
-        const hadtag = tags.find((tag) => tag.tag_name.toLowerCase() === i.toLowerCase())
-        if (!hadtag) {
-          AddTag(i, slugify(i), "", typeId)
-        } else {
-          newSelected.push(hadtag)
-        }
+      const hadTag = tags.find(t => t.tag_name.toLowerCase() === i.toLowerCase())
+      var tagId: number | undefined
+      if (hadTag) {
+        tagId = hadTag.tag_id
+      } else {
+        tagId = AddTag(i, slugify(i, { lower: true, locale: "vi" }), "", typeId)
+      }
+      if (tagId) {
+        newSelected.push(tagId)
       }
     })
     setSelectedTags(newSelected);
     setInputValue('');
   }
 
-  const handleRemoveSelectedTag = (value: TagType) => {
+  const handleRemoveSelectedTag = (value: number) => {
     const newSelected = selectedTags.filter((item) => item !== value);
     setSelectedTags(newSelected);
   }
@@ -149,7 +160,7 @@ const Tags = ({ typeId, selectedTags, setSelectedTags }: Props) => {
                 <FaX
                   onClick={() => { handleRemoveSelectedTag(value) }}
                   className='bg-blue-600 text-gray-100 hover:bg-red-600 rounded-full p-1' />
-                {value.tag_name}
+                {tags.find(i => i.tag_id === value)?.tag_name}
               </li>
             ))}
           </ul>

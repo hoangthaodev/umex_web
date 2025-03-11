@@ -20,6 +20,7 @@ func (cr *CategoryRouter) InitCategoryRouter(router *gin.RouterGroup) {
 	privateCategoryRouter.Use(middleware.Permission())
 	{
 		privateCategoryRouter.GET("/id/:id", cr.CategoryController.GetCategoryById)
+		privateCategoryRouter.GET("/ids/", cr.CategoryController.GetCategoryByManyId)
 		privateCategoryRouter.GET("/parent/:id", cr.CategoryController.GetCategoryByParent)
 		privateCategoryRouter.GET("/slug/:slug", cr.CategoryController.GetCategoryBySlug)
 		privateCategoryRouter.GET("", cr.CategoryController.GetAllCategory)

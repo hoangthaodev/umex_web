@@ -5,7 +5,6 @@ import (
 	"gateway/global"
 	"gateway/internal/utils"
 	"gateway/proto/pb"
-	"log"
 )
 
 type PageService struct{}
@@ -82,12 +81,13 @@ func (ps *PageService) GetPageByTypeNStatus(typeId int32, pageStatus int32, limi
 	defer conn.Close()
 
 	client := pb.NewPageServiceClient(conn)
-	return client.GetPageByTypeNStatus(context.Background(), &pb.Page{
+	res, err := client.GetPageByTypeNStatus(context.Background(), &pb.Page{
 		TypeId:     typeId,
 		PageStatus: pageStatus,
 		Limit:      limit,
 		Offset:     offset,
 	})
+	return res, err
 }
 
 func (ps *PageService) GetPageByPublishYear(year int32, limit int32, offset int32) (*pb.ManyPageResponse, error) {
@@ -129,7 +129,7 @@ func (ps *PageService) GetPageByPublishYearMonthDay(year int32, month int32, day
 	})
 }
 
-func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, userId int64, typeId int32, tempId int32) (*pb.MessageResponse, error) {
+func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, userId int64, typeId int32, tempId int32) (*pb.PageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
@@ -153,8 +153,6 @@ func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageCont
 func (ps *PageService) UpdatePage(pageId int64, pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, year int32, month int32, day int32, imageId int64, userId int64, typeId int32, tempId int32) (*pb.MessageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
-
-	log.Printf("year: %d, month: %d, day: %d", year, month, day)
 
 	client := pb.NewPageServiceClient(conn)
 	return client.UpdatePage(context.Background(), &pb.Page{
@@ -202,5 +200,19 @@ func (ps *PageService) CountPageByTypeNStatus(typeId int32, status int32) (*pb.N
 	return client.CountPageByTypeNStatus(context.Background(), &pb.Page{
 		TypeId:     typeId,
 		PageStatus: status,
+	})
+}
+
+func (ps *PageService) GetPageByManyId(listId []int64) (*pb.ManyPageResponse, error) {
+	conn := utils.ConnectToService(global.Config.Server.MainServer)
+	defer conn.Close()
+
+	client := pb.NewPageServiceClient(conn)
+	var numbs []*pb.NumbRequest
+	for _, id := range listId {
+		numbs = append(numbs, &pb.NumbRequest{Numb: id})
+	}
+	return client.GetPageByManyId(context.Background(), &pb.ManyNumbRequest{
+		Numbs: numbs,
 	})
 }

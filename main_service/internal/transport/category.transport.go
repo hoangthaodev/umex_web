@@ -2,8 +2,10 @@ package transport
 
 import (
 	"context"
+	"encoding/json"
 	"main_service/global"
 	"main_service/internal/services"
+	"main_service/internal/utils"
 	"main_service/pkg/response"
 	"main_service/proto/pb"
 
@@ -59,6 +61,46 @@ func (ct *CategoryTransport) GetCategoryById(c context.Context, in *pb.NumbReque
 	return &pb.CategoryResponse{
 		Code:     2000,
 		Category: &category,
+	}, nil
+}
+
+func (ct *CategoryTransport) GetCategoryByManyId(c context.Context, in *pb.ManyNumbRequest) (*pb.ManyCategoryResponse, error) {
+	listId := make([]int64, len(in.Numbs))
+	for i, id := range in.Numbs {
+		listId[i] = id.Numb
+	}
+	res, err := ct.CategoryService.GetCategoryByManyId(listId)
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.ManyCategoryResponse{
+			Code: int32(response.ErrCodeGetFail),
+		}, nil
+	}
+	var categories []*pb.Category
+	var categoriesText []*utils.CategoryText
+	err = json.Unmarshal(res, &categoriesText)
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.ManyCategoryResponse{
+			Code: int32(response.ErrCodeGetFail),
+		}, nil
+	}
+
+	for _, c := range categoriesText {
+		var category pb.Category
+		category.CategoryId = utils.StrToInt64(c.CategoryId)
+		category.CategoryName = c.CategoryName
+		category.CategorySlug = c.CategorySlug
+		category.CategoryDescription = c.CategoryDescription
+		category.TypeId = int32(utils.StrToInt64(c.TypeId))
+		category.CategoryParent = utils.StrToInt64(c.CategoryParent)
+
+		categories = append(categories, &category)
+	}
+
+	return &pb.ManyCategoryResponse{
+		Code:       int32(response.ErrCodeSuccess),
+		Categories: categories,
 	}, nil
 }
 
@@ -160,17 +202,24 @@ func (ct *CategoryTransport) GetCategoryByTypeNParent(c context.Context, in *pb.
 	}, nil
 }
 
-func (ct *CategoryTransport) CreateNewCategory(c context.Context, in *pb.Category) (*pb.MessageResponse, error) {
-	err := ct.CategoryService.CreateNewCategory(in.CategoryName, in.CategorySlug, in.CategoryDescription, in.CategoryParent, in.TypeId)
+func (ct *CategoryTransport) CreateNewCategory(c context.Context, in *pb.Category) (*pb.CategoryResponse, error) {
+	res, err := ct.CategoryService.CreateNewCategory(in.CategoryName, in.CategorySlug, in.CategoryDescription, in.CategoryParent, in.TypeId)
 	if err != nil {
 		global.Logger.Error(err.Error())
-		return &pb.MessageResponse{
-			Code: 2002,
+		return &pb.CategoryResponse{
+			Code: int32(response.ErrCodeCreateFail),
 		}, nil
 	}
-	return &pb.MessageResponse{
-		Code:    2000,
-		Message: "New category created",
+	var category pb.Category
+	category.CategoryId = res.CategoryID
+	category.CategoryName = res.CategoryName
+	category.CategorySlug = res.CategorySlug
+	category.CategoryDescription = res.CategoryDescription
+	category.TypeId = res.TypeID
+	category.CategoryParent = res.CategoryParent
+	return &pb.CategoryResponse{
+		Code:     int32(response.ErrCodeSuccess),
+		Category: &category,
 	}, nil
 }
 

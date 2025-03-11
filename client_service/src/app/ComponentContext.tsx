@@ -1,5 +1,6 @@
 'use client'
-import { getAllComponent } from '@/actions/component.action'
+import { getAllComponent, updateComponent } from '@/actions/component.action'
+import { useTheme } from '@/app/ThemeContext'
 import { listComponent } from '@/lib/componentMap'
 import { ComponentType } from '@/lib/types'
 import { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core'
@@ -67,6 +68,23 @@ export const ComponentProvider = ({ children }: ComponentProviderType) => {
   const [modComponent3, setModComponent3] = useState<ComponentType[]>([])
   const [modComponent4, setModComponent4] = useState<ComponentType[]>([])
   const [modComponent5, setModComponent5] = useState<ComponentType[]>([])
+  const { changedComponent, setChangedComponent } = useTheme()
+
+  const addToChangedComponent = (item: ComponentType) => {
+    const hadComp = changedComponent.some(i => i.component_id === item.component_id)
+    if (hadComp) {
+      const newChangedComponent = changedComponent.map(i => {
+        if (i.component_id === item.component_id) {
+          i.component_position = item.component_position
+          i.component_index = item.component_index
+        }
+        return i
+      })
+      setChangedComponent(newChangedComponent)
+    } else {
+      setChangedComponent([...changedComponent, item])
+    }
+  }
 
   useEffect(() => {
     const getData = async () => {
@@ -242,6 +260,8 @@ export const ComponentProvider = ({ children }: ComponentProviderType) => {
     const item = newArray.find((i) => i.component_id === activeItem.component_id)
     if (!item) return
     item.component_index = overIndex
+
+    addToChangedComponent(item)
 
     idToSetComponent(compId, newArray)
   }

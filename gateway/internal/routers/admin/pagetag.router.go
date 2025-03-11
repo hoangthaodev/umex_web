@@ -18,8 +18,8 @@ func (pc *PagetagRouter) InitPagetagRouter(router *gin.RouterGroup) {
 	privatePagetagRouter.Use(middleware.Authorization())
 	privatePagetagRouter.Use(middleware.Permission())
 	{
-		privatePagetagRouter.GET("/tag/:id", pc.PagetagController.GetPageByTag)
-		privatePagetagRouter.GET("/page/:id", pc.PagetagController.GetTagByPage)
+		privatePagetagRouter.GET("/tag/:id", pc.PagetagController.GetPagetagByTag)
+		privatePagetagRouter.GET("/page/:id", pc.PagetagController.GetPagetagByPage)
 		privatePagetagRouter.POST("", pc.PagetagController.CreateNewPagetag)
 		privatePagetagRouter.DELETE("/:id", pc.PagetagController.DeletePagetag)
 	}

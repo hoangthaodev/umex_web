@@ -1,5 +1,5 @@
 'use client'
-import { useBreadcrumb } from '@/app/ux-admin/(admin)/theme/BreadcrumbContext'
+import { useBreadcrumb } from '@/app/ux-admin/(admin)/theme/(custom)/BreadcrumbContext'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { LuChevronRight } from 'react-icons/lu'

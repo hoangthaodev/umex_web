@@ -37,7 +37,7 @@ type UserServiceClient interface {
 	Logout(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 	GetAllUser(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyUserResponse, error)
 	GetUserById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*UserResponse, error)
-	CreateNewUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*MessageResponse, error)
+	CreateNewUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*UserResponse, error)
 	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*MessageResponse, error)
 	DeleteUser(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 }
@@ -90,9 +90,9 @@ func (c *userServiceClient) GetUserById(ctx context.Context, in *NumbRequest, op
 	return out, nil
 }
 
-func (c *userServiceClient) CreateNewUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *userServiceClient) CreateNewUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*UserResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageResponse)
+	out := new(UserResponse)
 	err := c.cc.Invoke(ctx, UserService_CreateNewUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -128,7 +128,7 @@ type UserServiceServer interface {
 	Logout(context.Context, *NumbRequest) (*MessageResponse, error)
 	GetAllUser(context.Context, *emptypb.Empty) (*ManyUserResponse, error)
 	GetUserById(context.Context, *NumbRequest) (*UserResponse, error)
-	CreateNewUser(context.Context, *User) (*MessageResponse, error)
+	CreateNewUser(context.Context, *User) (*UserResponse, error)
 	UpdateUser(context.Context, *User) (*MessageResponse, error)
 	DeleteUser(context.Context, *NumbRequest) (*MessageResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
@@ -153,7 +153,7 @@ func (UnimplementedUserServiceServer) GetAllUser(context.Context, *emptypb.Empty
 func (UnimplementedUserServiceServer) GetUserById(context.Context, *NumbRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserById not implemented")
 }
-func (UnimplementedUserServiceServer) CreateNewUser(context.Context, *User) (*MessageResponse, error) {
+func (UnimplementedUserServiceServer) CreateNewUser(context.Context, *User) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewUser not implemented")
 }
 func (UnimplementedUserServiceServer) UpdateUser(context.Context, *User) (*MessageResponse, error) {
@@ -365,7 +365,7 @@ type ConfigServiceClient interface {
 	GetAllConfig(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyConfigResponse, error)
 	GetConfigByKey(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*ConfigResponse, error)
 	GetConfigById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ConfigResponse, error)
-	CreateNewConfig(ctx context.Context, in *Config, opts ...grpc.CallOption) (*MessageResponse, error)
+	CreateNewConfig(ctx context.Context, in *Config, opts ...grpc.CallOption) (*ConfigResponse, error)
 	UpdateConfig(ctx context.Context, in *Config, opts ...grpc.CallOption) (*MessageResponse, error)
 	DeleteConfig(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 }
@@ -408,9 +408,9 @@ func (c *configServiceClient) GetConfigById(ctx context.Context, in *NumbRequest
 	return out, nil
 }
 
-func (c *configServiceClient) CreateNewConfig(ctx context.Context, in *Config, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *configServiceClient) CreateNewConfig(ctx context.Context, in *Config, opts ...grpc.CallOption) (*ConfigResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageResponse)
+	out := new(ConfigResponse)
 	err := c.cc.Invoke(ctx, ConfigService_CreateNewConfig_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -445,7 +445,7 @@ type ConfigServiceServer interface {
 	GetAllConfig(context.Context, *emptypb.Empty) (*ManyConfigResponse, error)
 	GetConfigByKey(context.Context, *MessageRequest) (*ConfigResponse, error)
 	GetConfigById(context.Context, *NumbRequest) (*ConfigResponse, error)
-	CreateNewConfig(context.Context, *Config) (*MessageResponse, error)
+	CreateNewConfig(context.Context, *Config) (*ConfigResponse, error)
 	UpdateConfig(context.Context, *Config) (*MessageResponse, error)
 	DeleteConfig(context.Context, *NumbRequest) (*MessageResponse, error)
 	mustEmbedUnimplementedConfigServiceServer()
@@ -467,7 +467,7 @@ func (UnimplementedConfigServiceServer) GetConfigByKey(context.Context, *Message
 func (UnimplementedConfigServiceServer) GetConfigById(context.Context, *NumbRequest) (*ConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConfigById not implemented")
 }
-func (UnimplementedConfigServiceServer) CreateNewConfig(context.Context, *Config) (*MessageResponse, error) {
+func (UnimplementedConfigServiceServer) CreateNewConfig(context.Context, *Config) (*ConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewConfig not implemented")
 }
 func (UnimplementedConfigServiceServer) UpdateConfig(context.Context, *Config) (*MessageResponse, error) {
@@ -659,7 +659,7 @@ type ComponentServiceClient interface {
 	GetComponentById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ComponentResponse, error)
 	GetComponentByName(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*ComponentResponse, error)
 	GetComponentByPosition(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyComponentResponse, error)
-	CreateNewComponent(ctx context.Context, in *Component, opts ...grpc.CallOption) (*MessageResponse, error)
+	CreateNewComponent(ctx context.Context, in *Component, opts ...grpc.CallOption) (*ComponentResponse, error)
 	UpdateComponent(ctx context.Context, in *Component, opts ...grpc.CallOption) (*MessageResponse, error)
 	DeleteComponent(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 }
@@ -712,9 +712,9 @@ func (c *componentServiceClient) GetComponentByPosition(ctx context.Context, in 
 	return out, nil
 }
 
-func (c *componentServiceClient) CreateNewComponent(ctx context.Context, in *Component, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *componentServiceClient) CreateNewComponent(ctx context.Context, in *Component, opts ...grpc.CallOption) (*ComponentResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageResponse)
+	out := new(ComponentResponse)
 	err := c.cc.Invoke(ctx, ComponentService_CreateNewComponent_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -750,7 +750,7 @@ type ComponentServiceServer interface {
 	GetComponentById(context.Context, *NumbRequest) (*ComponentResponse, error)
 	GetComponentByName(context.Context, *MessageRequest) (*ComponentResponse, error)
 	GetComponentByPosition(context.Context, *NumbRequest) (*ManyComponentResponse, error)
-	CreateNewComponent(context.Context, *Component) (*MessageResponse, error)
+	CreateNewComponent(context.Context, *Component) (*ComponentResponse, error)
 	UpdateComponent(context.Context, *Component) (*MessageResponse, error)
 	DeleteComponent(context.Context, *NumbRequest) (*MessageResponse, error)
 	mustEmbedUnimplementedComponentServiceServer()
@@ -775,7 +775,7 @@ func (UnimplementedComponentServiceServer) GetComponentByName(context.Context, *
 func (UnimplementedComponentServiceServer) GetComponentByPosition(context.Context, *NumbRequest) (*ManyComponentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetComponentByPosition not implemented")
 }
-func (UnimplementedComponentServiceServer) CreateNewComponent(context.Context, *Component) (*MessageResponse, error) {
+func (UnimplementedComponentServiceServer) CreateNewComponent(context.Context, *Component) (*ComponentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewComponent not implemented")
 }
 func (UnimplementedComponentServiceServer) UpdateComponent(context.Context, *Component) (*MessageResponse, error) {
@@ -1163,7 +1163,7 @@ const (
 type ImageServiceClient interface {
 	GetAllImage(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyImageResponse, error)
 	GetImageById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ImageResponse, error)
-	CreateNewImage(ctx context.Context, in *Image, opts ...grpc.CallOption) (*MessageResponse, error)
+	CreateNewImage(ctx context.Context, in *Image, opts ...grpc.CallOption) (*ImageResponse, error)
 	UpdateImage(ctx context.Context, in *Image, opts ...grpc.CallOption) (*MessageResponse, error)
 	DeleteImage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 }
@@ -1196,9 +1196,9 @@ func (c *imageServiceClient) GetImageById(ctx context.Context, in *NumbRequest, 
 	return out, nil
 }
 
-func (c *imageServiceClient) CreateNewImage(ctx context.Context, in *Image, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *imageServiceClient) CreateNewImage(ctx context.Context, in *Image, opts ...grpc.CallOption) (*ImageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageResponse)
+	out := new(ImageResponse)
 	err := c.cc.Invoke(ctx, ImageService_CreateNewImage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -1232,7 +1232,7 @@ func (c *imageServiceClient) DeleteImage(ctx context.Context, in *NumbRequest, o
 type ImageServiceServer interface {
 	GetAllImage(context.Context, *emptypb.Empty) (*ManyImageResponse, error)
 	GetImageById(context.Context, *NumbRequest) (*ImageResponse, error)
-	CreateNewImage(context.Context, *Image) (*MessageResponse, error)
+	CreateNewImage(context.Context, *Image) (*ImageResponse, error)
 	UpdateImage(context.Context, *Image) (*MessageResponse, error)
 	DeleteImage(context.Context, *NumbRequest) (*MessageResponse, error)
 	mustEmbedUnimplementedImageServiceServer()
@@ -1251,7 +1251,7 @@ func (UnimplementedImageServiceServer) GetAllImage(context.Context, *emptypb.Emp
 func (UnimplementedImageServiceServer) GetImageById(context.Context, *NumbRequest) (*ImageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetImageById not implemented")
 }
-func (UnimplementedImageServiceServer) CreateNewImage(context.Context, *Image) (*MessageResponse, error) {
+func (UnimplementedImageServiceServer) CreateNewImage(context.Context, *Image) (*ImageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewImage not implemented")
 }
 func (UnimplementedImageServiceServer) UpdateImage(context.Context, *Image) (*MessageResponse, error) {
@@ -1417,7 +1417,7 @@ const (
 type MenuServiceClient interface {
 	GetAllMenu(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyMenuResponse, error)
 	GetMenuById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MenuResponse, error)
-	CreateNewMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error)
+	CreateNewMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MenuResponse, error)
 	UpdateMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error)
 	DeleteMenu(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 }
@@ -1450,9 +1450,9 @@ func (c *menuServiceClient) GetMenuById(ctx context.Context, in *NumbRequest, op
 	return out, nil
 }
 
-func (c *menuServiceClient) CreateNewMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *menuServiceClient) CreateNewMenu(ctx context.Context, in *Menu, opts ...grpc.CallOption) (*MenuResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageResponse)
+	out := new(MenuResponse)
 	err := c.cc.Invoke(ctx, MenuService_CreateNewMenu_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -1486,7 +1486,7 @@ func (c *menuServiceClient) DeleteMenu(ctx context.Context, in *NumbRequest, opt
 type MenuServiceServer interface {
 	GetAllMenu(context.Context, *emptypb.Empty) (*ManyMenuResponse, error)
 	GetMenuById(context.Context, *NumbRequest) (*MenuResponse, error)
-	CreateNewMenu(context.Context, *Menu) (*MessageResponse, error)
+	CreateNewMenu(context.Context, *Menu) (*MenuResponse, error)
 	UpdateMenu(context.Context, *Menu) (*MessageResponse, error)
 	DeleteMenu(context.Context, *NumbRequest) (*MessageResponse, error)
 	mustEmbedUnimplementedMenuServiceServer()
@@ -1505,7 +1505,7 @@ func (UnimplementedMenuServiceServer) GetAllMenu(context.Context, *emptypb.Empty
 func (UnimplementedMenuServiceServer) GetMenuById(context.Context, *NumbRequest) (*MenuResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMenuById not implemented")
 }
-func (UnimplementedMenuServiceServer) CreateNewMenu(context.Context, *Menu) (*MessageResponse, error) {
+func (UnimplementedMenuServiceServer) CreateNewMenu(context.Context, *Menu) (*MenuResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewMenu not implemented")
 }
 func (UnimplementedMenuServiceServer) UpdateMenu(context.Context, *Menu) (*MessageResponse, error) {
@@ -1876,6 +1876,7 @@ var MenuLocationService_ServiceDesc = grpc.ServiceDesc{
 const (
 	CategoryService_GetAllCategory_FullMethodName           = "/pb.CategoryService/GetAllCategory"
 	CategoryService_GetCategoryById_FullMethodName          = "/pb.CategoryService/GetCategoryById"
+	CategoryService_GetCategoryByManyId_FullMethodName      = "/pb.CategoryService/GetCategoryByManyId"
 	CategoryService_GetCategoryBySlug_FullMethodName        = "/pb.CategoryService/GetCategoryBySlug"
 	CategoryService_GetCategoryByType_FullMethodName        = "/pb.CategoryService/GetCategoryByType"
 	CategoryService_GetCategoryByParent_FullMethodName      = "/pb.CategoryService/GetCategoryByParent"
@@ -1891,11 +1892,12 @@ const (
 type CategoryServiceClient interface {
 	GetAllCategory(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
 	GetCategoryById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*CategoryResponse, error)
+	GetCategoryByManyId(ctx context.Context, in *ManyNumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
 	GetCategoryBySlug(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*CategoryResponse, error)
 	GetCategoryByType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
 	GetCategoryByParent(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
 	GetCategoryByTypeNParent(ctx context.Context, in *Category, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
-	CreateNewCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*MessageResponse, error)
+	CreateNewCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*CategoryResponse, error)
 	UpdateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*MessageResponse, error)
 	DeleteCategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 }
@@ -1922,6 +1924,16 @@ func (c *categoryServiceClient) GetCategoryById(ctx context.Context, in *NumbReq
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CategoryResponse)
 	err := c.cc.Invoke(ctx, CategoryService_GetCategoryById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *categoryServiceClient) GetCategoryByManyId(ctx context.Context, in *ManyNumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyCategoryResponse)
+	err := c.cc.Invoke(ctx, CategoryService_GetCategoryByManyId_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1968,9 +1980,9 @@ func (c *categoryServiceClient) GetCategoryByTypeNParent(ctx context.Context, in
 	return out, nil
 }
 
-func (c *categoryServiceClient) CreateNewCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *categoryServiceClient) CreateNewCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*CategoryResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageResponse)
+	out := new(CategoryResponse)
 	err := c.cc.Invoke(ctx, CategoryService_CreateNewCategory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -2004,11 +2016,12 @@ func (c *categoryServiceClient) DeleteCategory(ctx context.Context, in *NumbRequ
 type CategoryServiceServer interface {
 	GetAllCategory(context.Context, *emptypb.Empty) (*ManyCategoryResponse, error)
 	GetCategoryById(context.Context, *NumbRequest) (*CategoryResponse, error)
+	GetCategoryByManyId(context.Context, *ManyNumbRequest) (*ManyCategoryResponse, error)
 	GetCategoryBySlug(context.Context, *MessageRequest) (*CategoryResponse, error)
 	GetCategoryByType(context.Context, *NumbRequest) (*ManyCategoryResponse, error)
 	GetCategoryByParent(context.Context, *NumbRequest) (*ManyCategoryResponse, error)
 	GetCategoryByTypeNParent(context.Context, *Category) (*ManyCategoryResponse, error)
-	CreateNewCategory(context.Context, *Category) (*MessageResponse, error)
+	CreateNewCategory(context.Context, *Category) (*CategoryResponse, error)
 	UpdateCategory(context.Context, *Category) (*MessageResponse, error)
 	DeleteCategory(context.Context, *NumbRequest) (*MessageResponse, error)
 	mustEmbedUnimplementedCategoryServiceServer()
@@ -2027,6 +2040,9 @@ func (UnimplementedCategoryServiceServer) GetAllCategory(context.Context, *empty
 func (UnimplementedCategoryServiceServer) GetCategoryById(context.Context, *NumbRequest) (*CategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryById not implemented")
 }
+func (UnimplementedCategoryServiceServer) GetCategoryByManyId(context.Context, *ManyNumbRequest) (*ManyCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryByManyId not implemented")
+}
 func (UnimplementedCategoryServiceServer) GetCategoryBySlug(context.Context, *MessageRequest) (*CategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryBySlug not implemented")
 }
@@ -2039,7 +2055,7 @@ func (UnimplementedCategoryServiceServer) GetCategoryByParent(context.Context, *
 func (UnimplementedCategoryServiceServer) GetCategoryByTypeNParent(context.Context, *Category) (*ManyCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryByTypeNParent not implemented")
 }
-func (UnimplementedCategoryServiceServer) CreateNewCategory(context.Context, *Category) (*MessageResponse, error) {
+func (UnimplementedCategoryServiceServer) CreateNewCategory(context.Context, *Category) (*CategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewCategory not implemented")
 }
 func (UnimplementedCategoryServiceServer) UpdateCategory(context.Context, *Category) (*MessageResponse, error) {
@@ -2101,6 +2117,24 @@ func _CategoryService_GetCategoryById_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CategoryServiceServer).GetCategoryById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CategoryService_GetCategoryByManyId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ManyNumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).GetCategoryByManyId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CategoryService_GetCategoryByManyId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).GetCategoryByManyId(ctx, req.(*ManyNumbRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2247,6 +2281,10 @@ var CategoryService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CategoryService_GetCategoryById_Handler,
 		},
 		{
+			MethodName: "GetCategoryByManyId",
+			Handler:    _CategoryService_GetCategoryByManyId_Handler,
+		},
+		{
 			MethodName: "GetCategoryBySlug",
 			Handler:    _CategoryService_GetCategoryBySlug_Handler,
 		},
@@ -2282,6 +2320,7 @@ var CategoryService_ServiceDesc = grpc.ServiceDesc{
 const (
 	PageService_GetAllPage_FullMethodName                   = "/pb.PageService/GetAllPage"
 	PageService_GetPageById_FullMethodName                  = "/pb.PageService/GetPageById"
+	PageService_GetPageByManyId_FullMethodName              = "/pb.PageService/GetPageByManyId"
 	PageService_GetPageBySlug_FullMethodName                = "/pb.PageService/GetPageBySlug"
 	PageService_GetPageByStatus_FullMethodName              = "/pb.PageService/GetPageByStatus"
 	PageService_GetPageByUser_FullMethodName                = "/pb.PageService/GetPageByUser"
@@ -2303,6 +2342,7 @@ const (
 type PageServiceClient interface {
 	GetAllPage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
 	GetPageById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*PageResponse, error)
+	GetPageByManyId(ctx context.Context, in *ManyNumbRequest, opts ...grpc.CallOption) (*ManyPageResponse, error)
 	GetPageBySlug(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*PageResponse, error)
 	GetPageByStatus(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
 	GetPageByUser(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
@@ -2311,7 +2351,7 @@ type PageServiceClient interface {
 	GetPageByPublishYear(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
 	GetPageByPublishYearMonth(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
 	GetPageByPublishYearMonthDay(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
-	CreateNewPage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*MessageResponse, error)
+	CreateNewPage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*PageResponse, error)
 	UpdatePage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*MessageResponse, error)
 	DeletePage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 	CountPageByType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*NumbResponse, error)
@@ -2340,6 +2380,16 @@ func (c *pageServiceClient) GetPageById(ctx context.Context, in *NumbRequest, op
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PageResponse)
 	err := c.cc.Invoke(ctx, PageService_GetPageById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageByManyId(ctx context.Context, in *ManyNumbRequest, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageByManyId_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2426,9 +2476,9 @@ func (c *pageServiceClient) GetPageByPublishYearMonthDay(ctx context.Context, in
 	return out, nil
 }
 
-func (c *pageServiceClient) CreateNewPage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *pageServiceClient) CreateNewPage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*PageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageResponse)
+	out := new(PageResponse)
 	err := c.cc.Invoke(ctx, PageService_CreateNewPage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -2482,6 +2532,7 @@ func (c *pageServiceClient) CountPageByTypeNStatus(ctx context.Context, in *Page
 type PageServiceServer interface {
 	GetAllPage(context.Context, *Page) (*ManyPageResponse, error)
 	GetPageById(context.Context, *NumbRequest) (*PageResponse, error)
+	GetPageByManyId(context.Context, *ManyNumbRequest) (*ManyPageResponse, error)
 	GetPageBySlug(context.Context, *MessageRequest) (*PageResponse, error)
 	GetPageByStatus(context.Context, *Page) (*ManyPageResponse, error)
 	GetPageByUser(context.Context, *Page) (*ManyPageResponse, error)
@@ -2490,7 +2541,7 @@ type PageServiceServer interface {
 	GetPageByPublishYear(context.Context, *Page) (*ManyPageResponse, error)
 	GetPageByPublishYearMonth(context.Context, *Page) (*ManyPageResponse, error)
 	GetPageByPublishYearMonthDay(context.Context, *Page) (*ManyPageResponse, error)
-	CreateNewPage(context.Context, *Page) (*MessageResponse, error)
+	CreateNewPage(context.Context, *Page) (*PageResponse, error)
 	UpdatePage(context.Context, *Page) (*MessageResponse, error)
 	DeletePage(context.Context, *NumbRequest) (*MessageResponse, error)
 	CountPageByType(context.Context, *NumbRequest) (*NumbResponse, error)
@@ -2510,6 +2561,9 @@ func (UnimplementedPageServiceServer) GetAllPage(context.Context, *Page) (*ManyP
 }
 func (UnimplementedPageServiceServer) GetPageById(context.Context, *NumbRequest) (*PageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPageById not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageByManyId(context.Context, *ManyNumbRequest) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageByManyId not implemented")
 }
 func (UnimplementedPageServiceServer) GetPageBySlug(context.Context, *MessageRequest) (*PageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPageBySlug not implemented")
@@ -2535,7 +2589,7 @@ func (UnimplementedPageServiceServer) GetPageByPublishYearMonth(context.Context,
 func (UnimplementedPageServiceServer) GetPageByPublishYearMonthDay(context.Context, *Page) (*ManyPageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPageByPublishYearMonthDay not implemented")
 }
-func (UnimplementedPageServiceServer) CreateNewPage(context.Context, *Page) (*MessageResponse, error) {
+func (UnimplementedPageServiceServer) CreateNewPage(context.Context, *Page) (*PageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewPage not implemented")
 }
 func (UnimplementedPageServiceServer) UpdatePage(context.Context, *Page) (*MessageResponse, error) {
@@ -2603,6 +2657,24 @@ func _PageService_GetPageById_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PageServiceServer).GetPageById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageByManyId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ManyNumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageByManyId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageByManyId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageByManyId(ctx, req.(*ManyNumbRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2857,6 +2929,10 @@ var PageService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PageService_GetPageById_Handler,
 		},
 		{
+			MethodName: "GetPageByManyId",
+			Handler:    _PageService_GetPageByManyId_Handler,
+		},
+		{
 			MethodName: "GetPageBySlug",
 			Handler:    _PageService_GetPageBySlug_Handler,
 		},
@@ -2914,13 +2990,14 @@ var PageService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	TagService_GetAllTag_FullMethodName    = "/pb.TagService/GetAllTag"
-	TagService_GetTagById_FullMethodName   = "/pb.TagService/GetTagById"
-	TagService_GetTagByType_FullMethodName = "/pb.TagService/GetTagByType"
-	TagService_GetTagBySlug_FullMethodName = "/pb.TagService/GetTagBySlug"
-	TagService_CreateNewTag_FullMethodName = "/pb.TagService/CreateNewTag"
-	TagService_UpdateTag_FullMethodName    = "/pb.TagService/UpdateTag"
-	TagService_DeleteTag_FullMethodName    = "/pb.TagService/DeleteTag"
+	TagService_GetAllTag_FullMethodName      = "/pb.TagService/GetAllTag"
+	TagService_GetTagById_FullMethodName     = "/pb.TagService/GetTagById"
+	TagService_GetTagByManyId_FullMethodName = "/pb.TagService/GetTagByManyId"
+	TagService_GetTagByType_FullMethodName   = "/pb.TagService/GetTagByType"
+	TagService_GetTagBySlug_FullMethodName   = "/pb.TagService/GetTagBySlug"
+	TagService_CreateNewTag_FullMethodName   = "/pb.TagService/CreateNewTag"
+	TagService_UpdateTag_FullMethodName      = "/pb.TagService/UpdateTag"
+	TagService_DeleteTag_FullMethodName      = "/pb.TagService/DeleteTag"
 )
 
 // TagServiceClient is the client API for TagService service.
@@ -2929,9 +3006,10 @@ const (
 type TagServiceClient interface {
 	GetAllTag(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyTagResponse, error)
 	GetTagById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*TagResponse, error)
+	GetTagByManyId(ctx context.Context, in *ManyNumbRequest, opts ...grpc.CallOption) (*ManyTagResponse, error)
 	GetTagByType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyTagResponse, error)
 	GetTagBySlug(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*TagResponse, error)
-	CreateNewTag(ctx context.Context, in *Tag, opts ...grpc.CallOption) (*MessageResponse, error)
+	CreateNewTag(ctx context.Context, in *Tag, opts ...grpc.CallOption) (*TagResponse, error)
 	UpdateTag(ctx context.Context, in *Tag, opts ...grpc.CallOption) (*MessageResponse, error)
 	DeleteTag(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 }
@@ -2964,6 +3042,16 @@ func (c *tagServiceClient) GetTagById(ctx context.Context, in *NumbRequest, opts
 	return out, nil
 }
 
+func (c *tagServiceClient) GetTagByManyId(ctx context.Context, in *ManyNumbRequest, opts ...grpc.CallOption) (*ManyTagResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyTagResponse)
+	err := c.cc.Invoke(ctx, TagService_GetTagByManyId_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *tagServiceClient) GetTagByType(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyTagResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ManyTagResponse)
@@ -2984,9 +3072,9 @@ func (c *tagServiceClient) GetTagBySlug(ctx context.Context, in *MessageRequest,
 	return out, nil
 }
 
-func (c *tagServiceClient) CreateNewTag(ctx context.Context, in *Tag, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *tagServiceClient) CreateNewTag(ctx context.Context, in *Tag, opts ...grpc.CallOption) (*TagResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageResponse)
+	out := new(TagResponse)
 	err := c.cc.Invoke(ctx, TagService_CreateNewTag_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -3020,9 +3108,10 @@ func (c *tagServiceClient) DeleteTag(ctx context.Context, in *NumbRequest, opts 
 type TagServiceServer interface {
 	GetAllTag(context.Context, *emptypb.Empty) (*ManyTagResponse, error)
 	GetTagById(context.Context, *NumbRequest) (*TagResponse, error)
+	GetTagByManyId(context.Context, *ManyNumbRequest) (*ManyTagResponse, error)
 	GetTagByType(context.Context, *NumbRequest) (*ManyTagResponse, error)
 	GetTagBySlug(context.Context, *MessageRequest) (*TagResponse, error)
-	CreateNewTag(context.Context, *Tag) (*MessageResponse, error)
+	CreateNewTag(context.Context, *Tag) (*TagResponse, error)
 	UpdateTag(context.Context, *Tag) (*MessageResponse, error)
 	DeleteTag(context.Context, *NumbRequest) (*MessageResponse, error)
 	mustEmbedUnimplementedTagServiceServer()
@@ -3041,13 +3130,16 @@ func (UnimplementedTagServiceServer) GetAllTag(context.Context, *emptypb.Empty) 
 func (UnimplementedTagServiceServer) GetTagById(context.Context, *NumbRequest) (*TagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTagById not implemented")
 }
+func (UnimplementedTagServiceServer) GetTagByManyId(context.Context, *ManyNumbRequest) (*ManyTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTagByManyId not implemented")
+}
 func (UnimplementedTagServiceServer) GetTagByType(context.Context, *NumbRequest) (*ManyTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTagByType not implemented")
 }
 func (UnimplementedTagServiceServer) GetTagBySlug(context.Context, *MessageRequest) (*TagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTagBySlug not implemented")
 }
-func (UnimplementedTagServiceServer) CreateNewTag(context.Context, *Tag) (*MessageResponse, error) {
+func (UnimplementedTagServiceServer) CreateNewTag(context.Context, *Tag) (*TagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewTag not implemented")
 }
 func (UnimplementedTagServiceServer) UpdateTag(context.Context, *Tag) (*MessageResponse, error) {
@@ -3109,6 +3201,24 @@ func _TagService_GetTagById_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TagServiceServer).GetTagById(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TagService_GetTagByManyId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ManyNumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TagServiceServer).GetTagByManyId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TagService_GetTagByManyId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TagServiceServer).GetTagByManyId(ctx, req.(*ManyNumbRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -3219,6 +3329,10 @@ var TagService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _TagService_GetTagById_Handler,
 		},
 		{
+			MethodName: "GetTagByManyId",
+			Handler:    _TagService_GetTagByManyId_Handler,
+		},
+		{
 			MethodName: "GetTagByType",
 			Handler:    _TagService_GetTagByType_Handler,
 		},
@@ -3244,8 +3358,8 @@ var TagService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	PagetagService_GetPageByTag_FullMethodName     = "/pb.PagetagService/GetPageByTag"
-	PagetagService_GetTagByPage_FullMethodName     = "/pb.PagetagService/GetTagByPage"
+	PagetagService_GetPagetagByTag_FullMethodName  = "/pb.PagetagService/GetPagetagByTag"
+	PagetagService_GetPagetagByPage_FullMethodName = "/pb.PagetagService/GetPagetagByPage"
 	PagetagService_CreateNewPagetag_FullMethodName = "/pb.PagetagService/CreateNewPagetag"
 	PagetagService_DeletePagetag_FullMethodName    = "/pb.PagetagService/DeletePagetag"
 )
@@ -3254,9 +3368,9 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PagetagServiceClient interface {
-	GetPageByTag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*ManyPageResponse, error)
-	GetTagByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyTagResponse, error)
-	CreateNewPagetag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*MessageResponse, error)
+	GetPagetagByTag(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagetagResponse, error)
+	GetPagetagByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagetagResponse, error)
+	CreateNewPagetag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*PagetagResponse, error)
 	DeletePagetag(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 }
 
@@ -3268,29 +3382,29 @@ func NewPagetagServiceClient(cc grpc.ClientConnInterface) PagetagServiceClient {
 	return &pagetagServiceClient{cc}
 }
 
-func (c *pagetagServiceClient) GetPageByTag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+func (c *pagetagServiceClient) GetPagetagByTag(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagetagResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ManyPageResponse)
-	err := c.cc.Invoke(ctx, PagetagService_GetPageByTag_FullMethodName, in, out, cOpts...)
+	out := new(ManyPagetagResponse)
+	err := c.cc.Invoke(ctx, PagetagService_GetPagetagByTag_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *pagetagServiceClient) GetTagByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyTagResponse, error) {
+func (c *pagetagServiceClient) GetPagetagByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagetagResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ManyTagResponse)
-	err := c.cc.Invoke(ctx, PagetagService_GetTagByPage_FullMethodName, in, out, cOpts...)
+	out := new(ManyPagetagResponse)
+	err := c.cc.Invoke(ctx, PagetagService_GetPagetagByPage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *pagetagServiceClient) CreateNewPagetag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *pagetagServiceClient) CreateNewPagetag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*PagetagResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageResponse)
+	out := new(PagetagResponse)
 	err := c.cc.Invoke(ctx, PagetagService_CreateNewPagetag_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -3312,9 +3426,9 @@ func (c *pagetagServiceClient) DeletePagetag(ctx context.Context, in *NumbReques
 // All implementations must embed UnimplementedPagetagServiceServer
 // for forward compatibility.
 type PagetagServiceServer interface {
-	GetPageByTag(context.Context, *Pagetag) (*ManyPageResponse, error)
-	GetTagByPage(context.Context, *NumbRequest) (*ManyTagResponse, error)
-	CreateNewPagetag(context.Context, *Pagetag) (*MessageResponse, error)
+	GetPagetagByTag(context.Context, *NumbRequest) (*ManyPagetagResponse, error)
+	GetPagetagByPage(context.Context, *NumbRequest) (*ManyPagetagResponse, error)
+	CreateNewPagetag(context.Context, *Pagetag) (*PagetagResponse, error)
 	DeletePagetag(context.Context, *NumbRequest) (*MessageResponse, error)
 	mustEmbedUnimplementedPagetagServiceServer()
 }
@@ -3326,13 +3440,13 @@ type PagetagServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPagetagServiceServer struct{}
 
-func (UnimplementedPagetagServiceServer) GetPageByTag(context.Context, *Pagetag) (*ManyPageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageByTag not implemented")
+func (UnimplementedPagetagServiceServer) GetPagetagByTag(context.Context, *NumbRequest) (*ManyPagetagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPagetagByTag not implemented")
 }
-func (UnimplementedPagetagServiceServer) GetTagByPage(context.Context, *NumbRequest) (*ManyTagResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetTagByPage not implemented")
+func (UnimplementedPagetagServiceServer) GetPagetagByPage(context.Context, *NumbRequest) (*ManyPagetagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPagetagByPage not implemented")
 }
-func (UnimplementedPagetagServiceServer) CreateNewPagetag(context.Context, *Pagetag) (*MessageResponse, error) {
+func (UnimplementedPagetagServiceServer) CreateNewPagetag(context.Context, *Pagetag) (*PagetagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewPagetag not implemented")
 }
 func (UnimplementedPagetagServiceServer) DeletePagetag(context.Context, *NumbRequest) (*MessageResponse, error) {
@@ -3359,38 +3473,38 @@ func RegisterPagetagServiceServer(s grpc.ServiceRegistrar, srv PagetagServiceSer
 	s.RegisterService(&PagetagService_ServiceDesc, srv)
 }
 
-func _PagetagService_GetPageByTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Pagetag)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PagetagServiceServer).GetPageByTag(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PagetagService_GetPageByTag_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PagetagServiceServer).GetPageByTag(ctx, req.(*Pagetag))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PagetagService_GetTagByPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PagetagService_GetPagetagByTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NumbRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PagetagServiceServer).GetTagByPage(ctx, in)
+		return srv.(PagetagServiceServer).GetPagetagByTag(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PagetagService_GetTagByPage_FullMethodName,
+		FullMethod: PagetagService_GetPagetagByTag_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PagetagServiceServer).GetTagByPage(ctx, req.(*NumbRequest))
+		return srv.(PagetagServiceServer).GetPagetagByTag(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PagetagService_GetPagetagByPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagetagServiceServer).GetPagetagByPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagetagService_GetPagetagByPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagetagServiceServer).GetPagetagByPage(ctx, req.(*NumbRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -3439,12 +3553,12 @@ var PagetagService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PagetagServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageByTag",
-			Handler:    _PagetagService_GetPageByTag_Handler,
+			MethodName: "GetPagetagByTag",
+			Handler:    _PagetagService_GetPagetagByTag_Handler,
 		},
 		{
-			MethodName: "GetTagByPage",
-			Handler:    _PagetagService_GetTagByPage_Handler,
+			MethodName: "GetPagetagByPage",
+			Handler:    _PagetagService_GetPagetagByPage_Handler,
 		},
 		{
 			MethodName: "CreateNewPagetag",
@@ -3460,19 +3574,19 @@ var PagetagService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	PagecategoryService_GetPageByCategory_FullMethodName     = "/pb.PagecategoryService/GetPageByCategory"
-	PagecategoryService_GetCategoryByPage_FullMethodName     = "/pb.PagecategoryService/GetCategoryByPage"
-	PagecategoryService_CreateNewPagecategory_FullMethodName = "/pb.PagecategoryService/CreateNewPagecategory"
-	PagecategoryService_DeletePagecategory_FullMethodName    = "/pb.PagecategoryService/DeletePagecategory"
+	PagecategoryService_GetPagecategoryByCategory_FullMethodName = "/pb.PagecategoryService/GetPagecategoryByCategory"
+	PagecategoryService_GetPagecategoryByPage_FullMethodName     = "/pb.PagecategoryService/GetPagecategoryByPage"
+	PagecategoryService_CreateNewPagecategory_FullMethodName     = "/pb.PagecategoryService/CreateNewPagecategory"
+	PagecategoryService_DeletePagecategory_FullMethodName        = "/pb.PagecategoryService/DeletePagecategory"
 )
 
 // PagecategoryServiceClient is the client API for PagecategoryService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PagecategoryServiceClient interface {
-	GetPageByCategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*ManyPageResponse, error)
-	GetCategoryByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error)
-	CreateNewPagecategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*MessageResponse, error)
+	GetPagecategoryByCategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagecategoryResponse, error)
+	GetPagecategoryByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagecategoryResponse, error)
+	CreateNewPagecategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*PagecategoryResponse, error)
 	DeletePagecategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 }
 
@@ -3484,29 +3598,29 @@ func NewPagecategoryServiceClient(cc grpc.ClientConnInterface) PagecategoryServi
 	return &pagecategoryServiceClient{cc}
 }
 
-func (c *pagecategoryServiceClient) GetPageByCategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+func (c *pagecategoryServiceClient) GetPagecategoryByCategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagecategoryResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ManyPageResponse)
-	err := c.cc.Invoke(ctx, PagecategoryService_GetPageByCategory_FullMethodName, in, out, cOpts...)
+	out := new(ManyPagecategoryResponse)
+	err := c.cc.Invoke(ctx, PagecategoryService_GetPagecategoryByCategory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *pagecategoryServiceClient) GetCategoryByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyCategoryResponse, error) {
+func (c *pagecategoryServiceClient) GetPagecategoryByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagecategoryResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ManyCategoryResponse)
-	err := c.cc.Invoke(ctx, PagecategoryService_GetCategoryByPage_FullMethodName, in, out, cOpts...)
+	out := new(ManyPagecategoryResponse)
+	err := c.cc.Invoke(ctx, PagecategoryService_GetPagecategoryByPage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *pagecategoryServiceClient) CreateNewPagecategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*MessageResponse, error) {
+func (c *pagecategoryServiceClient) CreateNewPagecategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*PagecategoryResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageResponse)
+	out := new(PagecategoryResponse)
 	err := c.cc.Invoke(ctx, PagecategoryService_CreateNewPagecategory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -3528,9 +3642,9 @@ func (c *pagecategoryServiceClient) DeletePagecategory(ctx context.Context, in *
 // All implementations must embed UnimplementedPagecategoryServiceServer
 // for forward compatibility.
 type PagecategoryServiceServer interface {
-	GetPageByCategory(context.Context, *Pagecategory) (*ManyPageResponse, error)
-	GetCategoryByPage(context.Context, *NumbRequest) (*ManyCategoryResponse, error)
-	CreateNewPagecategory(context.Context, *Pagecategory) (*MessageResponse, error)
+	GetPagecategoryByCategory(context.Context, *NumbRequest) (*ManyPagecategoryResponse, error)
+	GetPagecategoryByPage(context.Context, *NumbRequest) (*ManyPagecategoryResponse, error)
+	CreateNewPagecategory(context.Context, *Pagecategory) (*PagecategoryResponse, error)
 	DeletePagecategory(context.Context, *NumbRequest) (*MessageResponse, error)
 	mustEmbedUnimplementedPagecategoryServiceServer()
 }
@@ -3542,13 +3656,13 @@ type PagecategoryServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPagecategoryServiceServer struct{}
 
-func (UnimplementedPagecategoryServiceServer) GetPageByCategory(context.Context, *Pagecategory) (*ManyPageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageByCategory not implemented")
+func (UnimplementedPagecategoryServiceServer) GetPagecategoryByCategory(context.Context, *NumbRequest) (*ManyPagecategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPagecategoryByCategory not implemented")
 }
-func (UnimplementedPagecategoryServiceServer) GetCategoryByPage(context.Context, *NumbRequest) (*ManyCategoryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryByPage not implemented")
+func (UnimplementedPagecategoryServiceServer) GetPagecategoryByPage(context.Context, *NumbRequest) (*ManyPagecategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPagecategoryByPage not implemented")
 }
-func (UnimplementedPagecategoryServiceServer) CreateNewPagecategory(context.Context, *Pagecategory) (*MessageResponse, error) {
+func (UnimplementedPagecategoryServiceServer) CreateNewPagecategory(context.Context, *Pagecategory) (*PagecategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewPagecategory not implemented")
 }
 func (UnimplementedPagecategoryServiceServer) DeletePagecategory(context.Context, *NumbRequest) (*MessageResponse, error) {
@@ -3575,38 +3689,38 @@ func RegisterPagecategoryServiceServer(s grpc.ServiceRegistrar, srv Pagecategory
 	s.RegisterService(&PagecategoryService_ServiceDesc, srv)
 }
 
-func _PagecategoryService_GetPageByCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Pagecategory)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PagecategoryServiceServer).GetPageByCategory(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PagecategoryService_GetPageByCategory_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PagecategoryServiceServer).GetPageByCategory(ctx, req.(*Pagecategory))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PagecategoryService_GetCategoryByPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PagecategoryService_GetPagecategoryByCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NumbRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PagecategoryServiceServer).GetCategoryByPage(ctx, in)
+		return srv.(PagecategoryServiceServer).GetPagecategoryByCategory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PagecategoryService_GetCategoryByPage_FullMethodName,
+		FullMethod: PagecategoryService_GetPagecategoryByCategory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PagecategoryServiceServer).GetCategoryByPage(ctx, req.(*NumbRequest))
+		return srv.(PagecategoryServiceServer).GetPagecategoryByCategory(ctx, req.(*NumbRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PagecategoryService_GetPagecategoryByPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NumbRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagecategoryServiceServer).GetPagecategoryByPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagecategoryService_GetPagecategoryByPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagecategoryServiceServer).GetPagecategoryByPage(ctx, req.(*NumbRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -3655,12 +3769,12 @@ var PagecategoryService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PagecategoryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageByCategory",
-			Handler:    _PagecategoryService_GetPageByCategory_Handler,
+			MethodName: "GetPagecategoryByCategory",
+			Handler:    _PagecategoryService_GetPagecategoryByCategory_Handler,
 		},
 		{
-			MethodName: "GetCategoryByPage",
-			Handler:    _PagecategoryService_GetCategoryByPage_Handler,
+			MethodName: "GetPagecategoryByPage",
+			Handler:    _PagecategoryService_GetPagecategoryByPage_Handler,
 		},
 		{
 			MethodName: "CreateNewPagecategory",

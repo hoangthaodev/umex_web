@@ -1,7 +1,7 @@
 'use client'
 import { useComponent } from '@/app/ComponentContext'
 import { useTheme } from '@/app/ThemeContext'
-import { useBreadcrumb } from '@/app/ux-admin/(admin)/theme/BreadcrumbContext'
+import { useBreadcrumb } from '@/app/ux-admin/(admin)/theme/(custom)/BreadcrumbContext'
 import DeskActionList from '@/components/admin/theme/actionArea/DeskActionList'
 import ActionList from '@/components/admin/theme/actionArea/DeskActionList'
 import IdleList from '@/components/admin/theme/actionArea/IdleList'

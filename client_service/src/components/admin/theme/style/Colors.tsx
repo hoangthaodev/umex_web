@@ -1,11 +1,9 @@
 'use client'
-import { updateConfigByKey } from '@/actions/config.action'
 import { useTheme } from '@/app/ThemeContext'
 import DivNgang from '@/components/DivNgang'
 import SelectColor from '@/components/SelectColor'
 import { SetBreadcrumb } from '@/components/SetBreadcrumb'
 import React from 'react'
-import { toast } from 'react-toastify'
 
 type Props = {}
 
@@ -13,22 +11,6 @@ const Colors = (props: Props) => {
   const { primaryColor, secondaryColor, successColor, alertColor, baseColor, headlineColor, linkColor, linkColorHover,
     setPrimaryColor, setSecondaryColor, setSuccessColor, setAlertColor, setBaseColor, setHeadlineColor, setLinkColor, setLinkColorHover
   } = useTheme()
-
-  const handleSaveChange = async () => {
-    const data = JSON.stringify({
-      primaryColor,
-      secondaryColor,
-      successColor,
-      alertColor,
-      baseColor,
-      headlineColor,
-      linkColor,
-      linkColorHover,
-    })
-    await updateConfigByKey("style_color", data)
-
-    toast.success("Save Change Successfully!")
-  }
 
   return (
     <div className='flex flex-col gap-4'>
@@ -129,11 +111,6 @@ const Colors = (props: Props) => {
             </div>
           </div>
         </div>
-      </div>
-      <div className='px-2'>
-        <button className='float-right bg-blue-700 text-gray-200 hover:bg-blue-800 text-sm py-1 px-2 rounded-md'
-          onClick={handleSaveChange}
-        >Save Change</button>
       </div>
     </div>
   )

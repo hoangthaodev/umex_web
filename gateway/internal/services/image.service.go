@@ -31,7 +31,7 @@ func (is *ImageService) GetImageById(imageId int64) (*pb.ImageResponse, error) {
 	})
 }
 
-func (is *ImageService) CreateNewImage(url string, title string, alt string, caption string) (*pb.MessageResponse, error) {
+func (is *ImageService) CreateNewImage(url string, title string, alt string, caption string) (*pb.ImageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 

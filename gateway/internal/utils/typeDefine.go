@@ -1,11 +1,12 @@
 package utils
 
 type User struct {
-	UserId     int64  `json:"user_id"`
-	Username   string `json:"username"`
-	Password   string `json:"password"`
-	Email      string `json:"user_email"`
-	UserActive int32  `json:"user_active"`
+	UserId          int64  `json:"user_id"`
+	Username        string `json:"username"`
+	Password        string `json:"password"`
+	Email           string `json:"user_email"`
+	UserActive      int32  `json:"user_active"`
+	UserDisplayName string `json:"user_display_name"`
 }
 
 type Config struct {
@@ -35,6 +36,7 @@ type Menu struct {
 	MenuId    int64  `json:"menu_id"`
 	MenuName  string `json:"menu_name"`
 	MenuValue string `json:"menu_value"`
+	MenuSlug  string `json:"menu_slug"`
 }
 
 type MenuLocation struct {
@@ -44,9 +46,10 @@ type MenuLocation struct {
 }
 
 type Pagetag struct {
-	PagetagId int64 `json:"pagetag_id"`
-	PageId    int64 `json:"page_id"`
-	TagId     int64 `json:"tag_id"`
+	PagetagId   int64  `json:"pagetag_id"`
+	PageId      int64  `json:"page_id"`
+	TagId       int64  `json:"tag_id"`
+	PagetagSlug string `json:"pagetag_slug"`
 }
 
 type Tag struct {
@@ -83,9 +86,10 @@ type Category struct {
 }
 
 type Pagecategory struct {
-	PagecategoryId int64 `json:"pagecategory_id"`
-	PageId         int64 `json:"page_id"`
-	CategoryId     int64 `json:"category_id"`
+	PagecategoryId   int64  `json:"pagecategory_id"`
+	PageId           int64  `json:"page_id"`
+	CategoryId       int64  `json:"category_id"`
+	PagecategorySlug string `json:"pagecategory_slug"`
 }
 
 type RefreshToken struct {

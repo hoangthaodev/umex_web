@@ -49,7 +49,7 @@ func (cps *ComponentService) GetComponentByPosition(position int64) (*pb.ManyCom
 	})
 }
 
-func (cps *ComponentService) CreateNewComponent(name string, position int32, index int32, compMap string) (*pb.MessageResponse, error) {
+func (cps *ComponentService) CreateNewComponent(name string, position int32, index int32, compMap string) (*pb.ComponentResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 	client := pb.NewComponentServiceClient(conn)

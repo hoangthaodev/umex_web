@@ -16,22 +16,26 @@ func (as *AuthService) GetAuthById(authId int64) (database.TbAuth, error) {
 	return queries.GetAuthById(context.Background(), authId)
 }
 
-func (as *AuthService) GetAuthByUserId(userId int64) (database.TbAuth, error) {
+func (as *AuthService) GetAuthByUser(userId int64) (database.TbAuth, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.GetAuthByUserId(context.Background(), userId)
+	return queries.GetAuthByUser(context.Background(), userId)
 }
 
-func (as *AuthService) CreateNewAuth(userId int64, roleId int32) error {
+func (as *AuthService) CreateNewAuth(userId int64, roleId int32) (database.TbAuth, error) {
 	queries := database.New(global.Mysql)
 
 	createAt := utils.TimeToInt64(time.Now())
 
-	return queries.CreateNewAuth(context.Background(), database.CreateNewAuthParams{
+	err := queries.CreateNewAuth(context.Background(), database.CreateNewAuthParams{
 		UserID:    userId,
 		RoleID:    roleId,
 		CreatedAt: createAt,
 	})
+	if err != nil {
+		return database.TbAuth{}, err
+	}
+	return as.GetAuthByUser(userId)
 }
 
 func (as *AuthService) UpdateAuth(roleId int32, authId int64) error {

@@ -1,7 +1,7 @@
 -- name: GetAuthById :one
 select * from tb_auth where auth_id = ?;
 
--- name: GetAuthByUserId :one
+-- name: GetAuthByUser :one
 select * from tb_auth where user_id = ?;
 
 -- name: CreateNewAuth :exec

@@ -19,7 +19,8 @@ func (tc *TagRouter) InitTagRouter(router *gin.RouterGroup) {
 	privateTagRouter.Use(middleware.Permission())
 	{
 		privateTagRouter.GET("", tc.TagController.GetAllTag)
-		privateTagRouter.GET("/:id", tc.TagController.GetTagById)
+		privateTagRouter.GET("id/:id", tc.TagController.GetTagById)
+		privateTagRouter.GET("ids/", tc.TagController.GetTagByManyId)
 		privateTagRouter.GET("/slug/:slug", tc.TagController.GetTagBySlug)
 		privateTagRouter.GET("/type/:id", tc.TagController.GetTagByType)
 		privateTagRouter.POST("", tc.TagController.CreateNewTag)

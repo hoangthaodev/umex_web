@@ -9,36 +9,35 @@ import (
 
 type PagecategoryService struct{}
 
-func (ps *PagecategoryService) GetPageByCategory(catId int64, limit int32, offset int32) (*pb.ManyPageResponse, error) {
+func (ps *PagecategoryService) GetPagecategoryByCategory(catId int64) (*pb.ManyPagecategoryResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
 	client := pb.NewPagecategoryServiceClient(conn)
-	return client.GetPageByCategory(context.Background(), &pb.Pagecategory{
-		CategoryId: catId,
-		Limit:      limit,
-		Offset:     offset,
+	return client.GetPagecategoryByCategory(context.Background(), &pb.NumbRequest{
+		Numb: catId,
 	})
 }
 
-func (ps *PagecategoryService) GetCategoryByPage(pageId int64) (*pb.ManyCategoryResponse, error) {
+func (ps *PagecategoryService) GetPagecategoryByPage(pageId int64) (*pb.ManyPagecategoryResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
 	client := pb.NewPagecategoryServiceClient(conn)
-	return client.GetCategoryByPage(context.Background(), &pb.NumbRequest{
+	return client.GetPagecategoryByPage(context.Background(), &pb.NumbRequest{
 		Numb: pageId,
 	})
 }
 
-func (ps *PagecategoryService) CreateNewPagecategory(pageId int64, catId int64) (*pb.MessageResponse, error) {
+func (ps *PagecategoryService) CreateNewPagecategory(pageId int64, catId int64, slug string) (*pb.PagecategoryResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()
 
 	client := pb.NewPagecategoryServiceClient(conn)
 	return client.CreateNewPagecategory(context.Background(), &pb.Pagecategory{
-		PageId:     pageId,
-		CategoryId: catId,
+		PageId:           pageId,
+		CategoryId:       catId,
+		PagecategorySlug: slug,
 	})
 }
 

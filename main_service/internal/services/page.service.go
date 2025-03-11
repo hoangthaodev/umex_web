@@ -2,9 +2,11 @@ package services
 
 import (
 	"context"
+	"fmt"
 	"main_service/global"
 	"main_service/internal/database"
 	"main_service/internal/utils"
+	"strings"
 	"time"
 )
 
@@ -23,6 +25,25 @@ func (ps *PageService) GetPageById(pageId int64) (database.TbPage, error) {
 	queries := database.New(global.Mysql)
 
 	return queries.GetPageById(context.Background(), pageId)
+}
+
+func (ps *PageService) GetPageByManyId(listId []int64) ([]byte, error) {
+	if len(listId) == 0 {
+		return nil, fmt.Errorf("listId is empty")
+	}
+	queries := database.New(global.Mysql)
+
+	placeholders := make([]string, len(listId))
+	for i := range listId {
+		placeholders[i] = "?"
+	}
+	queryString := fmt.Sprintf("SELECT * FROM tb_page WHERE page_id in(%s)", strings.Join(placeholders, ","))
+	args := make([]interface{}, len(listId))
+	for i, id := range listId {
+		args[i] = id
+	}
+
+	return queries.QueryByString(context.Background(), queryString, args...)
 }
 
 func (ps *PageService) GetPageBySlug(pageSlug string) (database.TbPage, error) {
@@ -105,10 +126,10 @@ func (ps *PageService) GetPageByPublishYearMonthDay(pagePubYear int32, pagePubMo
 	})
 }
 
-func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, pagePubYear int32, pagePubMonth int32, pagePubDay int32, pageFeatureImage int64, userId int64, typeId int32, tempId int32) error {
+func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, pagePubYear int32, pagePubMonth int32, pagePubDay int32, pageFeatureImage int64, userId int64, typeId int32, tempId int32) (database.TbPage, error) {
 	queries := database.New(global.Mysql)
 
-	return queries.CreateNewPage(context.Background(), database.CreateNewPageParams{
+	err := queries.CreateNewPage(context.Background(), database.CreateNewPageParams{
 		PageTitle:        pageTitle,
 		PageSlug:         pageSlug,
 		PageContent:      pageContent,
@@ -123,6 +144,10 @@ func (ps *PageService) CreateNewPage(pageTitle string, pageSlug string, pageCont
 		TemplateID:       tempId,
 		CreatedAt:        utils.TimeToInt64(time.Now()),
 	})
+	if err != nil {
+		return database.TbPage{}, err
+	}
+	return ps.GetPageBySlug(pageSlug)
 }
 
 func (ps *PageService) UpdatePage(pageTitle string, pageSlug string, pageContent string, pageDes string, pageStatus int32, pagePubYear int32, pagePubMonth int32, pagePubDay int32, pageFeatureImage int64, userId int64, typeId int32, tempId int32, pageId int64) error {

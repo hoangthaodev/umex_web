@@ -32,6 +32,17 @@ func (cc *CategoryController) GetCategoryById(c *gin.Context) {
 	response.SuccessResponse(c, int(res.Code), res)
 }
 
+func (cc *CategoryController) GetCategoryByManyId(c *gin.Context) {
+	listId := c.Query("ids")
+	ids := utils.StringToInt64Slice(listId)
+	res, err := cc.CategoryService.GetCategoryByManyId(ids)
+	if err != nil {
+		response.ErrorResponse(c, int(res.Code), "")
+		return
+	}
+	response.SuccessResponse(c, int(res.Code), res)
+}
+
 func (cc *CategoryController) GetCategoryBySlug(c *gin.Context) {
 	slug := c.Param("slug")
 	res, err := cc.CategoryService.GetCategoryBySlug(slug)

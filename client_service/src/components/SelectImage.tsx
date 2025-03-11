@@ -1,26 +1,42 @@
 'use client'
+import { getImageById } from '@/actions/image.action'
 import MediaSelect from '@/components/MediaSelect'
 import { ImageType } from '@/lib/types'
 import Image from 'next/image'
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useEffect, useRef, useState } from 'react'
 
 type Props = {
-  image: ImageType | undefined,
-  setImage: React.Dispatch<SetStateAction<ImageType | undefined>>
+  image: number,
+  setImage: React.Dispatch<SetStateAction<number>>
 }
 
 const SelectImage = ({ image, setImage }: Props) => {
   const [isSelectMedia, setIsSelectMedia] = useState(false)
+  const [selectedImage, setSelectedImage] = useState<ImageType | undefined>(undefined)
+
+  const firstMount = useRef(true)
+
+  useEffect(() => {
+    if (firstMount.current) return
+    setImage(selectedImage?.image_id || 0)
+  }, [selectedImage])
+
+  useEffect(() => {
+    image > 0 && getImageById(image).then(data => {
+      setSelectedImage(data);
+    })
+    firstMount.current = false;
+  }, [])
   return (
     <div>
       <div className='flex flex-col gap-2'>
         {
-          image ?
+          selectedImage ?
             (
               <div className='w-32 h-32 border border-gray-400'>
                 <Image
-                  src={image.image_url}
-                  alt={image.image_alt}
+                  src={selectedImage.image_url}
+                  alt={selectedImage.image_alt}
                   width={100}
                   height={100}
                   className='w-full h-full'
@@ -33,9 +49,9 @@ const SelectImage = ({ image, setImage }: Props) => {
         }
         <div className='flex gap-2'>
           {
-            image && (
+            selectedImage && (
               <button
-                onClick={() => { setImage(undefined) }}
+                onClick={() => { setSelectedImage(undefined) }}
                 className='border border-blue-600 text-blue-400 px-2 py-1 rounded-sm text-sm'
               >Remove</button>
             )
@@ -47,7 +63,7 @@ const SelectImage = ({ image, setImage }: Props) => {
       </div>
       {
         isSelectMedia && (
-          <MediaSelect setIsSelectMedia={setIsSelectMedia} setImage={setImage} />
+          <MediaSelect setIsSelectMedia={setIsSelectMedia} setImage={setSelectedImage} />
         )
       }
     </div>

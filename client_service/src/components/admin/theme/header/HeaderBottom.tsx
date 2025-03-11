@@ -1,11 +1,10 @@
 'use client'
 import { getConfigByKey, updateConfigByKey } from '@/actions/config.action'
-import { getImageById } from '@/actions/image.action'
 import Layout from '@/components/admin/theme/Layout'
 import Navigation from '@/components/admin/theme/Navigation'
 import DivNgang from '@/components/DivNgang'
 import { SetBreadcrumb } from '@/components/SetBreadcrumb'
-import { ConfigType, ImageType } from '@/lib/types'
+import { ConfigType } from '@/lib/types'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -13,7 +12,7 @@ const HeaderBottom = () => {
   const [layoutHeight, setLayoutHeight] = useState(30)
   const [layoutTextColor, setLayoutTextColor] = useState("0")
   const [layoutBackgroundColor, setLayoutBackgroundColor] = useState<string | undefined>("#333333")
-  const [layoutBackgroundImage, setLayoutBackgroundImage] = useState<ImageType | undefined>(undefined)
+  const [layoutBackgroundImage, setLayoutBackgroundImage] = useState<number>(0)
   const [layoutBackgroundRepeat, setLayoutBackgroundRepeat] = useState(3)
 
   const [isUppercase, setIsUppercase] = useState(true)
@@ -29,7 +28,7 @@ const HeaderBottom = () => {
       setLayoutHeight(data.layoutHeight)
       setLayoutTextColor(data.layoutTextColor)
       setLayoutBackgroundColor(data.layoutBackgroundColor)
-      setLayoutBackgroundImage(await getImageById(Number(data.layoutBackgroundImage)))
+      data.layoutBackgroundImage && setLayoutBackgroundImage(data.layoutBackgroundImage)
       setLayoutBackgroundRepeat(data.layoutBackgroundRepeat)
       setIsUppercase(data.isUppercase)
       setNavColor(data.navColor)
@@ -45,7 +44,7 @@ const HeaderBottom = () => {
       layoutHeight,
       layoutTextColor,
       layoutBackgroundColor,
-      layoutBackgroundImage: layoutBackgroundImage ? layoutBackgroundImage.image_id : undefined,
+      layoutBackgroundImage,
       layoutBackgroundRepeat,
       isUppercase,
       navColor,
