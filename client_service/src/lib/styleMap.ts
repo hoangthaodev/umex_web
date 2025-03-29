@@ -1,80 +1,80 @@
-export const depthMap = {
-  "0": "",
-  "1": "shadow-sm",
-  "2": "shadow",
-  "3": "shadow-md",
-  "4": "shadow-lg",
-  "5": "shadow-xl",
-  "6": "shadow-2xl",
+export const depthMap: Record<number, string> = {
+  1: "",
+  2: "shadow-sm",
+  3: "shadow",
+  4: "shadow-md",
+  5: "shadow-lg",
+  6: "shadow-xl",
+  7: "shadow-2xl",
 };
 
-export const depthHoverMap = {
-  "0": "",
-  "1": "hover:shadow-sm hover:transition-all",
-  "2": "hover:shadow hover:transition-all",
-  "3": "hover:shadow-md hover:transition-all hover:-translate-y-1",
-  "4": "hover:shadow-lg hover:transition-all hover:-translate-y-1",
-  "5": "hover:shadow-xl hover:transition-all hover:-translate-y-2",
-  "6": "hover:shadow-2xl hover:transition-all hover:-translate-y-2",
+export const depthHoverMap: Record<number, string> = {
+  1: "",
+  2: "hover:shadow-sm hover:transition-all",
+  3: "hover:shadow hover:transition-all",
+  4: "hover:shadow-md hover:transition-all hover:-translate-y-1",
+  5: "hover:shadow-lg hover:transition-all hover:-translate-y-1",
+  6: "hover:shadow-xl hover:transition-all hover:-translate-y-2",
+  7: "hover:shadow-2xl hover:transition-all hover:-translate-y-2",
 };
 
-export const listSize = {
-  "0": "XS",
-  "1": "S",
-  "2": "Default",
-  "3": "M",
-  "4": "L",
-  "5": "XL",
+export const sizeMap: Record<number, string> = {
+  1: "XS",
+  2: "S",
+  3: "Default",
+  4: "M",
+  5: "L",
+  6: "XL",
 };
 
-export const sizeMap = {
-  "0": "text-xs",
-  "1": "text-sm",
-  "2": "",
-  "3": "text-base",
-  "4": "text-lg",
-  "5": "text-2xl",
+export const sizeStyleMap: Record<number, string> = {
+  1: "text-xs",
+  2: "text-sm",
+  3: "",
+  4: "text-base",
+  5: "text-lg",
+  6: "text-2xl",
 };
 
-export const listTextCase = {
-  "0": "Abc",
-  "1": "ABC",
+export const textCaseMap: Record<number, string> = {
+  1: "Abc",
+  2: "ABC",
 };
 
-export const textCaseMap = {
-  "0": "",
-  "1": "text-uppercase",
+export const textCaseStyleMap: Record<number, string> = {
+  1: "",
+  2: "text-uppercase",
 };
 
-export const listLinkTarget = {
-  0: "Same Window",
-  1: "New Window",
+export const linkTargetMap: Record<number, string> = {
+  1: "Same Window",
+  2: "New Window",
 };
 
-export const linkTargetMap = {
-  0: "_self",
-  1: "_blank",
+export const linkTargetStyleMap: Record<number, string> = {
+  1: "_self",
+  2: "_blank",
 };
 
-export const listLayoutMode = {
-  "0": "Full Width",
-  "1": "Boxed",
+export const layoutModeMap: Record<number, string> = {
+  1: "Full Width",
+  2: "Boxed",
 };
 
-export const listColor = {
-  "0": "Plain",
-  "1": "Primary",
-  "2": "Secondary",
-  "3": "Success",
-  "4": "Alert",
+export const colorMap: Record<number, string> = {
+  1: "Plain",
+  2: "Primary",
+  3: "Secondary",
+  4: "Success",
+  5: "Alert",
 };
 
-export const listStyle = {
-  "0": "Default",
-  "1": "Outline",
-  "2": "Underline",
-  "3": "Shade",
-  "4": "Bevel",
-  "5": "Gloss",
-  "6": "Link",
+export const styleMap: Record<number, string> = {
+  1: "Default",
+  2: "Outline",
+  3: "Underline",
+  4: "Shade",
+  5: "Bevel",
+  6: "Gloss",
+  7: "Link",
 };

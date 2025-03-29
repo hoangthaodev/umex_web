@@ -342,6 +342,7 @@ message ManyPagetagResponse{
 }
 
 service PagetagService{
+  rpc GetAllPagetag(google.protobuf.Empty) returns (ManyPagetagResponse){}
   rpc GetPagetagByTag(NumbRequest) returns (ManyPagetagResponse){}
   rpc GetPagetagByPage(NumbRequest) returns (ManyPagetagResponse){}
   rpc CreateNewPagetag(Pagetag) returns (PagetagResponse){}
@@ -366,6 +367,7 @@ message ManyPagecategoryResponse{
 }
 
 service PagecategoryService{
+  rpc GetAllPagecategory(google.protobuf.Empty) returns (ManyPagecategoryResponse){}
   rpc GetPagecategoryByCategory(NumbRequest) returns (ManyPagecategoryResponse){}
   rpc GetPagecategoryByPage(NumbRequest) returns (ManyPagecategoryResponse){}
   rpc CreateNewPagecategory(Pagecategory) returns (PagecategoryResponse){}

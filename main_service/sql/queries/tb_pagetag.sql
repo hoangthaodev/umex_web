@@ -1,3 +1,6 @@
+-- name: GetAllPagetag :many
+select * from tb_pagetag;
+
 -- name: GetPagetagByTag :many
 select * from tb_pagetag where tag_id = ?;
 

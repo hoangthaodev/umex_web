@@ -12,3 +12,15 @@ export function arrayAreEqual(arr1: any[], arr2: any[]) {
   }
   return true;
 }
+
+export const moveArray = (
+  array: any[],
+  dragIndex: number,
+  dropIndex: number
+) => {
+  const item = array[dragIndex];
+  const newArray = [...array];
+  newArray.splice(dragIndex, 1);
+  newArray.splice(dropIndex, 0, item);
+  return newArray;
+};

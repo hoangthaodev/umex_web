@@ -13,6 +13,15 @@ type PagetagController struct {
 	services.PagetagService
 }
 
+func (pc *PagetagController) GetAllPagetag(c *gin.Context) {
+	res, err := pc.PagetagService.GetAllPagetag()
+	if err != nil {
+		response.ErrorResponse(c, int(res.Code), "")
+		return
+	}
+	response.SuccessResponse(c, int(res.Code), res)
+}
+
 func (pc *PagetagController) GetPagetagByTag(c *gin.Context) {
 	tagId := c.Param("id")
 	res, err := pc.PagetagService.GetPagetagByTag(utils.StringToInt64(tagId))

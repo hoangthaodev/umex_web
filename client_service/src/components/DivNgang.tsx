@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 
 type Props = {
@@ -6,7 +8,7 @@ type Props = {
 
 const DivNgang = ({ className }: Props) => {
   return (
-    <div className={`${className} border-b border-gray-400`} />
+    <div className={`${className ? className : ""} border-b`} />
   )
 }
 

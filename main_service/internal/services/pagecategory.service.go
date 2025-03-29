@@ -8,6 +8,12 @@ import (
 
 type PagecategoryService struct{}
 
+func (ps *PagecategoryService) GetAllPagecategory() ([]database.TbPagecategory, error) {
+	queries := database.New(global.Mysql)
+
+	return queries.GetAllPagecategory(context.Background())
+}
+
 func (ps *PagecategoryService) GetPagecategoryByCategory(catId int64) ([]database.TbPagecategory, error) {
 	queries := database.New(global.Mysql)
 

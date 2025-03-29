@@ -3358,6 +3358,7 @@ var TagService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
+	PagetagService_GetAllPagetag_FullMethodName    = "/pb.PagetagService/GetAllPagetag"
 	PagetagService_GetPagetagByTag_FullMethodName  = "/pb.PagetagService/GetPagetagByTag"
 	PagetagService_GetPagetagByPage_FullMethodName = "/pb.PagetagService/GetPagetagByPage"
 	PagetagService_CreateNewPagetag_FullMethodName = "/pb.PagetagService/CreateNewPagetag"
@@ -3368,6 +3369,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PagetagServiceClient interface {
+	GetAllPagetag(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyPagetagResponse, error)
 	GetPagetagByTag(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagetagResponse, error)
 	GetPagetagByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagetagResponse, error)
 	CreateNewPagetag(ctx context.Context, in *Pagetag, opts ...grpc.CallOption) (*PagetagResponse, error)
@@ -3380,6 +3382,16 @@ type pagetagServiceClient struct {
 
 func NewPagetagServiceClient(cc grpc.ClientConnInterface) PagetagServiceClient {
 	return &pagetagServiceClient{cc}
+}
+
+func (c *pagetagServiceClient) GetAllPagetag(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyPagetagResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPagetagResponse)
+	err := c.cc.Invoke(ctx, PagetagService_GetAllPagetag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *pagetagServiceClient) GetPagetagByTag(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagetagResponse, error) {
@@ -3426,6 +3438,7 @@ func (c *pagetagServiceClient) DeletePagetag(ctx context.Context, in *NumbReques
 // All implementations must embed UnimplementedPagetagServiceServer
 // for forward compatibility.
 type PagetagServiceServer interface {
+	GetAllPagetag(context.Context, *emptypb.Empty) (*ManyPagetagResponse, error)
 	GetPagetagByTag(context.Context, *NumbRequest) (*ManyPagetagResponse, error)
 	GetPagetagByPage(context.Context, *NumbRequest) (*ManyPagetagResponse, error)
 	CreateNewPagetag(context.Context, *Pagetag) (*PagetagResponse, error)
@@ -3440,6 +3453,9 @@ type PagetagServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPagetagServiceServer struct{}
 
+func (UnimplementedPagetagServiceServer) GetAllPagetag(context.Context, *emptypb.Empty) (*ManyPagetagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllPagetag not implemented")
+}
 func (UnimplementedPagetagServiceServer) GetPagetagByTag(context.Context, *NumbRequest) (*ManyPagetagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPagetagByTag not implemented")
 }
@@ -3471,6 +3487,24 @@ func RegisterPagetagServiceServer(s grpc.ServiceRegistrar, srv PagetagServiceSer
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&PagetagService_ServiceDesc, srv)
+}
+
+func _PagetagService_GetAllPagetag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagetagServiceServer).GetAllPagetag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagetagService_GetAllPagetag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagetagServiceServer).GetAllPagetag(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _PagetagService_GetPagetagByTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -3553,6 +3587,10 @@ var PagetagService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PagetagServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "GetAllPagetag",
+			Handler:    _PagetagService_GetAllPagetag_Handler,
+		},
+		{
 			MethodName: "GetPagetagByTag",
 			Handler:    _PagetagService_GetPagetagByTag_Handler,
 		},
@@ -3574,6 +3612,7 @@ var PagetagService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
+	PagecategoryService_GetAllPagecategory_FullMethodName        = "/pb.PagecategoryService/GetAllPagecategory"
 	PagecategoryService_GetPagecategoryByCategory_FullMethodName = "/pb.PagecategoryService/GetPagecategoryByCategory"
 	PagecategoryService_GetPagecategoryByPage_FullMethodName     = "/pb.PagecategoryService/GetPagecategoryByPage"
 	PagecategoryService_CreateNewPagecategory_FullMethodName     = "/pb.PagecategoryService/CreateNewPagecategory"
@@ -3584,6 +3623,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PagecategoryServiceClient interface {
+	GetAllPagecategory(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyPagecategoryResponse, error)
 	GetPagecategoryByCategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagecategoryResponse, error)
 	GetPagecategoryByPage(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagecategoryResponse, error)
 	CreateNewPagecategory(ctx context.Context, in *Pagecategory, opts ...grpc.CallOption) (*PagecategoryResponse, error)
@@ -3596,6 +3636,16 @@ type pagecategoryServiceClient struct {
 
 func NewPagecategoryServiceClient(cc grpc.ClientConnInterface) PagecategoryServiceClient {
 	return &pagecategoryServiceClient{cc}
+}
+
+func (c *pagecategoryServiceClient) GetAllPagecategory(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ManyPagecategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPagecategoryResponse)
+	err := c.cc.Invoke(ctx, PagecategoryService_GetAllPagecategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *pagecategoryServiceClient) GetPagecategoryByCategory(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*ManyPagecategoryResponse, error) {
@@ -3642,6 +3692,7 @@ func (c *pagecategoryServiceClient) DeletePagecategory(ctx context.Context, in *
 // All implementations must embed UnimplementedPagecategoryServiceServer
 // for forward compatibility.
 type PagecategoryServiceServer interface {
+	GetAllPagecategory(context.Context, *emptypb.Empty) (*ManyPagecategoryResponse, error)
 	GetPagecategoryByCategory(context.Context, *NumbRequest) (*ManyPagecategoryResponse, error)
 	GetPagecategoryByPage(context.Context, *NumbRequest) (*ManyPagecategoryResponse, error)
 	CreateNewPagecategory(context.Context, *Pagecategory) (*PagecategoryResponse, error)
@@ -3656,6 +3707,9 @@ type PagecategoryServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPagecategoryServiceServer struct{}
 
+func (UnimplementedPagecategoryServiceServer) GetAllPagecategory(context.Context, *emptypb.Empty) (*ManyPagecategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllPagecategory not implemented")
+}
 func (UnimplementedPagecategoryServiceServer) GetPagecategoryByCategory(context.Context, *NumbRequest) (*ManyPagecategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPagecategoryByCategory not implemented")
 }
@@ -3687,6 +3741,24 @@ func RegisterPagecategoryServiceServer(s grpc.ServiceRegistrar, srv Pagecategory
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&PagecategoryService_ServiceDesc, srv)
+}
+
+func _PagecategoryService_GetAllPagecategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PagecategoryServiceServer).GetAllPagecategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PagecategoryService_GetAllPagecategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PagecategoryServiceServer).GetAllPagecategory(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _PagecategoryService_GetPagecategoryByCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -3768,6 +3840,10 @@ var PagecategoryService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.PagecategoryService",
 	HandlerType: (*PagecategoryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAllPagecategory",
+			Handler:    _PagecategoryService_GetAllPagecategory_Handler,
+		},
 		{
 			MethodName: "GetPagecategoryByCategory",
 			Handler:    _PagecategoryService_GetPagecategoryByCategory_Handler,

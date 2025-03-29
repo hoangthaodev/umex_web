@@ -1,11 +1,9 @@
 'use client'
 
-import { logout } from '@/actions/user.action'
-import { useRouter } from 'next/navigation'
+import { logout } from '@/action/user.action'
 import React from 'react'
 
 const LogoutButton = ({ className }: { className?: string }) => {
-  const router = useRouter()
 
   const handleLogout = async () => {
     try {
@@ -16,16 +14,17 @@ const LogoutButton = ({ className }: { className?: string }) => {
         alert("something went wrong")
       }
 
-      router.push("/ux-admin/login")
+      window.location.replace("/ux-admin")
 
     } catch (error) {
       console.log("error::", error);
     }
-
   }
 
   return (
-    <button onClick={handleLogout} className={className}>
+    <button
+      onClick={handleLogout}
+      className={className}>
       Logout
     </button>
   )

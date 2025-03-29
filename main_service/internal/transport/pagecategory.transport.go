@@ -6,11 +6,37 @@ import (
 	"main_service/internal/services"
 	"main_service/pkg/response"
 	"main_service/proto/pb"
+
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type PagecategoryTransport struct {
 	pb.UnimplementedPagecategoryServiceServer
 	services.PagecategoryService
+}
+
+func (pt *PagecategoryTransport) GetAllPagecategory(c context.Context, in *emptypb.Empty) (*pb.ManyPagecategoryResponse, error) {
+	res, err := pt.PagecategoryService.GetAllPagecategory()
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.ManyPagecategoryResponse{
+			Code: int32(response.ErrCodeGetFail),
+		}, nil
+	}
+	var pageCategories []*pb.Pagecategory
+	for _, p := range res {
+		var pageCategory pb.Pagecategory
+		pageCategory.PagecategoryId = p.PagecategoryID
+		pageCategory.PageId = p.PageID
+		pageCategory.CategoryId = p.CategoryID
+		pageCategory.PagecategorySlug = p.PagecategorySlug
+
+		pageCategories = append(pageCategories, &pageCategory)
+	}
+	return &pb.ManyPagecategoryResponse{
+		Code:           int32(response.ErrCodeSuccess),
+		Pagecategories: pageCategories,
+	}, nil
 }
 
 func (pt *PagecategoryTransport) GetPagecategoryByCategory(c context.Context, in *pb.NumbRequest) (*pb.ManyPagecategoryResponse, error) {
@@ -27,6 +53,7 @@ func (pt *PagecategoryTransport) GetPagecategoryByCategory(c context.Context, in
 		pageCategory.PagecategoryId = p.PagecategoryID
 		pageCategory.PageId = p.PageID
 		pageCategory.CategoryId = p.CategoryID
+		pageCategory.PagecategorySlug = p.PagecategorySlug
 
 		pageCategories = append(pageCategories, &pageCategory)
 	}
@@ -50,6 +77,7 @@ func (pt *PagecategoryTransport) GetPagecategoryByPage(c context.Context, in *pb
 		pageCategory.PagecategoryId = p.PagecategoryID
 		pageCategory.PageId = p.PageID
 		pageCategory.CategoryId = p.CategoryID
+		pageCategory.PagecategorySlug = p.PagecategorySlug
 
 		pageCategories = append(pageCategories, &pageCategory)
 	}

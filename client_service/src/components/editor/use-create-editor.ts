@@ -3,7 +3,6 @@
 import type { Value } from "@udecode/plate";
 
 import { withProps } from "@udecode/cn";
-import { AIPlugin } from "@udecode/plate-ai/react";
 import {
   BoldPlugin,
   CodePlugin,
@@ -19,7 +18,6 @@ import {
   CodeLinePlugin,
   CodeSyntaxPlugin,
 } from "@udecode/plate-code-block/react";
-import { CommentsPlugin } from "@udecode/plate-comments/react";
 import { DatePlugin } from "@udecode/plate-date/react";
 import { EmojiInputPlugin } from "@udecode/plate-emoji/react";
 import { ExcalidrawPlugin } from "@udecode/plate-excalidraw/react";
@@ -47,7 +45,6 @@ import {
   MentionPlugin,
 } from "@udecode/plate-mention/react";
 import { SlashInputPlugin } from "@udecode/plate-slash-command/react";
-import { SuggestionPlugin } from "@udecode/plate-suggestion/react";
 import {
   TableCellHeaderPlugin,
   TableCellPlugin,
@@ -62,11 +59,9 @@ import {
   usePlateEditor,
 } from "@udecode/plate/react";
 
-import { copilotPlugins } from "@/components/editor/plugins/copilot-plugins";
 import { editorPlugins } from "@/components/editor/plugins/editor-plugins";
 import { FixedToolbarPlugin } from "@/components/editor/plugins/fixed-toolbar-plugin";
 import { FloatingToolbarPlugin } from "@/components/editor/plugins/floating-toolbar-plugin";
-import { AILeaf } from "@/components/plate-ui/ai-leaf";
 import { BlockquoteElement } from "@/components/plate-ui/blockquote-element";
 import { CodeBlockElement } from "@/components/plate-ui/code-block-element";
 import { CodeLeaf } from "@/components/plate-ui/code-leaf";
@@ -74,7 +69,6 @@ import { CodeLineElement } from "@/components/plate-ui/code-line-element";
 import { CodeSyntaxLeaf } from "@/components/plate-ui/code-syntax-leaf";
 import { ColumnElement } from "@/components/plate-ui/column-element";
 import { ColumnGroupElement } from "@/components/plate-ui/column-group-element";
-import { CommentLeaf } from "@/components/plate-ui/comment-leaf";
 import { DateElement } from "@/components/plate-ui/date-element";
 import { EmojiInputElement } from "@/components/plate-ui/emoji-input-element";
 import { EquationElement } from "@/components/plate-ui/equation-element";
@@ -96,7 +90,6 @@ import { MentionInputElement } from "@/components/plate-ui/mention-input-element
 import { ParagraphElement } from "@/components/plate-ui/paragraph-element";
 import { withPlaceholders } from "@/components/plate-ui/placeholder";
 import { SlashInputElement } from "@/components/plate-ui/slash-input-element";
-import { SuggestionLeaf } from "@/components/plate-ui/suggestion-leaf";
 import {
   TableCellElement,
   TableCellHeaderElement,
@@ -116,7 +109,6 @@ export const viewComponents = {
   [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,
   [ColumnItemPlugin.key]: ColumnElement,
   [ColumnPlugin.key]: ColumnGroupElement,
-  [CommentsPlugin.key]: CommentLeaf,
   [DatePlugin.key]: DateElement,
   [EquationPlugin.key]: EquationElement,
   [ExcalidrawPlugin.key]: ExcalidrawElement,
@@ -140,7 +132,6 @@ export const viewComponents = {
   [PlaceholderPlugin.key]: MediaPlaceholderElement,
   [StrikethroughPlugin.key]: withProps(PlateLeaf, { as: "s" }),
   [SubscriptPlugin.key]: withProps(PlateLeaf, { as: "sub" }),
-  [SuggestionPlugin.key]: SuggestionLeaf,
   [SuperscriptPlugin.key]: withProps(PlateLeaf, { as: "sup" }),
   [TableCellHeaderPlugin.key]: TableCellHeaderElement,
   [TableCellPlugin.key]: TableCellElement,
@@ -154,7 +145,6 @@ export const viewComponents = {
 
 export const editorComponents = {
   ...viewComponents,
-  [AIPlugin.key]: AILeaf,
   [EmojiInputPlugin.key]: EmojiInputElement,
   [MentionInputPlugin.key]: MentionInputElement,
   [SlashInputPlugin.key]: SlashInputElement,
@@ -182,12 +172,7 @@ export const useCreateEditor = (
         },
         ...override,
       },
-      plugins: [
-        ...copilotPlugins,
-        ...editorPlugins,
-        FixedToolbarPlugin,
-        FloatingToolbarPlugin,
-      ],
+      plugins: [...editorPlugins, FixedToolbarPlugin, FloatingToolbarPlugin],
       value: [
         {
           children: [{ text: "Playground" }],

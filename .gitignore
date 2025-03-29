@@ -3,3 +3,4 @@ client_service/node_modules
 client_service/.env
 client_service/next-env.d.ts
 client_service/.env.local
+client_service_2

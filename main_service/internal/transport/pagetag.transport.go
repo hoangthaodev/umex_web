@@ -6,11 +6,37 @@ import (
 	"main_service/internal/services"
 	"main_service/pkg/response"
 	"main_service/proto/pb"
+
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type PagetagTransport struct {
 	pb.UnimplementedPagetagServiceServer
 	services.PagetagService
+}
+
+func (pt *PagetagTransport) GetAllPagetag(context.Context, *emptypb.Empty) (*pb.ManyPagetagResponse, error) {
+	res, err := pt.PagetagService.GetAllPagetag()
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.ManyPagetagResponse{
+			Code: int32(response.ErrCodeGetFail),
+		}, nil
+	}
+	var pageTags []*pb.Pagetag
+	for _, p := range res {
+		var pageTag pb.Pagetag
+		pageTag.PagetagId = p.PagetagID
+		pageTag.PageId = p.PageID
+		pageTag.TagId = p.TagID
+		pageTag.PagetagSlug = p.PagetagSlug
+
+		pageTags = append(pageTags, &pageTag)
+	}
+	return &pb.ManyPagetagResponse{
+		Code:     int32(response.ErrCodeSuccess),
+		Pagetags: pageTags,
+	}, nil
 }
 
 func (pt *PagetagTransport) GetPagetagByTag(c context.Context, in *pb.NumbRequest) (*pb.ManyPagetagResponse, error) {
@@ -27,6 +53,7 @@ func (pt *PagetagTransport) GetPagetagByTag(c context.Context, in *pb.NumbReques
 		pageTag.PagetagId = p.PagetagID
 		pageTag.PageId = p.PageID
 		pageTag.TagId = p.TagID
+		pageTag.PagetagSlug = p.PagetagSlug
 
 		pageTags = append(pageTags, &pageTag)
 	}
@@ -50,6 +77,7 @@ func (pt *PagetagTransport) GetPagetagByPage(c context.Context, in *pb.NumbReque
 		pageTag.PagetagId = p.PagetagID
 		pageTag.PageId = p.PageID
 		pageTag.TagId = p.TagID
+		pageTag.PagetagSlug = p.PagetagSlug
 
 		pageTags = append(pageTags, &pageTag)
 	}

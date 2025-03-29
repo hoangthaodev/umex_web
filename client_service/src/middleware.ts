@@ -1,4 +1,4 @@
-import { checkAuth } from "@/actions/checkstatus";
+import { checkAuth } from "@/action/checkStatus.action";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {

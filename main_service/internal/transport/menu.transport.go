@@ -30,6 +30,7 @@ func (mt *MenuTransport) GetAllMenu(context.Context, *emptypb.Empty) (*pb.ManyMe
 		menu.MenuId = item.MenuID
 		menu.MenuName = item.MenuName
 		menu.MenuValue = item.MenuValue
+		menu.MenuSlug = item.MenuSlug
 
 		menus = append(menus, &menu)
 	}
@@ -53,6 +54,7 @@ func (mt *MenuTransport) GetMenuById(c context.Context, in *pb.NumbRequest) (*pb
 			MenuId:    menu.MenuID,
 			MenuName:  menu.MenuName,
 			MenuValue: menu.MenuValue,
+			MenuSlug:  menu.MenuSlug,
 		},
 	}, nil
 }

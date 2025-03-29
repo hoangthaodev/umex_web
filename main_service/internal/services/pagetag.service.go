@@ -8,6 +8,12 @@ import (
 
 type PagetagService struct{}
 
+func (pts *PagetagService) GetAllPagetag() ([]database.TbPagetag, error) {
+	queries := database.New(global.Mysql)
+
+	return queries.GetAllPagetag(context.Background())
+}
+
 func (pts *PagetagService) GetPagetagByTag(tagId int64) ([]database.TbPagetag, error) {
 	queries := database.New(global.Mysql)
 

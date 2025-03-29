@@ -1,3 +1,6 @@
+-- name: GetAllPagecategory :many
+select * from tb_pagecategory;
+
 -- name: GetPagecategoryCategory :many
 select * from tb_pagecategory where category_id = ?;
 

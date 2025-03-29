@@ -33,6 +33,38 @@ func (q *Queries) DeletePagetag(ctx context.Context, pagetagID int64) error {
 	return err
 }
 
+const getAllPagetag = `-- name: GetAllPagetag :many
+select pagetag_id, page_id, tag_id, pagetag_slug from tb_pagetag
+`
+
+func (q *Queries) GetAllPagetag(ctx context.Context) ([]TbPagetag, error) {
+	rows, err := q.db.QueryContext(ctx, getAllPagetag)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []TbPagetag
+	for rows.Next() {
+		var i TbPagetag
+		if err := rows.Scan(
+			&i.PagetagID,
+			&i.PageID,
+			&i.TagID,
+			&i.PagetagSlug,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getPagetagByPage = `-- name: GetPagetagByPage :many
 select pagetag_id, page_id, tag_id, pagetag_slug from tb_pagetag where page_id = ?
 `

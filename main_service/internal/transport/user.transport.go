@@ -76,9 +76,10 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 	return &pb.LoginResponse{
 		Code: int32(response.ErrCodeSuccess),
 		User: &pb.User{
-			UserId:    user.UserID,
-			UserName:  user.UserName,
-			UserEmail: user.UserEmail,
+			UserId:          user.UserID,
+			UserName:        user.UserName,
+			UserEmail:       user.UserEmail,
+			UserDisplayName: user.UserDisplayName,
 		},
 		AccessToken:  tokenPair.AccessToken,
 		RefreshToken: tokenPair.RefreshToken,

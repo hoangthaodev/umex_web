@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 
 type Props = {
@@ -6,7 +8,7 @@ type Props = {
 
 const DivDoc = ({ className }: Props) => {
   return (
-    <div className={`${className} border-l border-gray-400`} />
+    <div className={`${className ? className : ""} border-l`} />
   )
 }
 

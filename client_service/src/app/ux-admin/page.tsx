@@ -1,13 +1,11 @@
+'use server'
 
-import DashboardPage from '@/app/ux-admin/(admin)/dashboard/page'
-import AdminLayout from '@/app/ux-admin/(admin)/layout'
+import DashboardPage from "@/app/ux-admin/dashboard/page"
+import React from 'react'
 
-const AdminPage = () => {
+const page = () => {
   return (
-    <AdminLayout>
-      <DashboardPage />
-    </AdminLayout>
+    <DashboardPage />
   )
 }
-
-export default AdminPage
+export default page

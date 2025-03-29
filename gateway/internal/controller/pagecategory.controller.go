@@ -13,6 +13,15 @@ type PagecategoryController struct {
 	services.PagecategoryService
 }
 
+func (pc *PagecategoryController) GetAllPagecategory(c *gin.Context) {
+	res, err := pc.PagecategoryService.GetAllPagecategory()
+	if err != nil {
+		response.ErrorResponse(c, int(res.Code), "")
+		return
+	}
+	response.SuccessResponse(c, int(res.Code), res)
+}
+
 func (pc *PagecategoryController) GetPagecategoryByCategory(c *gin.Context) {
 	catId := c.Param("id")
 	res, err := pc.PagecategoryService.GetPagecategoryByCategory(utils.StringToInt64(catId))

@@ -2,7 +2,6 @@
 
 import { useCallback, useState } from 'react';
 
-import { AIChatPlugin } from '@udecode/plate-ai/react';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
 import { IndentListPlugin } from '@udecode/plate-indent-list/react';
@@ -11,7 +10,11 @@ import {
   BlockMenuPlugin,
   BlockSelectionPlugin,
 } from '@udecode/plate-selection/react';
-import { ParagraphPlugin, useEditorPlugin } from '@udecode/plate/react';
+import {
+  ParagraphPlugin,
+  useEditorPlugin,
+  usePlateState,
+} from '@udecode/plate/react';
 
 import { useIsTouchDevice } from '@/hooks/use-is-touch-device';
 
@@ -32,6 +35,7 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
   const { api, editor } = useEditorPlugin(BlockMenuPlugin);
   const [value, setValue] = useState<Value>(null);
   const isTouch = useIsTouchDevice();
+  const [readOnly] = usePlateState('readOnly');
 
   const handleTurnInto = useCallback(
     (type: string) => {
@@ -81,7 +85,7 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
         onContextMenu={(event) => {
           const dataset = (event.target as HTMLElement).dataset;
 
-          const disabled = dataset?.slateEditor === 'true';
+          const disabled = dataset?.slateEditor === 'true' || readOnly;
 
           if (disabled) return event.preventDefault();
 
@@ -91,17 +95,13 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
           });
         }}
       >
-        <div className="w-full">{children}</div>
+        <div className="w-full h-full flex flex-col">{children}</div>
       </ContextMenuTrigger>
       <ContextMenuContent
         className="w-64"
         onCloseAutoFocus={(e) => {
           e.preventDefault();
           editor.getApi(BlockSelectionPlugin).blockSelection.focus();
-
-          if (value === 'askAI') {
-            editor.getApi(AIChatPlugin).aiChat.show();
-          }
 
           setValue(null);
         }}

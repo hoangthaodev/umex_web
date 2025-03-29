@@ -5,9 +5,19 @@ import (
 	"gateway/global"
 	"gateway/internal/utils"
 	"gateway/proto/pb"
+
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type PagecategoryService struct{}
+
+func (ps *PagecategoryService) GetAllPagecategory() (*pb.ManyPagecategoryResponse, error) {
+	conn := utils.ConnectToService(global.Config.Server.MainServer)
+	defer conn.Close()
+
+	client := pb.NewPagecategoryServiceClient(conn)
+	return client.GetAllPagecategory(context.Background(), &emptypb.Empty{})
+}
 
 func (ps *PagecategoryService) GetPagecategoryByCategory(catId int64) (*pb.ManyPagecategoryResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)

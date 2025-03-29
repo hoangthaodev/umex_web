@@ -5,9 +5,19 @@ import (
 	"gateway/global"
 	"gateway/internal/utils"
 	"gateway/proto/pb"
+
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type PagetagService struct{}
+
+func (ps *PagetagService) GetAllPagetag() (*pb.ManyPagetagResponse, error) {
+	conn := utils.ConnectToService(global.Config.Server.MainServer)
+	defer conn.Close()
+
+	client := pb.NewPagetagServiceClient(conn)
+	return client.GetAllPagetag(context.Background(), &emptypb.Empty{})
+}
 
 func (ps *PagetagService) GetPagetagByTag(tagId int64) (*pb.ManyPagetagResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)

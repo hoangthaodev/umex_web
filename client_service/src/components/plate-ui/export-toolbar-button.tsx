@@ -27,7 +27,6 @@ import {
   BaseCodeLinePlugin,
   BaseCodeSyntaxPlugin,
 } from '@udecode/plate-code-block';
-import { BaseCommentsPlugin } from '@udecode/plate-comments';
 import { BaseDatePlugin } from '@udecode/plate-date';
 import {
   BaseFontBackgroundColorPlugin,
@@ -69,8 +68,8 @@ import {
 } from '@udecode/plate-table';
 import { BaseTogglePlugin } from '@udecode/plate-toggle';
 import { useEditorRef } from '@udecode/plate/react';
+import { all, createLowlight } from 'lowlight';
 import { ArrowDownToLineIcon } from 'lucide-react';
-import Prism from 'prismjs';
 
 import { BlockquoteElementStatic } from '@/components/plate-ui/blockquote-element-static';
 import { CodeBlockElementStatic } from '@/components/plate-ui/code-block-element-static';
@@ -79,7 +78,6 @@ import { CodeLineElementStatic } from '@/components/plate-ui/code-line-element-s
 import { CodeSyntaxLeafStatic } from '@/components/plate-ui/code-syntax-leaf-static';
 import { ColumnElementStatic } from '@/components/plate-ui/column-element-static';
 import { ColumnGroupElementStatic } from '@/components/plate-ui/column-group-element-static';
-import { CommentLeafStatic } from '@/components/plate-ui/comment-leaf-static';
 import { DateElementStatic } from '@/components/plate-ui/date-element-static';
 import { HeadingElementStatic } from '@/components/plate-ui/heading-element-static';
 import { HighlightLeafStatic } from '@/components/plate-ui/highlight-leaf-static';
@@ -123,6 +121,7 @@ import { InlineEquationElementStatic } from './inline-equation-element-static';
 import { ToolbarButton } from './toolbar';
 
 const siteUrl = 'https://platejs.org';
+const lowlight = createLowlight(all);
 
 export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
   const editor = useEditorRef();
@@ -195,7 +194,6 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
       [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,
       [BaseColumnItemPlugin.key]: ColumnElementStatic,
       [BaseColumnPlugin.key]: ColumnGroupElementStatic,
-      [BaseCommentsPlugin.key]: CommentLeafStatic,
       [BaseDatePlugin.key]: DateElementStatic,
       [BaseEquationPlugin.key]: EquationElementStatic,
       [BaseFilePlugin.key]: MediaFileElementStatic,
@@ -251,7 +249,7 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
         BaseInlineEquationPlugin,
         BaseCodeBlockPlugin.configure({
           options: {
-            prism: Prism,
+            lowlight,
           },
         }),
         BaseIndentPlugin.extend({
@@ -312,7 +310,6 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
         BaseFilePlugin,
         BaseImagePlugin,
         BaseMentionPlugin,
-        BaseCommentsPlugin,
         BaseTogglePlugin,
       ],
       value: editor.children,
@@ -324,7 +321,6 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
       props: { style: { padding: '0 calc(50% - 350px)', paddingBottom: '' } },
     });
 
-    const prismCss = `<link rel="stylesheet" href="${siteUrl}/prism.css">`;
     const tailwindCss = `<link rel="stylesheet" href="${siteUrl}/tailwind.css">`;
     const katexCss = `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.18/dist/katex.css" integrity="sha384-9PvLvaiSKCPkFKB1ZsEoTjgnJn+O3KvEwtsz37/XrkYft3DTk2gHdYvd9oWgW3tV" crossorigin="anonymous">`;
 
@@ -341,7 +337,6 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
           rel="stylesheet"
         />
         ${tailwindCss}
-        ${prismCss}
         ${katexCss}
         <style>
           :root {

@@ -1,16 +1,15 @@
-'use client'
-import { createNewImage } from '@/actions/image.action'
-import uploadS3 from '@/app/hooks/uploadS3'
-import { useMedia } from '@/app/ux-admin/MediaContext'
-import React, { useRef, useState } from 'react'
+import { createNewImage } from '@/action/image.action'
+import { uploadS3 } from '@/action/s3.action'
+import React, { SetStateAction, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 type Props = {
-  isUpload: boolean
   className?: string
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>
+  isUpload?: boolean
 }
 
-const Upload = ({ isUpload, className }: Props) => {
-  const { setIsLoading } = useMedia()
+const Upload = ({ className, setIsLoading, isUpload = true }: Props) => {
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
@@ -34,16 +33,16 @@ const Upload = ({ isUpload, className }: Props) => {
     const files = e.dataTransfer.files
 
     if (files && files.length > 0) {
-      setIsLoading(true)
 
       Array.from(files).forEach(async (file) => {
         const fileUrl = await uploadS3({ file })
         if (fileUrl) {
           await createNewImage(fileUrl)
-          setIsLoading(false)
         } else {
-          alert('Upload failed')
+          toast.error('Upload failed')
         }
+
+        setIsLoading(true)
       })
     }
   }
@@ -52,22 +51,22 @@ const Upload = ({ isUpload, className }: Props) => {
     const files = e.target.files
 
     if (files && files.length > 0) {
-      setIsLoading(true)
 
       Array.from(files).forEach(async (file) => {
         const fileUrl = await uploadS3({ file })
         if (fileUrl) {
           await createNewImage(fileUrl)
-          setIsLoading(false)
         } else {
-          alert('Upload failed')
+          toast.error('Upload failed')
         }
+
+        setIsLoading(true)
       })
     }
   }
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${className ? className : ""}`}>
       <div className={`${isDragging ? "bg-gray-500 border-blue-400" : ""} absolute w-full h-full justify-center items-center flex text-gray-100`}
         onDragOver={handleDragOver}
         onDrop={handleDrop}

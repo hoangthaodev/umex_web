@@ -92,7 +92,7 @@ const ToolbarButton = withTooltip(
       React.ComponentPropsWithoutRef<typeof ToolbarToggleItem>,
       'asChild' | 'value'
     > &
-      VariantProps<typeof toolbarButtonVariants>
+    VariantProps<typeof toolbarButtonVariants>
   >(
     (
       { children, className, isDropdown, pressed, size, variant, ...props },
@@ -199,7 +199,7 @@ export const ToolbarSplitButtonPrimary = withTooltip(
 export const ToolbarSplitButtonSecondary = React.forwardRef<
   HTMLButtonElement,
   React.ComponentPropsWithoutRef<'span'> &
-    VariantProps<typeof dropdownArrowVariants>
+  VariantProps<typeof dropdownArrowVariants>
 >(({ className, size, variant, ...props }, ref) => {
   return (
     <span

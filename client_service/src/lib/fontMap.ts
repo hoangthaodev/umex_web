@@ -37,50 +37,50 @@ export const fontMap = {
 };
 
 export const getFontMap: Record<string, NextFont> = {
-  "0_0": fontMap["Titillium_200"],
-  "0_1": fontMap["Titillium_300"],
-  "0_2": fontMap["Titillium_400"],
-  "0_3": fontMap["Titillium_600"],
-  "0_4": fontMap["Titillium_700"],
-  "0_5": fontMap["Titillium_900"],
-  "1_0": fontMap["NotoSans_100"],
-  "1_1": fontMap["NotoSans_200"],
-  "1_2": fontMap["NotoSans_300"],
-  "1_3": fontMap["NotoSans_400"],
-  "1_4": fontMap["NotoSans_500"],
-  "1_5": fontMap["NotoSans_600"],
-  "1_6": fontMap["NotoSans_700"],
-  "1_7": fontMap["NotoSans_800"],
-  "1_8": fontMap["NotoSans_900"],
+  "1_1": fontMap["Titillium_200"],
+  "1_2": fontMap["Titillium_300"],
+  "1_3": fontMap["Titillium_400"],
+  "1_4": fontMap["Titillium_600"],
+  "1_5": fontMap["Titillium_700"],
+  "1_6": fontMap["Titillium_900"],
+  "2_1": fontMap["NotoSans_100"],
+  "2_2": fontMap["NotoSans_200"],
+  "2_3": fontMap["NotoSans_300"],
+  "2_4": fontMap["NotoSans_400"],
+  "2_5": fontMap["NotoSans_500"],
+  "2_6": fontMap["NotoSans_600"],
+  "2_7": fontMap["NotoSans_700"],
+  "2_8": fontMap["NotoSans_800"],
+  "2_9": fontMap["NotoSans_900"],
 };
 
-const titilliumWeights = {
-  "0": "200",
-  "1": "300",
-  "2": "400",
-  "3": "600",
-  "4": "700",
-  "5": "900",
+const titilliumWeights: Record<number, string> = {
+  1: "200",
+  2: "300",
+  3: "400",
+  4: "600",
+  5: "700",
+  6: "900",
 };
 
-const NotoSansWeights = {
-  "0": "100",
-  "1": "200",
-  "2": "300",
-  "3": "400",
-  "4": "500",
-  "5": "600",
-  "6": "700",
-  "7": "800",
-  "8": "900",
+const NotoSansWeights: Record<number, string> = {
+  1: "100",
+  2: "200",
+  3: "300",
+  4: "400",
+  5: "500",
+  6: "600",
+  7: "700",
+  8: "800",
+  9: "900",
 };
 
-export const listFont: Record<string, string> = {
-  "0": "Titillium_Web",
-  "1": "Noto_Sans",
+export const listFont: Record<number, string> = {
+  1: "Titillium_Web",
+  2: "Noto_Sans",
 };
 
-export const listFontWeight: Record<string, Record<string, string>> = {
-  "0": titilliumWeights,
-  "1": NotoSansWeights,
+export const listFontWeight: Record<number, Record<number, string>> = {
+  1: titilliumWeights,
+  2: NotoSansWeights,
 };
