@@ -17,23 +17,23 @@ import {
 } from "react-icons/fa6";
 import { IconType } from "react-icons/lib";
 
-export const IconsMap: Record<number, string> = {
-  1: "Facebook",
-  2: "Instagram",
-  3: "TikTok",
-  4: "X",
-  5: "E-mail",
-  6: "Phone",
-  7: "Pinterest",
-  8: "RSS",
-  9: "LinkedIn",
-  10: "YouTube",
-  11: "Flickr",
-  12: "500px",
-  13: "Telegram",
-  14: "Twitch",
-  15: "Discord",
-};
+export const IconsMap: { id: number; name: string }[] = [
+  { id: 1, name: "Facebook" },
+  { id: 2, name: "Instagram" },
+  { id: 3, name: "TikTok" },
+  { id: 4, name: "X" },
+  { id: 5, name: "E-mail" },
+  { id: 6, name: "Phone" },
+  { id: 7, name: "Pinterest" },
+  { id: 8, name: "RSS" },
+  { id: 9, name: "LinkedIn" },
+  { id: 10, name: "YouTube" },
+  { id: 11, name: "Flickr" },
+  { id: 12, name: "500px" },
+  { id: 13, name: "Telegram" },
+  { id: 14, name: "Twitch" },
+  { id: 15, name: "Discord" },
+];
 
 export const IconsIcoMap: Record<number, IconType> = {
   1: FaFacebookF,
@@ -52,3 +52,12 @@ export const IconsIcoMap: Record<number, IconType> = {
   14: FaTwitch,
   15: FaDiscord,
 };
+
+export const ShareIconsMap: { id: number; name: string }[] = [
+  { id: 1, name: "Facebook" },
+  { id: 4, name: "X" },
+  { id: 5, name: "E-mail" },
+  { id: 7, name: "Pinterest" },
+  { id: 9, name: "LinkedIn" },
+  { id: 13, name: "Telegram" },
+];

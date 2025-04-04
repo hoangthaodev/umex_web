@@ -184,10 +184,18 @@ const PageForm = ({ page, typeId }: Props) => {
       </div>
       <div className='md:w-[40%] flex flex-col gap-2'>
         <Publish isSaving={isSaving} isChanged={isChanged} page={page} status={status} setStatus={setStatus} publishYear={publishYear} setPublishYear={setPublishYear} publishMonth={publishMonth} setPublishMonth={setPublishMonth} publishDay={publishDay} setPublishDay={setPublishDay} handleMoveToTrash={handleMoveToTrash} handleSave={handleSave} />
-        <Categories typeId={typeId} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+        {
+          typeId !== 1 && (
+            <Categories typeId={typeId} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+          )
+        }
         <FeaturedImage imageId={imageId} setImageId={setImageId} />
         <Template selectedTemp={tempId} setSelectedTemp={setTempId} />
-        <Tags typeId={typeId} selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
+        {
+          typeId !== 1 && typeId !== 3 && (
+            <Tags typeId={typeId} selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
+          )
+        }
       </div>
     </div>
   )

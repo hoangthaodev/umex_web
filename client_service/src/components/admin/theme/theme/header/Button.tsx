@@ -1,7 +1,7 @@
 'use client'
 
+import SelectInList from '@/components/admin/theme/theme/SelectInList'
 import SelectOption from '@/components/admin/theme/theme/SelectOption'
-import { colorMap, linkTargetMap, sizeMap, styleMap, textCaseMap } from '@/lib/styleMap'
 import React, { SetStateAction } from 'react'
 
 type Props = {
@@ -33,110 +33,105 @@ const Button = ({ buttonLabel, buttonText, setButtonText, buttonLink, setButtonL
   buttonSize, setButtonSize
 }: Props) => {
 
+  const buttonCaseList = [
+    { id: 1, name: "Abc" },
+    { id: 2, name: "ABC" },
+  ]
+
+  const buttonColorList = [
+    { id: 1, name: "Plain" },
+    { id: 2, name: "Primary" },
+    { id: 3, name: "Secondary" },
+    { id: 4, name: "Success" },
+    { id: 5, name: "Alert" },
+  ]
+
+  const buttonStyleList = [
+    { id: 1, name: "Default" },
+    { id: 2, name: "Outline" },
+    { id: 3, name: "Underline" },
+    { id: 4, name: "Shade" },
+    { id: 5, name: "Bevel" },
+    { id: 6, name: "Gloss" },
+    { id: 7, name: "Link" },
+  ]
+
+  const buttonSizeList = [
+    { id: 1, name: "XS" },
+    { id: 2, name: "S" },
+    { id: 3, name: "Default" },
+    { id: 4, name: "M" },
+    { id: 5, name: "L" },
+    { id: 6, name: "XL" },
+  ]
+
+  const buttonTargetList = [
+    { id: 1, name: "Same Window" },
+    { id: 2, name: "New Window" },
+  ]
+
   return (
     <div className='flex flex-col'>
       {
         buttonLabel && (
           <div className='bg-gray-600 px-2 py-1 text-gray-50'>
-            <h2>{buttonLabel}</h2>
+            <h3>{buttonLabel}</h3>
           </div>
         )
       }
       <div className='p-2 flex flex-col gap-4'>
         <div className='flex flex-col gap-2'>
-          <h3>Text</h3>
+          <h4>Text</h4>
           <input
             className='border px-2 rounded-sm'
             type="text" value={buttonText} onChange={(e) => { setButtonText(e.target.value) }} />
         </div>
 
         <div className='flex flex-col gap-2'>
-          <h3>Letter case</h3>
-          <div className='flex flex-wrap justify-center'>
-            {
-              Object.entries(textCaseMap).map(([key, val], index) => {
-                return (
-                  <label
-                    key={index}
-                    onClick={() => { setButtonCase(parseInt(key)) }}
-                    className={`${buttonCase === parseInt(key) ? "text-gray-50 bg-blue-400" : ""} p-1 grow text-center`}>{val}</label>
-                )
-              })
-            }
-          </div>
+          <h4>Letter case</h4>
+          <SelectInList arrayList={buttonCaseList} selected={buttonCase} setSelected={setButtonCase} />
         </div>
 
         <div className='flex flex-col gap-2'>
-          <h3>Link</h3>
+          <h4>Link</h4>
           <input
             placeholder='http://'
             className='border px-2 rounded-sm'
             type="text" value={buttonLink} onChange={(e) => { setButtonLink(e.target.value) }} />
         </div>
 
-        <SelectOption label='Target' value={buttonTarget} setValue={setButtonTarget} arrayOption={linkTargetMap} />
+        <div className='flex flex-col gap-2'>
+          <h4>Target</h4>
+          <SelectOption value={buttonTarget} setValue={setButtonTarget} arrayOption={buttonTargetList} />
+        </div>
 
         <div className='flex flex-col gap-2'>
-          <h3>Rel</h3>
+          <h4>Rel</h4>
           <input
             className='border px-2 rounded-sm'
             type="text" value={buttonRel} onChange={(e) => { setButtonRel(e.target.value) }} />
         </div>
 
         <div className='flex flex-col gap-2'>
-          <h3>Radius</h3>
+          <h4>Radius</h4>
           <input
             className='border px-2 rounded-sm'
             type="number" value={buttonRadius} onChange={(e) => { setButtonRadius(Number(e.target.value)) }} />
         </div>
 
         <div className='flex flex-col gap-2'>
-          <h3>Color</h3>
-          <div className='flex flex-wrap justify-center'>
-            {
-              Object.entries(colorMap).map(([key, val], index) => {
-                return (
-                  <label
-                    key={index}
-                    onClick={() => { setButtonColor(parseInt(key)) }}
-                    className={`${buttonColor === parseInt(key) ? "text-gray-50 bg-blue-400" : ""} p-1 grow text-center`}>{val}</label>
-                )
-              })
-            }
-
-          </div>
+          <h4>Color</h4>
+          <SelectInList arrayList={buttonColorList} selected={buttonColor} setSelected={setButtonColor} />
         </div>
 
         <div className='flex flex-col gap-2'>
-          <h3>Style</h3>
-          <div className='flex flex-wrap justify-center'>
-            {
-              Object.entries(styleMap).map(([key, val], index) => {
-                return (
-                  <label
-                    key={index}
-                    onClick={() => { setButtonStyle(parseInt(key)) }}
-                    className={`${buttonStyle === parseInt(key) ? "text-gray-50 bg-blue-400" : ""} p-1 grow text-center`}>{val}</label>
-                )
-              })
-            }
-          </div>
+          <h4>Style</h4>
+          <SelectInList arrayList={buttonStyleList} selected={buttonStyle} setSelected={setButtonStyle} />
         </div>
 
         <div className='flex flex-col gap-2'>
-          <h3>Size</h3>
-          <div className='flex flex-wrap justify-center'>
-            {
-              Object.entries(sizeMap).map(([key, val], index) => {
-                return (
-                  <label
-                    key={index}
-                    onClick={() => { setButtonSize(parseInt(key)) }}
-                    className={`${buttonSize === parseInt(key) ? "text-gray-50 bg-blue-400" : ""} p-1 grow text-center`}>{val}</label>
-                )
-              })
-            }
-          </div>
+          <h4>Size</h4>
+          <SelectInList arrayList={buttonSizeList} selected={buttonSize} setSelected={setButtonSize} />
         </div>
       </div>
     </div>

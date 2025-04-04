@@ -92,58 +92,58 @@ const page = () => {
         { name: "Follow Icons", link: "/ux-admin/theme/header/followicons" },
       ]} />
       <div className='p-2 flex flex-col gap-2'>
-        <h3>Icons Style</h3>
+        <h4>Icons Style</h4>
         <div className='text-blue-500 flex flex-wrap gap-1 justify-center'>
           <label
             onClick={() => { setIconStyle(1) }}
-            className={`${iconStyle === 1 ? "border border-blue-500" : ""} p-1 w-20 h-14 rounded-sm`}>
-            <label className={`${iconStyle === 1 ? "text-blue-500 border-blue-500" : "hover:text-blue-500 hover:border-blue-500 border-blue-400"} w-full h-full border rounded-sm flex items-center justify-center`}>
+            className={`${iconStyle === 1 ? "border border-blue-500" : ""} p-1 w-20 h-14 rounded-sm group`}>
+            <label className={`${iconStyle === 1 ? "text-blue-500 border-blue-500" : "group-hover:text-blue-500 group-hover:border-blue-500 border-blue-400 text-blue-400"} w-full h-full border rounded-sm flex items-center justify-center`}>
               <FaHeart size={20} />
             </label>
           </label>
 
           <label
             onClick={() => { setIconStyle(2) }}
-            className={`${iconStyle === 2 ? "border border-blue-500" : ""} p-1 w-20 h-14 rounded-sm`}>
-            <label className={`${iconStyle === 2 ? "text-blue-500 border-blue-500" : "hover:text-blue-500 hover:border-blue-500 border-blue-400"} w-full h-full border rounded-sm flex items-center justify-center`}>
-              <label className='p-2 border border-blue-400 hover:border-blue-500 rounded-full'><FaHeart size={20} /></label>
+            className={`${iconStyle === 2 ? "border border-blue-500" : ""} p-1 w-20 h-14 rounded-sm group`}>
+            <label className={`${iconStyle === 2 ? "text-blue-500 border-blue-500" : "group-hover:text-blue-500 group-hover:border-blue-500 border-blue-400 text-blue-400"} w-full h-full border rounded-sm flex items-center justify-center`}>
+              <label className='p-2 border border-blue-400 group-hover:border-blue-500 rounded-full'><FaHeart size={20} /></label>
             </label>
           </label>
 
           <label
             onClick={() => { setIconStyle(3) }}
-            className={`${iconStyle === 3 ? "border border-blue-500" : ""} p-1 w-20 h-14 rounded-sm`}>
-            <label className={`${iconStyle === 3 ? "text-blue-500 border-blue-500" : "hover:text-blue-500 hover:border-blue-500 border-blue-400"} w-full h-full border rounded-sm flex items-center justify-center`}>
-              <label className='p-2 border bg-blue-500 hover:bg-blue-600 rounded-full text-gray-100'><FaHeart size={20} /></label>
+            className={`${iconStyle === 3 ? "border border-blue-500" : ""} p-1 w-20 h-14 rounded-sm group`}>
+            <label className={`${iconStyle === 3 ? "text-blue-500 border-blue-500" : "group-hover:text-blue-500 group-hover:border-blue-500 border-blue-400 text-blue-400"} w-full h-full border rounded-sm flex items-center justify-center`}>
+              <label className='p-2 border bg-blue-400 group-hover:bg-blue-500 rounded-full text-gray-100'><FaHeart size={20} /></label>
             </label>
           </label>
 
           <label
             onClick={() => { setIconStyle(4) }}
-            className={`${iconStyle === 4 ? "border border-blue-500" : ""} p-1 w-20 h-14 rounded-sm`}>
-            <label className={`${iconStyle === 4 ? "text-blue-500 border-blue-500" : "hover:text-blue-500 hover:border-blue-500 border-blue-400"} w-full h-full border rounded-sm flex items-center justify-center`}>
-              <label className='p-2 border border-blue-400 hover:border-blue-500 rounded-sm'><FaHeart size={20} /></label>
+            className={`${iconStyle === 4 ? "border border-blue-500" : ""} p-1 w-20 h-14 rounded-sm group`}>
+            <label className={`${iconStyle === 4 ? "text-blue-500 border-blue-500" : "group-hover:text-blue-500 group-hover:border-blue-500 border-blue-400 text-blue-400"} w-full h-full border rounded-sm flex items-center justify-center`}>
+              <label className='p-2 border border-blue-400 group-hover:border-blue-500 rounded-sm'><FaHeart size={20} /></label>
             </label>
           </label>
 
           <label
             onClick={() => { setIconStyle(5) }}
-            className={`${iconStyle === 5 ? "border border-blue-500" : ""} p-1 w-20 h-14 rounded-sm`}>
-            <label className={`${iconStyle === 5 ? "text-blue-500 border-blue-500" : "hover:text-blue-500 hover:border-blue-500 border-blue-400"} w-full h-full border rounded-sm flex items-center justify-center`}>
-              <label className='p-2 border bg-blue-500 hover:bg-blue-600 rounded-sm text-gray-100'><FaHeart size={20} /></label>
+            className={`${iconStyle === 5 ? "border border-blue-500" : ""} p-1 w-20 h-14 rounded-sm group`}>
+            <label className={`${iconStyle === 5 ? "text-blue-500 border-blue-500" : "group-hover:text-blue-500 group-hover:border-blue-500 border-blue-400 text-blue-400"} w-full h-full border rounded-sm flex items-center justify-center`}>
+              <label className='p-2 border bg-blue-400 group-hover:bg-blue-500 rounded-sm text-gray-100'><FaHeart size={20} /></label>
             </label>
           </label>
 
         </div>
       </div>
       {
-        Object.entries(IconsMap).map(([key, val], index) => {
+        IconsMap.map((item, index) => {
           return (
-            <div key={index} className='p-2 flex flex-col'>
-              <h3>{val}</h3>
+            <div key={index} className='p-2 flex flex-col gap-2'>
+              <h4>{item.name}</h4>
               <input
                 className='border rounded-xs px-2 py-1'
-                type="text" value={handleValue(parseInt(key))} onChange={(e) => { handleChangeValue(parseInt(key), e.target.value) }} />
+                type="text" value={handleValue(item.id)} onChange={(e) => { handleChangeValue(item.id, e.target.value) }} />
             </div>
           )
         })

@@ -23,15 +23,15 @@ const Breadcrumb = () => {
   const { isChanged, saveTheme } = useTheme()
 
   return (
-    <div className='flex items-center justify-between'>
+    <div className='flex justify-between items-center'>
       <div className='flex items-center'>
         <button onClick={() => {
           router.push(backlink)
         }}
-          className={`${hideButton ? "hidden" : "flex"} text-blue-700 w-8 h-14 items-center justify-center cursor-pointer border-l-2 hover:border-blue-700`}>
-          <LuChevronLeft />
+          className={`${hideButton ? "hidden" : "flex"} text-blue-700 min-h-14 items-center justify-center cursor-pointer border-l-2 hover:border-blue-700`}>
+          <LuChevronLeft size={22} />
         </button>
-        <div className='p-2'>
+        <div className='py-2 pl-2'>
           <label className='flex text-gray-700 '>
             {
               hideButton ? <span>You are customizing</span> : null
@@ -50,12 +50,12 @@ const Breadcrumb = () => {
           {
             lastBr &&
             (
-              <div>{lastBr.name}</div>
+              <h4 className='w-48 whitespace-nowrap overflow-hidden overflow-ellipsis'>{lastBr.name}</h4>
             )
           }
         </div>
       </div>
-      <div className='p-2'>
+      <div className='py-2 pr-2'>
         <button className={`${isChanged ? "bg-blue-700 hover:bg-blue-800 cursor-pointer" : "bg-blue-400 cursor-auto"} text-gray-200 text-sm py-1 px-2 rounded-md`}
           onClick={isChanged ? saveTheme : () => { }}
           disabled={!isChanged}

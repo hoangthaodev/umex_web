@@ -32,8 +32,6 @@ const PageTableRow = ({ typeId, item, author = false, thumbnail = false, sku = f
     data()
   }, [])
 
-
-
   return (
     <tr>
       <td className='w-10 text-center'>

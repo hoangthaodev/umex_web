@@ -20,11 +20,11 @@ const page = () => {
       ]} />
 
       <div>
-        <h2 className='bg-gray-600 px-2 py-1 font-semibold text-gray-50'>Main Colors</h2>
+        <h3 className='bg-gray-600 px-2 py-1 font-semibold text-gray-50'>Main Colors</h3>
         <div className='flex flex-col gap-4 p-2'>
           <div>
             <div>
-              <h3>Primary Color</h3>
+              <h4>Primary Color</h4>
               <p className='text-xs text-gray-500 italic'>Change primary color.</p>
             </div>
             <div>
@@ -34,7 +34,7 @@ const page = () => {
           <DivNgang />
           <div>
             <div>
-              <h3>Secondary Color</h3>
+              <h4>Secondary Color</h4>
               <p className='text-xs text-gray-500 italic'>Change secondary color.</p>
             </div>
             <div>
@@ -44,7 +44,7 @@ const page = () => {
           <DivNgang />
           <div>
             <div>
-              <h3>Success Color</h3>
+              <h4>Success Color</h4>
               <p className='text-xs text-gray-500 italic'>Change the success color. Used for global success messages.</p>
             </div>
             <div>
@@ -54,7 +54,7 @@ const page = () => {
           <DivNgang />
           <div>
             <div>
-              <h3>Alert Color</h3>
+              <h4>Alert Color</h4>
               <p className='text-xs text-gray-500 italic'>Change the alert color. Used for global error messages etc.</p>
             </div>
             <div>
@@ -65,11 +65,11 @@ const page = () => {
       </div>
 
       <div>
-        <h2 className='bg-gray-600 px-2 py-1 font-semibold text-gray-50'>Type</h2>
+        <h3 className='bg-gray-600 px-2 py-1 font-semibold text-gray-50'>Type</h3>
         <div className='flex flex-col gap-4 p-2'>
           <div>
             <div>
-              <h3>Base Color</h3>
+              <h4>Base Color</h4>
               <p className='text-xs text-gray-500 italic'>Used for all nomal texts.</p>
             </div>
             <div>
@@ -79,7 +79,7 @@ const page = () => {
           <DivNgang />
           <div>
             <div>
-              <h3>Headline Color</h3>
+              <h4>Headline Color</h4>
               <p className='text-xs text-gray-500 italic'>Used for all headlines on white backgrounds. (H1, H2, H3 etc.)</p>
             </div>
             <div>
@@ -90,7 +90,7 @@ const page = () => {
       </div>
 
       <div>
-        <h2 className='bg-gray-600 px-2 py-1 font-semibold text-gray-50'>Links</h2>
+        <h3 className='bg-gray-600 px-2 py-1 font-semibold text-gray-50'>Links</h3>
         <div className='flex flex-col gap-4 p-2'>
           <div>
             <div>

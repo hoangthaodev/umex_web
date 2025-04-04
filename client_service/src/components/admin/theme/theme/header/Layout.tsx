@@ -1,9 +1,9 @@
 'use client'
 
-import TextColor from '@/components/admin/theme/theme/header/TextColor'
 import InputRange from '@/components/admin/theme/theme/InputRange'
 import SelectColor from '@/components/admin/theme/theme/SelectColor'
 import SelectImage from '@/components/admin/theme/theme/SelectImage'
+import SelectTextColor from '@/components/admin/theme/theme/SelectTextColor'
 import React, { SetStateAction } from 'react'
 
 type Props = {
@@ -27,29 +27,29 @@ const Layout = ({ layoutHeightMin, layoutHeightMax, layoutHeightDefault, layoutR
   return (
     <div>
       <div className='bg-gray-600 px-2 py-1 text-gray-50'>
-        <h2>Layout</h2>
+        <h3>Layout</h3>
       </div>
       <div className='flex flex-col px-2 py-1 gap-4'>
-        <div>
-          <h3>Height</h3>
+        <div className='flex flex-col gap-2'>
+          <h4>Height</h4>
           <InputRange min={layoutHeightMin} max={layoutHeightMax} defaultValue={layoutHeightDefault} value={layoutHeight} setValue={setLayoutHeight} />
         </div>
-        <div>
-          <h3>Text Color</h3>
-          <TextColor selected={layoutTextColor} setSelected={setLayoutTextColor} />
+        <div className='flex flex-col gap-2'>
+          <h4>Text Color</h4>
+          <SelectTextColor selected={layoutTextColor} setSelected={setLayoutTextColor} />
         </div>
-        <div>
-          <h3>Background Color</h3>
+        <div className='flex flex-col gap-2'>
+          <h4>Background Color</h4>
           <SelectColor color={layoutBackgroundColor} setColor={setLayoutBackgroundColor} />
         </div>
         <div className='flex flex-col gap-2'>
-          <h3>Background Image</h3>
+          <h4>Background Image</h4>
           <SelectImage image={layoutImage} setImage={setLayoutImage} />
         </div>
         {
           layoutImage > 0 && (
             <div className='flex flex-col gap-2'>
-              <h3>Background Repeat</h3>
+              <h4>Background Repeat</h4>
               <div className='flex bg-gray-50 text-sm border border-gray-300 rounded-md w-fit'>
                 <label
                   onClick={() => { setLayoutRepeat(0) }}

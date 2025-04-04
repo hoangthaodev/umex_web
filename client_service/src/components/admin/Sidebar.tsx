@@ -7,6 +7,7 @@ import { LuBlocks, LuBookOpenCheck, LuImagePlay, LuLayoutDashboard, LuNotebookPe
 
 type ItemListType = {
   children?: ReactNode,
+  typeId?: number,
   href: string,
   name: string,
   icon?: ReactNode,
@@ -15,12 +16,14 @@ type ItemListType = {
   expand: boolean,
 }
 const ItemList = (props: ItemListType) => {
+  const urlSplit = props.selected.split('/')
+  const urlType = parseInt(urlSplit[urlSplit.length - 1])
 
   const handleOnclick = () => {
     props.setSelected(props.href)
   }
 
-  const active = props.selected.startsWith(props.href)
+  const active = props.selected.startsWith(props.href) || urlType === props.typeId
 
   return (
     <li className={`relative ${props.children ? "group" : ""}`}>
@@ -143,7 +146,29 @@ const Sidebar = () => {
           selected={selected}
           setSelected={setSelected}
           expand={expand}
-        />
+          typeId={1}
+        >
+          <ul>
+            <li>
+              <Link
+                href='/ux-admin/page/pages'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/pages' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/pages') }}
+              >
+                <span>All Pages</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/ux-admin/page/new/1'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/new/1' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/new/1') }}
+              >
+                <span>Add New Page</span>
+              </Link>
+            </li>
+          </ul>
+        </ItemList>
         <ItemList
           href='/ux-admin/page/posts'
           name='Posts'
@@ -151,7 +176,29 @@ const Sidebar = () => {
           selected={selected}
           setSelected={setSelected}
           expand={expand}
-        />
+          typeId={2}
+        >
+          <ul>
+            <li>
+              <Link
+                href='/ux-admin/page/posts'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/posts' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/posts') }}
+              >
+                <span>All Posts</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/ux-admin/page/new/2'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/new/2' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/new/2') }}
+              >
+                <span>Add New Post</span>
+              </Link>
+            </li>
+          </ul>
+        </ItemList>
         <ItemList
           href='/ux-admin/page/portfolios'
           name='Portfolios'
@@ -159,7 +206,29 @@ const Sidebar = () => {
           selected={selected}
           setSelected={setSelected}
           expand={expand}
-        />
+          typeId={4}
+        >
+          <ul>
+            <li>
+              <Link
+                href='/ux-admin/page/portfolios'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/portfolios' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/portfolios') }}
+              >
+                <span>All Portfolios</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/ux-admin/page/new/4'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/new/4' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/new/4') }}
+              >
+                <span>Add New Portfolio</span>
+              </Link>
+            </li>
+          </ul>
+        </ItemList>
         <ItemList
           href='/ux-admin/page/blocks'
           name='Blocks'
@@ -167,7 +236,29 @@ const Sidebar = () => {
           selected={selected}
           setSelected={setSelected}
           expand={expand}
-        />
+          typeId={3}
+        >
+          <ul>
+            <li>
+              <Link
+                href='/ux-admin/page/blocks'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/blocks' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/blocks') }}
+              >
+                <span>All Blocks</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/ux-admin/page/new/3'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/new/3' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/new/3') }}
+              >
+                <span>Add New Block</span>
+              </Link>
+            </li>
+          </ul>
+        </ItemList>
         <ItemList
           href='/ux-admin/page/products'
           name='Products'
@@ -175,7 +266,29 @@ const Sidebar = () => {
           selected={selected}
           setSelected={setSelected}
           expand={expand}
-        />
+          typeId={5}
+        >
+          <ul>
+            <li>
+              <Link
+                href='/ux-admin/page/products'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/products' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/products') }}
+              >
+                <span>All Products</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/ux-admin/page/new/5'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/new/5' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/new/5') }}
+              >
+                <span>Add New Product</span>
+              </Link>
+            </li>
+          </ul>
+        </ItemList>
       </ul>
       <div className='mt-4'>
         <button

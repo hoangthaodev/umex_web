@@ -22,7 +22,9 @@ const page = () => {
         { name: "Top Bar", link: "/ux-admin/theme/header/topbar" },
       ]} />
       <div className='flex gap-2 items-center p-2'>
-        <input type="checkbox" checked={topbarEnable} onChange={() => { setTopbarEnable(!topbarEnable) }} />
+        <input
+          className='w-4 h-4'
+          type="checkbox" checked={topbarEnable} onChange={() => { setTopbarEnable(!topbarEnable) }} />
         <label onClick={() => { setTopbarEnable(!topbarEnable) }}>Enable Top Bar</label>
       </div>
       <div className={`${topbarEnable ? "display" : "hidden"}`}>

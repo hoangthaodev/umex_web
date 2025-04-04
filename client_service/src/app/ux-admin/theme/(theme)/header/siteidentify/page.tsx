@@ -66,28 +66,30 @@ const page = () => {
         { name: "Logo & Site Identify", link: "/ux-admin/theme/header/siteidentify" },
       ]} />
       <div className='flex flex-col gap-2'>
-        <h3>Site Title</h3>
-        <input className='border px-2 rounded-sm my-2'
+        <h4>Site Title</h4>
+        <input className='border px-2 rounded-sm'
           type="text" value={title}
           onChange={(e) => { setTitle(e.target.value) }} />
         <DivNgang className='my-2' />
 
-        <h3>Description</h3>
-        <input className='border px-2 rounded-sm my-2'
+        <h4>Description</h4>
+        <input className='border px-2 rounded-sm'
           type="text" value={description}
           onChange={(e) => { setDescription(e.target.value) }} />
-        <div className='flex gap-2'>
-          <input id='isdisplayBelowLogo' type='checkbox' checked={isDisplayBelowLogo} onChange={() => { setIsDisplayBelowLogo(!isDisplayBelowLogo) }} />
+        <div className='flex gap-2 '>
+          <input
+            className='w-4 h-4'
+            id='isdisplayBelowLogo' type='checkbox' checked={isDisplayBelowLogo} onChange={() => { setIsDisplayBelowLogo(!isDisplayBelowLogo) }} />
           <label onClick={() => { setIsDisplayBelowLogo(!isDisplayBelowLogo) }}>Display below logo</label>
         </div>
         <DivNgang className='my-2' />
 
-        <h3>Logo</h3>
+        <h4>Logo</h4>
         <div className='flex flex-col items-center'>
           <div className='w-32 h-32 flex items-center my-2'>
             <Image
               alt='logo'
-              src={logoImage?.image_url || "/logo.png"}
+              src={logoImage?.image_url || "/empty.png"}
               width={100}
               height={100}
               className='w-full h-auto'
@@ -104,31 +106,31 @@ const page = () => {
           </button>
         </div>
 
-        <h3>Logo container width</h3>
+        <h4>Logo container width</h4>
         <InputRange min={30} max={700} defaultValue={200} value={logoContainerWidth} setValue={setLogoContainerWidth} />
 
-        <h3>Logo max width (px)</h3>
+        <h4>Logo max width (px)</h4>
         <p className='text-xs text-gray-400 italic'>Set the logo max width in pixels. Leave it blank to make is auto fit inside the logo container.</p>
         <input
           className='border rounded-sm px-2'
           type="text" value={logoMaxWidth} onChange={(e) => { setLogoMaxWidth(e.target.value) }} />
 
-        <h3>Logo Padding</h3>
+        <h4>Logo Padding</h4>
         <InputRange min={0} max={30} defaultValue={0} value={logoPadding} setValue={setLogoPadding} />
 
-        <h3>Logo link</h3>
+        <h4>Logo link</h4>
         <p className='text-xs text-gray-400 italic'>Custom logo link (Default to homepage link if empty).</p>
         <input
           className='border rounded-sm px-2'
           type="text" value={logoLink} onChange={(e) => { setLogoLink(e.target.value) }} />
         <DivNgang className='my-2' />
 
-        <h3>Favicon</h3>
+        <h4>Favicon</h4>
         <div className='flex items-end'>
           <div className='w-20 h-20 flex items-center border my-2'>
             <Image
               alt='favicon'
-              src={faviconImage?.image_url || "/favicon.ico"}
+              src={faviconImage?.image_url || "/empty.png"}
               width={100}
               height={100}
               className='w-full h-auto'

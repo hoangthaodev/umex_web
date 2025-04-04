@@ -27,7 +27,7 @@ export type BreadcrumbType = {
 };
 
 export type LayoutType = {
-  themeMode: string;
+  themeMode: number;
   layoutMode: number;
   dropShadow: boolean;
   siteWidth: number;
@@ -176,6 +176,27 @@ export type ContactType = {
   contactPhone: string;
 };
 
+export type VerticalType = {
+  verticalOpenerIcon: number;
+  verticalOpenerHeight: number;
+  verticalOpenerWidth: number;
+  verticalOpenerTagline: string;
+  verticalOpenerText: string;
+  verticalOpenerBaseColor: number;
+  verticalOpenerColor: string | undefined;
+  verticalOpenerBackgroundColor: string | undefined;
+  verticalFlyoutKeepOpen: boolean;
+  verticalFlyoutAddShadow: boolean;
+  verticalFlyoutWidth: number;
+  verticalFlyoutBackgroundColor: string | undefined;
+  verticalFlyoutDivider: boolean;
+  verticalFlyoutNavHeight: number;
+  verticalFlyoutBaseColor: number;
+  verticalFlyoutNavColor: string | undefined;
+  verticalFlyoutNavColorHover: string | undefined;
+  verticalFlyoutNavBackgroundHover: string | undefined;
+};
+
 export type ButtonType = {
   button1Case: number;
   button1Color: number;
@@ -197,6 +218,63 @@ export type ButtonType = {
   button2Style: number;
   button2Text: string;
   button2Target: number;
+};
+
+export type ListMenuElementType = {
+  componentId: number;
+  status: number;
+};
+
+export type NaviconType = {
+  naviconHeight: number;
+  naviconStyle: number;
+  naviconShowTitle: boolean;
+  naviconOverlay: number;
+  naviconBehavior: number;
+  naviconSubmenuEffect: number;
+  naviconTopContent: string;
+  naviconTabs: number;
+  naviconTab1Text: string;
+  naviconTab2Text: string;
+  naviconTab1Element: string;
+  naviconTab2Element: string;
+  naviconOverlayColor: number;
+  naviconBackgroundColor: string | undefined;
+};
+
+export type FooterType = {
+  footerBlock: number;
+  footer1Checked: boolean;
+  footer1Columns: number;
+  footer1TextColor: number;
+  footer1BackgroundColor: string | undefined;
+  footer1BackgroundImage: number;
+  footer2Checked: boolean;
+  footer2Columns: number;
+  footer2TextColor: number;
+  footer2BackgroundColor: string | undefined;
+  footer2BackgroundImage: number;
+  footerAbsoluteTextColor: number;
+  footerAbsoluteAlign: number;
+  footerAbsoluteBackgroundColor: string | undefined;
+  footerAbsoluteBottomTextPrimary: string;
+  footerAbsoluteBottomTextSecondary: string;
+  footerBTTEnable: boolean;
+  footerBTTShape: number;
+  footerBTTPosition: number;
+  footerBTTShowMobile: boolean;
+  footerHTMLBefore: string;
+  footerHTMLAfter: string;
+};
+
+export type ShareType = {
+  shareIconStyle: number;
+  shareIcons: number[];
+};
+
+export type HomepageType = {
+  homepageDisplay: number;
+  homepagePage: number;
 };
 
 export type PageType = {

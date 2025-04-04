@@ -18,15 +18,6 @@ export const depthHoverMap: Record<number, string> = {
   7: "hover:shadow-2xl hover:transition-all hover:-translate-y-2",
 };
 
-export const sizeMap: Record<number, string> = {
-  1: "XS",
-  2: "S",
-  3: "Default",
-  4: "M",
-  5: "L",
-  6: "XL",
-};
-
 export const sizeStyleMap: Record<number, string> = {
   1: "text-xs",
   2: "text-sm",
@@ -36,45 +27,12 @@ export const sizeStyleMap: Record<number, string> = {
   6: "text-2xl",
 };
 
-export const textCaseMap: Record<number, string> = {
-  1: "Abc",
-  2: "ABC",
-};
-
 export const textCaseStyleMap: Record<number, string> = {
   1: "",
   2: "text-uppercase",
 };
 
-export const linkTargetMap: Record<number, string> = {
-  1: "Same Window",
-  2: "New Window",
-};
-
 export const linkTargetStyleMap: Record<number, string> = {
   1: "_self",
   2: "_blank",
-};
-
-export const layoutModeMap: Record<number, string> = {
-  1: "Full Width",
-  2: "Boxed",
-};
-
-export const colorMap: Record<number, string> = {
-  1: "Plain",
-  2: "Primary",
-  3: "Secondary",
-  4: "Success",
-  5: "Alert",
-};
-
-export const styleMap: Record<number, string> = {
-  1: "Default",
-  2: "Outline",
-  3: "Underline",
-  4: "Shade",
-  5: "Bevel",
-  6: "Gloss",
-  7: "Link",
 };

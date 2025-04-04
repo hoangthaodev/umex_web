@@ -119,6 +119,7 @@ func (ut *UserTransport) GetAllUser(context.Context, *emptypb.Empty) (*pb.ManyUs
 		inuser.UserName = user.UserName
 		inuser.UserEmail = user.UserEmail
 		inuser.UserActive = int32(user.UserActive)
+		inuser.UserDisplayName = user.UserDisplayName
 
 		users = append(users, &inuser)
 	}
@@ -143,6 +144,7 @@ func (ut *UserTransport) GetUserById(c context.Context, in *pb.NumbRequest) (*pb
 	user.UserName = tbuser.UserName
 	user.UserEmail = tbuser.UserEmail
 	user.UserActive = int32(tbuser.UserActive)
+	user.UserDisplayName = tbuser.UserDisplayName
 
 	return &pb.UserResponse{
 		Code: int32(response.ErrCodeSuccess),

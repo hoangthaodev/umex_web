@@ -53,20 +53,26 @@ const page = () => {
       ]} />
       <div className='flex flex-col gap-2'>
         <div className='flex gap-2'>
-          <input type="checkbox" checked={stickyTopCheck} onChange={() => { setStickyTopCheck(!stickyTopCheck) }} />
+          <input
+            className='w-4 h-4'
+            type="checkbox" checked={stickyTopCheck} onChange={() => { setStickyTopCheck(!stickyTopCheck) }} />
           <label onClick={() => { setStickyTopCheck(!stickyTopCheck) }}>Top Bar - Sticky on Scroll</label>
         </div>
         <div className='flex gap-2'>
-          <input type="checkbox" checked={stickyMainCheck} onChange={() => { setStickyMainCheck(!stickyMainCheck) }} />
+          <input
+            className='w-4 h-4'
+            type="checkbox" checked={stickyMainCheck} onChange={() => { setStickyMainCheck(!stickyMainCheck) }} />
           <label onClick={() => { setStickyMainCheck(!stickyMainCheck) }}>Header Main - Sticky on Scroll</label>
         </div>
         <div className='flex gap-2'>
-          <input type="checkbox" checked={stickyBottomCheck} onChange={() => { setStickyBottomCheck(!stickyBottomCheck) }} />
+          <input
+            className='w-4 h-4'
+            type="checkbox" checked={stickyBottomCheck} onChange={() => { setStickyBottomCheck(!stickyBottomCheck) }} />
           <label onClick={() => { setStickyBottomCheck(!stickyBottomCheck) }}>Header Bottom - Sticky on Scroll</label>
         </div>
       </div>
       <div className='flex flex-col gap-2'>
-        <label className='font-semibold'>Sticky Style</label>
+        <h4>Sticky Style</h4>
         <select className='border px-2 rounded-sm' value={stickyStyle} onChange={(e) => { setStickyStyle(Number(e.target.value)) }}>
           <option value={1}>Jump Down</option>
           <option value={2}>Fade</option>
@@ -74,11 +80,13 @@ const page = () => {
         </select>
       </div>
       <div className='flex gap-2'>
-        <input type="checkbox" checked={stickyHideScrolldown} onChange={() => { setStickyHideScrolldown(!stickyHideScrolldown) }} />
+        <input
+          className='w-4 h-4'
+          type="checkbox" checked={stickyHideScrolldown} onChange={() => { setStickyHideScrolldown(!stickyHideScrolldown) }} />
         <label onClick={() => { setStickyHideScrolldown(!stickyHideScrolldown) }}>Hide sticky when scrolling down</label>
       </div>
       <div className='flex flex-col gap-2'>
-        <label className='font-semibold'>Custom Sticky Logo</label>
+        <h4>Custom Sticky Logo</h4>
         {
           logoImage ?
             (

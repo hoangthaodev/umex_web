@@ -3,32 +3,25 @@
 import React, { SetStateAction } from 'react'
 
 type Props = {
-  label?: string,
   value: number,
   setValue: React.Dispatch<SetStateAction<number>>,
-  arrayOption: Record<number, string>
+  arrayOption: { id: number, name: string }[]
 }
 
-const SelectOption = ({ label, value, setValue, arrayOption }: Props) => {
+const SelectOption = ({ value, setValue, arrayOption }: Props) => {
   return (
-    <div className='flex flex-col gap-2'>
+
+    <select
+      className='px-2 py-1 border rounded-xs'
+      value={value} onChange={(e) => { setValue(parseInt(e.target.value)) }}>
       {
-        label && (
-          <h3>{label}</h3>
-        )
+        arrayOption.map((item, index) => {
+          return (
+            <option key={index} value={item.id}>{item.name}</option>
+          )
+        })
       }
-      <select
-        className='px-2 border rounded-xs'
-        value={value} onChange={(e) => { setValue(parseInt(e.target.value)) }}>
-        {
-          Object.entries(arrayOption).map(([key, val], index) => {
-            return (
-              <option key={index} value={parseInt(key)}>{val}</option>
-            )
-          })
-        }
-      </select>
-    </div>
+    </select>
   )
 }
 

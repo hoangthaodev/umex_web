@@ -54,33 +54,33 @@ export const getFontMap: Record<string, NextFont> = {
   "2_9": fontMap["NotoSans_900"],
 };
 
-const titilliumWeights: Record<number, string> = {
-  1: "200",
-  2: "300",
-  3: "400",
-  4: "600",
-  5: "700",
-  6: "900",
-};
+const titilliumWeights = [
+  { id: 1, name: "200" },
+  { id: 2, name: "300" },
+  { id: 3, name: "400" },
+  { id: 4, name: "600" },
+  { id: 5, name: "700" },
+  { id: 6, name: "900" },
+];
 
-const NotoSansWeights: Record<number, string> = {
-  1: "100",
-  2: "200",
-  3: "300",
-  4: "400",
-  5: "500",
-  6: "600",
-  7: "700",
-  8: "800",
-  9: "900",
-};
+const NotoSansWeights = [
+  { id: 1, name: "100" },
+  { id: 2, name: "200" },
+  { id: 3, name: "300" },
+  { id: 4, name: "400" },
+  { id: 5, name: "500" },
+  { id: 6, name: "600" },
+  { id: 7, name: "700" },
+  { id: 8, name: "800" },
+  { id: 9, name: "900" },
+];
 
-export const listFont: Record<number, string> = {
-  1: "Titillium_Web",
-  2: "Noto_Sans",
-};
+export const listFont = [
+  { id: 1, name: "Titillium_Web" },
+  { id: 2, name: "Noto_Sans" },
+];
 
-export const listFontWeight: Record<number, Record<number, string>> = {
+export const listFontWeight: Record<number, { id: number; name: string }[]> = {
   1: titilliumWeights,
   2: NotoSansWeights,
 };
