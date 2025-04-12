@@ -4,6 +4,7 @@ import { getImageById } from '@/action/image.action'
 import { useTheme } from '@/app/themeContext'
 import MediaSelect from '@/components/admin/media/MediaSelect'
 import { SetBreadcrumb } from '@/components/admin/SetBreadcrumb'
+import SelectOption from '@/components/admin/theme/theme/SelectOption'
 import { ImageType } from '@/lib/type'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
@@ -44,6 +45,12 @@ const page = () => {
     }
   }, [isSelectMedia])
 
+  const stickyStyleList = [
+    { id: 1, name: "Jump Down" },
+    { id: 2, name: "Fade" },
+    { id: 3, name: "Shrink" },
+  ]
+
   return (
     <div className='p-2 flex flex-col gap-4'>
       <SetBreadcrumb breadcrumb={[
@@ -73,11 +80,7 @@ const page = () => {
       </div>
       <div className='flex flex-col gap-2'>
         <h4>Sticky Style</h4>
-        <select className='border px-2 rounded-sm' value={stickyStyle} onChange={(e) => { setStickyStyle(Number(e.target.value)) }}>
-          <option value={1}>Jump Down</option>
-          <option value={2}>Fade</option>
-          <option value={3}>Shrink</option>
-        </select>
+        <SelectOption value={stickyStyle} setValue={setStickyStyle} arrayOption={stickyStyleList} />
       </div>
       <div className='flex gap-2'>
         <input

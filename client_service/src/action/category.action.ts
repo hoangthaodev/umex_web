@@ -117,7 +117,7 @@ export async function getCategoryById(categoryId: number) {
   try {
     const access_token = (await cookies()).get("access_token")?.value || "";
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/categories/${categoryId}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/categories/id/${categoryId}`,
       {
         method: "GET",
         headers: {
@@ -157,6 +157,59 @@ export async function getAllCategory() {
       return null;
     }
     return dataParse.data.categories as CategoryType[];
+  } catch (error) {
+    console.log("error::", error);
+    return null;
+  }
+}
+
+export async function deleteCategory(categoryId: number) {
+  try {
+    const access_token = (await cookies()).get("access_token")?.value || "";
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/categories/${categoryId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: access_token,
+        },
+      }
+    );
+    const data = await res.json();
+    const dataParse = JSON.parse(JSON.stringify(data));
+    if (dataParse.code !== 2000) {
+      console.log("fail deleteCategory::", dataParse);
+      return null;
+    }
+    return dataParse.data;
+  } catch (error) {
+    console.log("error::", error);
+    return null;
+  }
+}
+
+export async function updateCategory(newCategory: CategoryType) {
+  try {
+    const access_token = (await cookies()).get("access_token")?.value || "";
+    const body = JSON.stringify(newCategory);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/categories/${newCategory.category_id}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: access_token,
+          "Content-Type": "application/json",
+        },
+        body: body,
+      }
+    );
+    const data = await res.json();
+    const dataParse = JSON.parse(JSON.stringify(data));
+    if (dataParse.code !== 2000) {
+      console.log("fail updateCategory::", dataParse);
+      return null;
+    }
+    return dataParse.data;
   } catch (error) {
     console.log("error::", error);
     return null;

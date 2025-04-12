@@ -48,7 +48,7 @@ const ItemList = (props: ItemListType) => {
       </Link>
       {
         props.children && (
-          <div className={`bg-gray-600 ${props.expand ? active ? "block" : "hidden group-hover:block" : "absolute top-0 left-8 invisible group-hover:visible z-50"}`}>
+          <div className={`bg-gray-600 ${props.expand ? active ? "block" : "absolute top-0 left-32 invisible group-hover:visible z-50" : "absolute top-0 left-8 invisible group-hover:visible z-50"}`}>
             {props.children}
           </div>
         )
@@ -197,6 +197,24 @@ const Sidebar = () => {
                 <span>Add New Post</span>
               </Link>
             </li>
+            <li>
+              <Link
+                href='/ux-admin/page/categories/2'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/categories/2' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/categories/2') }}
+              >
+                <span>Categories</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/ux-admin/page/tags/2'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/tags/2' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/tags/2') }}
+              >
+                <span>Tags</span>
+              </Link>
+            </li>
           </ul>
         </ItemList>
         <ItemList
@@ -225,6 +243,24 @@ const Sidebar = () => {
                 onClick={() => { setSelected('/ux-admin/page/new/4') }}
               >
                 <span>Add New Portfolio</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/ux-admin/page/categories/4'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/categories/4' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/categories/4') }}
+              >
+                <span>Categories</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/ux-admin/page/tags/4'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/tags/4' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/tags/4') }}
+              >
+                <span>Tags</span>
               </Link>
             </li>
           </ul>
@@ -257,6 +293,15 @@ const Sidebar = () => {
                 <span>Add New Block</span>
               </Link>
             </li>
+            <li>
+              <Link
+                href='/ux-admin/page/categories/3'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/categories/3' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/categories/3') }}
+              >
+                <span>Categories</span>
+              </Link>
+            </li>
           </ul>
         </ItemList>
         <ItemList
@@ -285,6 +330,24 @@ const Sidebar = () => {
                 onClick={() => { setSelected('/ux-admin/page/new/5') }}
               >
                 <span>Add New Product</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/ux-admin/page/categories/5'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/categories/5' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/categories/5') }}
+              >
+                <span>Categories</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/ux-admin/page/tags/5'
+                className={`flex gap-2 px-2 py-1 items-center hover:text-blue-500 ${selected === '/ux-admin/page/tags/5' ? "text-gray-50 font-semibold" : "text-gray-200"}`}
+                onClick={() => { setSelected('/ux-admin/page/tags/5') }}
+              >
+                <span>Tags</span>
               </Link>
             </li>
           </ul>

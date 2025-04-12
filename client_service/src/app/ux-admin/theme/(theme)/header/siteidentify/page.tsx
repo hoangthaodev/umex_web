@@ -99,7 +99,7 @@ const page = () => {
             />
           </div>
           <button
-            className='text-sm justify-center items-center w-full py-2 border bg-gray-300 rounded-sm cursor-pointer'
+            className='text-sm justify-center items-center w-full py-2 border bg-gray-300 dark:bg-gray-600 rounded-sm cursor-pointer'
             onClick={() => { setIsLogoSelect(true) }}
           >
             Change Logo
@@ -113,7 +113,7 @@ const page = () => {
         <p className='text-xs text-gray-400 italic'>Set the logo max width in pixels. Leave it blank to make is auto fit inside the logo container.</p>
         <input
           className='border rounded-sm px-2'
-          type="text" value={logoMaxWidth} onChange={(e) => { setLogoMaxWidth(e.target.value) }} />
+          type="number" value={logoMaxWidth} onChange={(e) => { setLogoMaxWidth(parseInt(e.target.value)) }} />
 
         <h4>Logo Padding</h4>
         <InputRange min={0} max={30} defaultValue={0} value={logoPadding} setValue={setLogoPadding} />
@@ -139,7 +139,7 @@ const page = () => {
               }}
             />
           </div>
-          <button className='m-2 p-2 text-sm justify-center items-center border bg-gray-300 rounded-sm cursor-pointer'
+          <button className='m-2 p-2 text-sm justify-center items-center border bg-gray-300 dark:bg-gray-600 rounded-sm cursor-pointer'
             onClick={() => { setIsFaviconSelect(true) }}
           >
             Change icon

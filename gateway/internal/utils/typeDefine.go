@@ -77,12 +77,12 @@ type Page struct {
 }
 
 type Category struct {
-	CatId     int64  `json:"category_id"`
-	CatName   string `json:"category_name"`
-	CatSlug   string `json:"category_slug"`
-	CatDes    string `json:"category_des"`
-	CatParent int64  `json:"category_parent"`
-	TypeId    int32  `json:"type_id"`
+	CatId          int64  `json:"category_id"`
+	CatName        string `json:"category_name"`
+	CatSlug        string `json:"category_slug"`
+	CatDescription string `json:"category_description"`
+	CatParent      int64  `json:"category_parent"`
+	TypeId         int32  `json:"type_id"`
 }
 
 type Pagecategory struct {

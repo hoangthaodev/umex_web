@@ -33,6 +33,7 @@ func (ct *CategoryTransport) GetAllCategory(context.Context, *emptypb.Empty) (*p
 		category.CategorySlug = c.CategorySlug
 		category.TypeId = c.TypeID
 		category.CategoryParent = c.CategoryParent
+		category.CategoryDescription = c.CategoryDescription
 
 		categories = append(categories, &category)
 	}
@@ -57,6 +58,7 @@ func (ct *CategoryTransport) GetCategoryById(c context.Context, in *pb.NumbReque
 	category.CategorySlug = res.CategorySlug
 	category.TypeId = res.TypeID
 	category.CategoryParent = res.CategoryParent
+	category.CategoryDescription = res.CategoryDescription
 
 	return &pb.CategoryResponse{
 		Code:     2000,
@@ -94,6 +96,7 @@ func (ct *CategoryTransport) GetCategoryByManyId(c context.Context, in *pb.ManyN
 		category.CategoryDescription = c.CategoryDescription
 		category.TypeId = int32(utils.StrToInt64(c.TypeId))
 		category.CategoryParent = utils.StrToInt64(c.CategoryParent)
+		category.CategoryDescription = c.CategoryDescription
 
 		categories = append(categories, &category)
 	}
@@ -118,6 +121,7 @@ func (ct *CategoryTransport) GetCategoryBySlug(c context.Context, in *pb.Message
 	category.CategorySlug = res.CategorySlug
 	category.TypeId = res.TypeID
 	category.CategoryParent = res.CategoryParent
+	category.CategoryDescription = res.CategoryDescription
 
 	return &pb.CategoryResponse{
 		Code:     2000,
@@ -141,6 +145,7 @@ func (ct *CategoryTransport) GetCategoryByType(c context.Context, in *pb.NumbReq
 		category.CategorySlug = c.CategorySlug
 		category.TypeId = c.TypeID
 		category.CategoryParent = c.CategoryParent
+		category.CategoryDescription = c.CategoryDescription
 
 		categories = append(categories, &category)
 	}
@@ -167,6 +172,7 @@ func (ct *CategoryTransport) GetCategoryByParent(c context.Context, in *pb.NumbR
 		category.CategorySlug = c.CategorySlug
 		category.TypeId = c.TypeID
 		category.CategoryParent = c.CategoryParent
+		category.CategoryDescription = c.CategoryDescription
 
 		categories = append(categories, &category)
 	}
@@ -193,6 +199,7 @@ func (ct *CategoryTransport) GetCategoryByTypeNParent(c context.Context, in *pb.
 		category.CategorySlug = c.CategorySlug
 		category.TypeId = c.TypeID
 		category.CategoryParent = c.CategoryParent
+		category.CategoryDescription = c.CategoryDescription
 
 		categories = append(categories, &category)
 	}

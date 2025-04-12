@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"gateway/internal/services"
 	"gateway/internal/utils"
 	"gateway/pkg/response"
@@ -64,11 +65,14 @@ func (tc *TagController) GetTagByType(c *gin.Context) {
 }
 
 func (tc *TagController) CreateNewTag(c *gin.Context) {
-	var newTag utils.Tag
-	err := c.ShouldBindJSON(&newTag)
+	raw, err := c.GetRawData()
 	if err != nil {
-		log.Println("Error binding json tag::", err)
-		return
+		log.Println("Error get tag raw::", err)
+	}
+	var newTag utils.Tag
+	err = json.Unmarshal(raw, &newTag)
+	if err != nil {
+		log.Println("Error unmarshal tag raw:: ", err)
 	}
 	res, err := tc.TagService.CreateNewTag(newTag.TagName, newTag.TagSlug, newTag.TagDescription, newTag.TypeId)
 	if err != nil {
@@ -80,11 +84,14 @@ func (tc *TagController) CreateNewTag(c *gin.Context) {
 
 func (tc *TagController) UpdateTag(c *gin.Context) {
 	id := c.Param("id")
-	var updatedTag utils.Tag
-	err := c.ShouldBindJSON(&updatedTag)
+	raw, err := c.GetRawData()
 	if err != nil {
-		log.Println("Error binding json tag")
-		return
+		log.Println("Error get tag raw::", err)
+	}
+	var updatedTag utils.Tag
+	err = json.Unmarshal(raw, &updatedTag)
+	if err != nil {
+		log.Println("Error unmarshal tag raw:: ", err)
 	}
 	res, err := tc.TagService.UpdateTag(utils.StringToInt64(id), updatedTag.TagName, updatedTag.TagSlug, updatedTag.TagDescription, updatedTag.TypeId)
 	if err != nil {

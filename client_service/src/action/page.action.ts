@@ -3,7 +3,7 @@
 import { PageType } from "@/lib/type";
 import { cookies } from "next/headers";
 
-export const getAllPage = async (limit: number, offset: number) => {
+export const getPageASC = async (limit: number, offset: number) => {
   try {
     const access_token = (await cookies()).get("access_token")?.value || "";
     const res = await fetch(
@@ -248,6 +248,35 @@ export async function countPageByTypeNStatus(typeId: number, status: number) {
       return null;
     }
     return dataParse.data.result as number;
+  } catch (error) {
+    console.log("error::", error);
+    return null;
+  }
+}
+
+export async function getPageByTypeDESC(
+  type: number,
+  limit: number,
+  offset: number
+) {
+  try {
+    const access_token = (await cookies()).get("access_token")?.value || "";
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/pages/desc/?type=${type}&limit=${limit}&offset=${offset}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: access_token,
+        },
+      }
+    );
+    const data = await res.json();
+    const dataParse = JSON.parse(JSON.stringify(data));
+    if (dataParse.code !== 2000) {
+      console.log("Fail to getPageDESC::", dataParse);
+      return null;
+    }
+    return dataParse.data.pages as PageType[];
   } catch (error) {
     console.log("error::", error);
     return null;

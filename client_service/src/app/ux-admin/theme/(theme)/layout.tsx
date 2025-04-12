@@ -2,6 +2,7 @@
 
 import { BreadcrumbProvider } from '@/app/ux-admin/theme/(theme)/BreadcrumbContext'
 import Breadcrumb from '@/components/admin/theme/theme/Breadcrumb'
+import ShowArea from '@/components/admin/theme/theme/showArea/ShowArea'
 import DivNgang from '@/components/DivNgang'
 import React, { ReactNode, useState } from 'react'
 import { FaCircleChevronLeft, FaCircleChevronRight } from 'react-icons/fa6'
@@ -47,11 +48,12 @@ const ThemeLayout = ({ children }: Props) => {
             </div>
           )
         }
-        <div className='hidden sm:flex grow flex-col justify-between overflow-hidden'>
-          <div className='overflow-y-auto '>
-            {/* <ShowArea /> */}
+        <div className='hidden sm:flex grow h-full flex-col justify-between overflow-hidden'>
+          <div className='grow overflow-y-auto '>
+            <ShowArea />
           </div>
           <div>
+            action area
             {/* <ActionArea /> */}
           </div>
         </div>

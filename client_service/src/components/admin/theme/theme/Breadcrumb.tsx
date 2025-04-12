@@ -32,7 +32,7 @@ const Breadcrumb = () => {
           <LuChevronLeft size={22} />
         </button>
         <div className='py-2 pl-2'>
-          <label className='flex text-gray-700 '>
+          <label className='flex text-gray-700 dark:text-gray-300'>
             {
               hideButton ? <span>You are customizing</span> : null
             }

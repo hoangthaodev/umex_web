@@ -13,10 +13,22 @@ type PageController struct {
 	services.PageService
 }
 
-func (pc *PageController) GetAllPage(c *gin.Context) {
+func (pc *PageController) GetPageASC(c *gin.Context) {
 	limit := c.Query("limit")
 	offset := c.Query("offset")
 	res, err := pc.PageService.GetAllPage(utils.StringToInt32(limit), utils.StringToInt32(offset))
+	if err != nil {
+		response.ErrorResponse(c, int(res.Code), "")
+		return
+	}
+	response.SuccessResponse(c, int(res.Code), res)
+}
+
+func (pc *PageController) GetPageDESC(c *gin.Context) {
+	typeId := c.Query("type")
+	limit := c.Query("limit")
+	offset := c.Query("offset")
+	res, err := pc.PageService.GetPageDESC(utils.StringToInt32(typeId), utils.StringToInt32(limit), utils.StringToInt32(offset))
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return

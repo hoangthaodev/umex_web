@@ -187,7 +187,7 @@ const page = () => {
       <div className='flex flex-col gap-2'>
         <h4>Top content</h4>
         <textarea
-          className='h-28 border'
+          className='h-28 border p-2'
           value={naviconTopContent} onChange={(e) => { setNaviconTopContent(e.target.value) }} />
       </div>
       <div className='flex flex-col gap-2'>

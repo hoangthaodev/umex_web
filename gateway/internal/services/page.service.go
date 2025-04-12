@@ -20,6 +20,18 @@ func (ps *PageService) GetAllPage(limit int32, offset int32) (*pb.ManyPageRespon
 	})
 }
 
+func (ps *PageService) GetPageDESC(typeId int32, limit int32, offset int32) (*pb.ManyPageResponse, error) {
+	conn := utils.ConnectToService(global.Config.Server.MainServer)
+	defer conn.Close()
+
+	client := pb.NewPageServiceClient(conn)
+	return client.GetPageDESC(context.Background(), &pb.Page{
+		TypeId: typeId,
+		Limit:  limit,
+		Offset: offset,
+	})
+}
+
 func (ps *PageService) GetPageById(pageId int64) (*pb.PageResponse, error) {
 	conn := utils.ConnectToService(global.Config.Server.MainServer)
 	defer conn.Close()

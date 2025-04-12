@@ -612,6 +612,55 @@ func (q *Queries) GetPageByUser(ctx context.Context, arg GetPageByUserParams) ([
 	return items, nil
 }
 
+const getPageDESC = `-- name: GetPageDESC :many
+select page_id, page_title, page_slug, page_content, page_description, page_status, page_publish_year, page_publish_month, page_publish_day, page_feature_image, user_id, type_id, template_id, created_at, updated_at from tb_page where page_status = 1 and type_id = ? order by page_id desc limit ? offset ?
+`
+
+type GetPageDESCParams struct {
+	TypeID int32
+	Limit  int32
+	Offset int32
+}
+
+func (q *Queries) GetPageDESC(ctx context.Context, arg GetPageDESCParams) ([]TbPage, error) {
+	rows, err := q.db.QueryContext(ctx, getPageDESC, arg.TypeID, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []TbPage
+	for rows.Next() {
+		var i TbPage
+		if err := rows.Scan(
+			&i.PageID,
+			&i.PageTitle,
+			&i.PageSlug,
+			&i.PageContent,
+			&i.PageDescription,
+			&i.PageStatus,
+			&i.PagePublishYear,
+			&i.PagePublishMonth,
+			&i.PagePublishDay,
+			&i.PageFeatureImage,
+			&i.UserID,
+			&i.TypeID,
+			&i.TemplateID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const updatePage = `-- name: UpdatePage :exec
 update tb_page set
   page_title=?,

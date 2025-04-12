@@ -1,7 +1,7 @@
 'use client'
 
 import { getAllCategory } from '@/action/category.action'
-import { getAllPage } from '@/action/page.action'
+import { getPageASC } from '@/action/page.action'
 import CategoryEnter from '@/components/admin/theme/menus/edit/category/CategoryEnter'
 import CustomLinkEnter from '@/components/admin/theme/menus/edit/customLink/CustomLinkEnter'
 import PageEnter from '@/components/admin/theme/menus/edit/page/PageEnter'
@@ -29,7 +29,7 @@ const AddMenuItems = ({ isNew, menuValue, setMenuValue }: Props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const allPage = await getAllPage(1000, 0)
+      const allPage = await getPageASC(1000, 0)
       const activePage = allPage?.filter(i => i.page_status === 1)
       if (!activePage) return
       setListPage(activePage.filter(i => i.type_id === 1))

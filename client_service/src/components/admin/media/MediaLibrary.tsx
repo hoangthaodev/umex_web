@@ -77,7 +77,7 @@ const MediaLibrary = ({ isLoading, setIsLoading, selectedImage, setSelectedImage
           isLoading &&
           (
             <div
-              className={`flex flex-col gap-2 items-center h-24 p-2 border border-gray-400`}
+              className={`flex flex-col gap-2 items-center h-24 p-2 border`}
             >
               Loading...
               <LuLoaderCircle className='animate-spin' />
@@ -87,7 +87,7 @@ const MediaLibrary = ({ isLoading, setIsLoading, selectedImage, setSelectedImage
         {
           listImages && listImages.map(image => (
             <div id={image.image_id!.toString()} key={image.image_id}
-              className={`w-24 h-24 p-2 ${selectedImage?.image_id === image.image_id ? "border-2 border-blue-700" : "border border-gray-400"}`}
+              className={`w-24 h-24 p-2 ${selectedImage?.image_id === image.image_id ? "border-2 border-blue-700" : "border"}`}
               onClick={() => {
                 setSelectedImage(image)
               }}
@@ -108,7 +108,7 @@ const MediaLibrary = ({ isLoading, setIsLoading, selectedImage, setSelectedImage
 
       <div className={`w-1/4 p-2 flex flex-col gap-2`}>
         <div className='flex justify-center'>
-          <div className={`w-32 h-32 border border-gray-400 p-2`}>
+          <div className={`w-32 h-32 border p-2`}>
             {selectedImage &&
               <Image
                 src={selectedImage.image_url}
@@ -135,21 +135,21 @@ const MediaLibrary = ({ isLoading, setIsLoading, selectedImage, setSelectedImage
           <label className='col-span-1 xl:col-span-1'>ALT</label>
           <input type='text' value={alt}
             onChange={(e) => { setAlt(e.target.value) }}
-            className='col-span-full xl:col-span-3 px-2 border border-gray-400 rounded-sm'
+            className='col-span-full xl:col-span-3 px-2 border bg-gray-300 rounded-sm'
             disabled={selectedImage ? false : true}
           />
 
           <label className='col-span-full xl:col-span-1'>Title</label>
           <input type='text' value={title}
             onChange={(e) => { setTitle(e.target.value) }}
-            className='col-span-full xl:col-span-3 px-2 border border-gray-400 rounded-sm'
+            className='col-span-full xl:col-span-3 px-2 border bg-gray-300 rounded-sm'
             disabled={selectedImage ? false : true}
           />
 
           <label className='col-span-full xl:col-span-1'>Caption</label>
           <input type='text' value={caption}
             onChange={(e) => { setCaption(e.target.value) }}
-            className='col-span-full xl:col-span-3 px-2 border border-gray-400 rounded-sm'
+            className='col-span-full xl:col-span-3 px-2 border bg-gray-300 rounded-sm'
             disabled={selectedImage ? false : true}
           />
         </div>

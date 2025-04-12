@@ -30,6 +30,31 @@ export const getPagetagByPage = async (pageId: number) => {
   }
 };
 
+export async function getPagetagByTag(tagId: number) {
+  try {
+    const access_token = (await cookies()).get("access_token")?.value || "";
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/pagetags/tag/${tagId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: access_token,
+        },
+      }
+    );
+    const data = await res.json();
+    const dataParse = JSON.parse(JSON.stringify(data));
+    if (dataParse.code !== 2000) {
+      console.log("fail GetPagetagByTag::", dataParse);
+      return null;
+    }
+    return dataParse.data.pagetags as PageTagType[];
+  } catch (error) {
+    console.log("error::", error);
+    return null;
+  }
+}
+
 export async function deletePagetag(pagetagId: number) {
   try {
     const access_token = (await cookies()).get("access_token")?.value || "";

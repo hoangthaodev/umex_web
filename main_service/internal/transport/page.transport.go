@@ -48,6 +48,39 @@ func (pt *PageTransport) GetAllPage(c context.Context, in *pb.Page) (*pb.ManyPag
 	}, nil
 }
 
+func (pt *PageTransport) GetPageDESC(c context.Context, in *pb.Page) (*pb.ManyPageResponse, error) {
+	res, err := pt.PageService.GetPageDESC(in.TypeId, in.Limit, in.Offset)
+	if err != nil {
+		global.Logger.Error(err.Error())
+		return &pb.ManyPageResponse{
+			Code: 2001,
+		}, err
+	}
+	var pages []*pb.Page
+	for _, p := range res {
+		var page pb.Page
+		page.PageId = p.PageID
+		page.PageTitle = p.PageTitle
+		page.PageSlug = p.PageSlug
+		page.PageContent = p.PageContent
+		page.PageDescription = p.PageDescription
+		page.PageStatus = p.PageStatus
+		page.PagePublishYear = p.PagePublishYear
+		page.PagePublishMonth = p.PagePublishMonth
+		page.PagePublishDay = p.PagePublishDay
+		page.PageFeatureImage = p.PageFeatureImage
+		page.UserId = p.UserID
+		page.TypeId = p.TypeID
+		page.TemplateId = p.TemplateID
+
+		pages = append(pages, &page)
+	}
+	return &pb.ManyPageResponse{
+		Code:  2000,
+		Pages: pages,
+	}, nil
+}
+
 func (pt *PageTransport) GetPageById(c context.Context, in *pb.NumbRequest) (*pb.PageResponse, error) {
 	res, err := pt.PageService.GetPageById(in.Numb)
 	if err != nil {

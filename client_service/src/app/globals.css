@@ -165,10 +165,11 @@
 @layer base{
   *, *::before, *::after {
     @apply border-gray-400;
+    scrollbar-color: #333;
   }
   
   html, body, #root, .app{
-    @apply h-full w-full;
+    @apply h-full w-full overflow-auto ;
     @apply bg-gray-50 text-gray-900 dark:bg-gray-800 dark:text-gray-100;
   }
 
@@ -194,6 +195,30 @@
   h6{
     @apply text-sm;
   }
+
+  /* Thanh cuộn dọc */
+::-webkit-scrollbar {
+  width: 10px; /* Chiều rộng thanh cuộn */
+}
+
+::-webkit-scrollbar-track {
+  background: #474747; /* Màu nền track */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a1a1a1; /* Màu thanh cuộn */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c1c1c1; /* Màu khi di chuột qua */
+}
+
+/* Thanh cuộn ngang */
+::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
 }
 
 @keyframes ripple{

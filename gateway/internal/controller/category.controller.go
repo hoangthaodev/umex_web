@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"gateway/internal/services"
 	"gateway/internal/utils"
 	"gateway/pkg/response"
@@ -85,13 +86,17 @@ func (cc *CategoryController) GetCategoryByTypeNParent(c *gin.Context) {
 }
 
 func (cc *CategoryController) CreateNewCategory(c *gin.Context) {
-	var newCat utils.Category
-	err := c.ShouldBindJSON(&newCat)
+	raw, err := c.GetRawData()
 	if err != nil {
-		log.Println("error binding category")
-		return
+		log.Println("error getting raw data")
 	}
-	res, err := cc.CategoryService.CreateNewCategory(newCat.CatName, newCat.CatSlug, newCat.CatDes, newCat.CatParent, newCat.TypeId)
+
+	var newCat utils.Category
+	err = json.Unmarshal(raw, &newCat)
+	if err != nil {
+		log.Println("error unmarshalling category::", err.Error())
+	}
+	res, err := cc.CategoryService.CreateNewCategory(newCat.CatName, newCat.CatSlug, newCat.CatDescription, newCat.CatParent, newCat.TypeId)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return
@@ -107,7 +112,7 @@ func (cc *CategoryController) UpdateCategory(c *gin.Context) {
 		log.Println("error binding category")
 		return
 	}
-	res, err := cc.CategoryService.UpdateCategory(utils.StringToInt64(catId), updatedCat.CatName, updatedCat.CatSlug, updatedCat.CatDes, updatedCat.CatParent, updatedCat.TypeId)
+	res, err := cc.CategoryService.UpdateCategory(utils.StringToInt64(catId), updatedCat.CatName, updatedCat.CatSlug, updatedCat.CatDescription, updatedCat.CatParent, updatedCat.TypeId)
 	if err != nil {
 		response.ErrorResponse(c, int(res.Code), "")
 		return

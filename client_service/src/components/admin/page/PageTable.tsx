@@ -131,7 +131,7 @@ const PageTable = ({ typeId, tableId, author = false, thumbnail = false, sku = f
         <thead>
           <tr className='border-b border-gray-300'>
             <th className='w-10'>
-              <input type="checkbox" />
+              <input className='w-4 h-4' type="checkbox" />
             </th>
             {
               thumbnail && <th className='w-20 text-left'>Thumbnail</th>

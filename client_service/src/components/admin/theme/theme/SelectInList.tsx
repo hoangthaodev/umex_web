@@ -17,7 +17,7 @@ const SelectInList = ({ arrayList, selected, setSelected }: Props) => {
             <label
               key={i.id}
               onClick={() => { setSelected(i.id) }}
-              className={`${selected === i.id ? "bg-blue-500 text-gray-100" : "bg-gray-100"} text-center p-1 grow `}>
+              className={`${selected === i.id ? "bg-blue-500 text-gray-100" : "bg-gray-100 dark:bg-gray-700"} text-center p-1 grow `}>
               {i.name}
             </label>
           )

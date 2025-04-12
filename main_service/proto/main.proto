@@ -278,6 +278,7 @@ message PageResponse{
 
 service PageService{
   rpc GetAllPage(Page) returns (ManyPageResponse){}
+  rpc GetPageDESC(Page) returns (ManyPageResponse){}
   rpc GetPageById(NumbRequest) returns (PageResponse){}
   rpc GetPageByManyId(ManyNumbRequest) returns (ManyPageResponse){}
   rpc GetPageBySlug(MessageRequest) returns (PageResponse){}

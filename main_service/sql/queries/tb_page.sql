@@ -1,6 +1,9 @@
 -- name: GetAllPage :many
 select * from tb_page limit ? offset ?;
 
+-- name: GetPageDESC :many
+select * from tb_page where page_status = 1 and type_id = ? order by page_id desc limit ? offset ?;
+
 -- name: GetPageById :one
 select * from tb_page where page_id = ?;
 

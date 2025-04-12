@@ -82,8 +82,8 @@ type themeContextType = {
   setIsDisplayBelowLogo: React.Dispatch<SetStateAction<boolean>>,
   logoContainerWidth: number,
   setLogoContainerWidth: React.Dispatch<SetStateAction<number>>,
-  logoMaxWidth: string,
-  setLogoMaxWidth: React.Dispatch<SetStateAction<string>>,
+  logoMaxWidth: number | undefined,
+  setLogoMaxWidth: React.Dispatch<SetStateAction<number | undefined>>,
   logoPadding: number,
   setLogoPadding: React.Dispatch<SetStateAction<number>>,
   logoLink: string,
@@ -456,7 +456,7 @@ export function ThemeProvider({ children }: themeProviderType) {
   const [favicon, setFavicon] = useState<number>(0)
   const [isDisplayBelowLogo, setIsDisplayBelowLogo] = useState(false)
   const [logoContainerWidth, setLogoContainerWidth] = useState(200)
-  const [logoMaxWidth, setLogoMaxWidth] = useState("")
+  const [logoMaxWidth, setLogoMaxWidth] = useState<number | undefined>(undefined)
   const [logoPadding, setLogoPadding] = useState(0)
   const [logoLink, setLogoLink] = useState("")
   // header_topbar
@@ -683,7 +683,7 @@ export function ThemeProvider({ children }: themeProviderType) {
         layoutConfig.current = data.find(i => i.config_key === "layout")
         if (layoutConfig.current) {
           const layoutParse: LayoutType = JSON.parse(layoutConfig.current.config_value)
-          document.documentElement.classList.toggle("dark", layoutParse.themeMode === 1)
+          // document.documentElement.classList.toggle("dark", layoutParse.themeMode === 1)
           setThemeMode(layoutParse.themeMode)
           setBackgroundsColor(layoutParse.backgroundsColor)
           setContainerWidth(layoutParse.containerWidth)

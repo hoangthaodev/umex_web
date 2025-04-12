@@ -2319,6 +2319,7 @@ var CategoryService_ServiceDesc = grpc.ServiceDesc{
 
 const (
 	PageService_GetAllPage_FullMethodName                   = "/pb.PageService/GetAllPage"
+	PageService_GetPageDESC_FullMethodName                  = "/pb.PageService/GetPageDESC"
 	PageService_GetPageById_FullMethodName                  = "/pb.PageService/GetPageById"
 	PageService_GetPageByManyId_FullMethodName              = "/pb.PageService/GetPageByManyId"
 	PageService_GetPageBySlug_FullMethodName                = "/pb.PageService/GetPageBySlug"
@@ -2341,6 +2342,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PageServiceClient interface {
 	GetAllPage(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
+	GetPageDESC(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error)
 	GetPageById(ctx context.Context, in *NumbRequest, opts ...grpc.CallOption) (*PageResponse, error)
 	GetPageByManyId(ctx context.Context, in *ManyNumbRequest, opts ...grpc.CallOption) (*ManyPageResponse, error)
 	GetPageBySlug(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*PageResponse, error)
@@ -2370,6 +2372,16 @@ func (c *pageServiceClient) GetAllPage(ctx context.Context, in *Page, opts ...gr
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ManyPageResponse)
 	err := c.cc.Invoke(ctx, PageService_GetAllPage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pageServiceClient) GetPageDESC(ctx context.Context, in *Page, opts ...grpc.CallOption) (*ManyPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManyPageResponse)
+	err := c.cc.Invoke(ctx, PageService_GetPageDESC_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2531,6 +2543,7 @@ func (c *pageServiceClient) CountPageByTypeNStatus(ctx context.Context, in *Page
 // for forward compatibility.
 type PageServiceServer interface {
 	GetAllPage(context.Context, *Page) (*ManyPageResponse, error)
+	GetPageDESC(context.Context, *Page) (*ManyPageResponse, error)
 	GetPageById(context.Context, *NumbRequest) (*PageResponse, error)
 	GetPageByManyId(context.Context, *ManyNumbRequest) (*ManyPageResponse, error)
 	GetPageBySlug(context.Context, *MessageRequest) (*PageResponse, error)
@@ -2558,6 +2571,9 @@ type UnimplementedPageServiceServer struct{}
 
 func (UnimplementedPageServiceServer) GetAllPage(context.Context, *Page) (*ManyPageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllPage not implemented")
+}
+func (UnimplementedPageServiceServer) GetPageDESC(context.Context, *Page) (*ManyPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageDESC not implemented")
 }
 func (UnimplementedPageServiceServer) GetPageById(context.Context, *NumbRequest) (*PageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPageById not implemented")
@@ -2639,6 +2655,24 @@ func _PageService_GetAllPage_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PageServiceServer).GetAllPage(ctx, req.(*Page))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PageService_GetPageDESC_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Page)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PageServiceServer).GetPageDESC(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PageService_GetPageDESC_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PageServiceServer).GetPageDESC(ctx, req.(*Page))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2923,6 +2957,10 @@ var PageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllPage",
 			Handler:    _PageService_GetAllPage_Handler,
+		},
+		{
+			MethodName: "GetPageDESC",
+			Handler:    _PageService_GetPageDESC_Handler,
 		},
 		{
 			MethodName: "GetPageById",

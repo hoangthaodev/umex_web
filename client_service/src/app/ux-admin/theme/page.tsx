@@ -18,7 +18,7 @@ const page = () => {
         <button onClick={() => {
           router.push(link)
         }}
-          className='flex gap-2 px-2 items-center text-gray-700 w-full hover:text-blue-700 border-l-2 hover:border-blue-700 py-2 hover:bg-gray-100'>
+          className='flex gap-2 px-2 items-center text-gray-700 dark:text-gray-100 w-full hover:text-blue-700 border-l-2 hover:border-blue-700 py-2 hover:bg-gray-100 dark:hover:bg-gray-700'>
           {icon}
           <span className='grow text-start'>{name}</span>
           <LuChevronRight />
@@ -29,7 +29,7 @@ const page = () => {
 
   return (
     <ThemeLayout>
-      <div className='bg-white'>
+      <div className='bg-gray-50 dark:bg-gray-600'>
         <SetBreadcrumb breadcrumb={[{ name: title, link: "/" }]} />
         <ul>
           <ItemList link='/ux-admin/theme/header' name='Header' icon={<LuArrowUp />} />

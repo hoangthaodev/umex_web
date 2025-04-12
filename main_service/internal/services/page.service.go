@@ -21,6 +21,16 @@ func (ps *PageService) GetAllPage(limit int32, offset int32) ([]database.TbPage,
 	})
 }
 
+func (ps *PageService) GetPageDESC(typeId int32, limit int32, offset int32) ([]database.TbPage, error) {
+	queries := database.New(global.Mysql)
+
+	return queries.GetPageDESC(context.Background(), database.GetPageDESCParams{
+		TypeID: typeId,
+		Limit:  limit,
+		Offset: offset,
+	})
+}
+
 func (ps *PageService) GetPageById(pageId int64) (database.TbPage, error) {
 	queries := database.New(global.Mysql)
 

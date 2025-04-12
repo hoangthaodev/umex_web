@@ -239,7 +239,6 @@ const exportToHtml = async (value: string) => {
   const editorHtml = await serializeHtml(editorStatic, {
     components,
     editorComponent: EditorStatic,
-    props: { style: { padding: "0 calc(50% - 350px)", paddingBottom: "" } },
   });
 
   return editorHtml;

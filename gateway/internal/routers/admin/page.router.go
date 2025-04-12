@@ -18,7 +18,8 @@ func (pc *PageRouter) InitPageRouter(router *gin.RouterGroup) {
 	privatePageRouter.Use(middleware.Authorization())
 	privatePageRouter.Use(middleware.Permission())
 	{
-		privatePageRouter.GET("", pc.PageController.GetAllPage)
+		privatePageRouter.GET("", pc.PageController.GetPageASC)
+		privatePageRouter.GET("/desc/", pc.PageController.GetPageDESC)
 		privatePageRouter.GET("/typenstatus/", pc.PageController.GetPageByTypeNStatus)
 		privatePageRouter.GET("/id/:id", pc.PageController.GetPageById)
 		privatePageRouter.GET("/ids/", pc.PageController.GetPageByManyId)

@@ -35,7 +35,7 @@ const PageTableRow = ({ typeId, item, author = false, thumbnail = false, sku = f
   return (
     <tr>
       <td className='w-10 text-center'>
-        <input type="checkbox" />
+        <input className='w-4 h-4' type="checkbox" />
       </td>
       <td><Link href={editPageUrl} >{item.page_title}</Link></td>
       {

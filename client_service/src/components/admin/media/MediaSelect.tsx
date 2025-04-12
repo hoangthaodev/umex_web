@@ -41,7 +41,7 @@ const MediaSelect = ({ setIsSelectMedia, setImage }: Props) => {
 
   return (
     <div className='fixed w-full h-full z-50 top-0 left-0 flex items-center justify-center bg-inherit'>
-      <div className={`relative w-10/12 bg-gray-200 p-4 flex-col border border-gray-400 rounded-sm`}>
+      <div className={`relative w-10/12 bg-gray-200 dark:text-gray-700 p-4 flex-col border border-gray-400 rounded-sm`}>
         {
           setIsSelectMedia &&
           <LuX
@@ -53,7 +53,7 @@ const MediaSelect = ({ setIsSelectMedia, setImage }: Props) => {
           {tabs.map(tab =>
             <button
               key={tab.id}
-              className={`${tabActive === tab.id ? "bg-gray-600 text-gray-300" : ""} border border-gray-400 px-2`}
+              className={`${tabActive === tab.id ? "bg-gray-600 text-gray-300" : "dark:text-gray-600"} border border-gray-400 px-2`}
               onClick={() => setTabActive(tab.id)}
             >{tab.title}</button>)}
         </div>

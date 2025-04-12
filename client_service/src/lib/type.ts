@@ -71,7 +71,7 @@ export type SiteIdentifyType = {
   logo: number;
   favicon: number;
   logoContainerWidth: number;
-  logoMaxWidth: string;
+  logoMaxWidth: number;
   logoPadding: number;
   logoLink: string;
 };
