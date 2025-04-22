@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const VerticalMenu = () => {
+const VerticalMenu = async () => {
   return (
     <div>VerticalMenu</div>
   )

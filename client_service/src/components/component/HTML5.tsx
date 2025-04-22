@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const HTML5 = () => {
+const HTML5 = async () => {
   return (
     <div>HTML5</div>
   )

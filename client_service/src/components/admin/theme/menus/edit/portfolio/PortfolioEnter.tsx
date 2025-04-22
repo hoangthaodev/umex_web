@@ -103,7 +103,7 @@ const PortfolioEnter = ({ listPage, className, active, menuValue, setMenuValue }
         content: {
           id: i,
           label: listPage.find(a => a.page_id === i)?.page_title || `page ${i}`,
-          url: "",
+          url: `/portfolio/${listPage.find(a => a.page_id === i)?.page_slug}`,
         },
         depth: 0,
       }

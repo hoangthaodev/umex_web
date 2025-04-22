@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const SocialIcons = () => {
+const SocialIcons = async () => {
   return (
     <div>SocialIcons</div>
   )

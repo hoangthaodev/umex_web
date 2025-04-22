@@ -32,19 +32,14 @@ export const getPageASC = async (limit: number, offset: number) => {
 
 export const getPageById = async (pageId: number) => {
   try {
-    const access_token = (await cookies()).get("access_token")?.value || "";
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/pages/id/${pageId}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/page/id/${pageId}`,
       {
         method: "GET",
-        headers: {
-          Authorization: access_token,
-        },
       }
     );
     const data = await res.json();
     const dataParse = JSON.parse(JSON.stringify(data));
-
     if (dataParse.code !== 2000) {
       console.log("fail GetPageById::", dataParse);
       return null;
@@ -277,6 +272,27 @@ export async function getPageByTypeDESC(
       return null;
     }
     return dataParse.data.pages as PageType[];
+  } catch (error) {
+    console.log("error::", error);
+    return null;
+  }
+}
+
+export async function getPageBySlug(slug: string) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/page/slug/${slug}`,
+      {
+        method: "GET",
+      }
+    );
+    const data = await res.json();
+    const dataParse = JSON.parse(JSON.stringify(data));
+    if (dataParse.code !== 2000) {
+      console.log("fail to getPageBySlug::", dataParse);
+      return null;
+    }
+    return dataParse.data.page as PageType;
   } catch (error) {
     console.log("error::", error);
     return null;

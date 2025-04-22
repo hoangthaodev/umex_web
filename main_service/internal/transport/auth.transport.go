@@ -69,9 +69,10 @@ func (at *AuthTransport) RefreshToken(c context.Context, in *pb.MessageRequest) 
 	return &pb.LoginResponse{
 		Code: int32(response.ErrCodeSuccess),
 		User: &pb.User{
-			UserId:    userId,
-			UserName:  payload["user_name"].(string),
-			UserEmail: payload["user_email"].(string),
+			UserId:          userId,
+			UserName:        payload["user_name"].(string),
+			UserEmail:       payload["user_email"].(string),
+			UserDisplayName: payload["user_display_name"].(string),
 		},
 		AccessToken:  tokenPair.AccessToken,
 		RefreshToken: tokenPair.RefreshToken,

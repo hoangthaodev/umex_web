@@ -6,7 +6,7 @@ import React, { ReactNode, SetStateAction, useEffect, useState } from 'react'
 
 type Props = {
   array: MenuValueType[]
-  setArray: (newListValue: MenuValueType[]) => void
+  setArray: React.Dispatch<SetStateAction<string>>
 }
 
 const ArrayToList = ({ array, setArray }: Props): ReactNode => {

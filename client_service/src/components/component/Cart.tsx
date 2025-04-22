@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const Cart = () => {
+const Cart = async () => {
   return (
     <div>Cart</div>
   )

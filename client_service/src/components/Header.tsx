@@ -16,6 +16,11 @@ const Header = async () => {
   let component7: ComponentType[] = []
   let component8: ComponentType[] = []
   let component9: ComponentType[] = []
+  let componentMob1: ComponentType[] = []
+  let componentMob2: ComponentType[] = []
+  let componentMob3: ComponentType[] = []
+  let componentMob4: ComponentType[] = []
+  let componentMob5: ComponentType[] = []
 
   const comps = await getAllComponent()
   if (comps) {
@@ -28,6 +33,11 @@ const Header = async () => {
     component7 = comps.filter(i => i.component_position === 7).sort((a, b) => b.component_index - a.component_index)
     component8 = comps.filter(i => i.component_position === 8).sort((a, b) => b.component_index - a.component_index)
     component9 = comps.filter(i => i.component_position === 9).sort((a, b) => b.component_index - a.component_index)
+    componentMob1 = comps.filter(i => i.component_position === 11).sort((a, b) => b.component_index - a.component_index)
+    componentMob2 = comps.filter(i => i.component_position === 12).sort((a, b) => b.component_index - a.component_index)
+    componentMob3 = comps.filter(i => i.component_position === 13).sort((a, b) => b.component_index - a.component_index)
+    componentMob4 = comps.filter(i => i.component_position === 14).sort((a, b) => b.component_index - a.component_index)
+    componentMob5 = comps.filter(i => i.component_position === 15).sort((a, b) => b.component_index - a.component_index)
   }
 
   const comp1Items = component1.map((i) => i.component_map)
@@ -39,6 +49,11 @@ const Header = async () => {
   const comp7Items = component7.map((i) => i.component_map)
   const comp8Items = component8.map((i) => i.component_map)
   const comp9Items = component9.map((i) => i.component_map)
+  const compMob1Items = componentMob1.map((i) => i.component_map)
+  const compMob2Items = componentMob2.map((i) => i.component_map)
+  const compMob3Items = componentMob3.map((i) => i.component_map)
+  const compMob4Items = componentMob4.map((i) => i.component_map)
+  const compMob5Items = componentMob5.map((i) => i.component_map)
 
   let topbarEnable: boolean = false
   const topbar = await getConfigByKey('header_topbar')
@@ -53,36 +68,54 @@ const Header = async () => {
         topbarEnable &&
         <div id='top-bar' className='flex items-center gap-2'>
           <CompZone compItems={comp1Items}
-            className='flex flex-wrap grow gap-2 justify-start p-2 '
+            className='hidden sm:flex flex-wrap grow gap-2 items-center justify-start p-2 '
           />
           <CompZone compItems={comp2Items}
-            className='flex flex-wrap grow gap-2 justify-center p-2 '
+            className='hidden sm:flex flex-wrap grow gap-2 items-center justify-center p-2 '
           />
           <CompZone compItems={comp3Items}
-            className='flex flex-wrap grow gap-2 justify-end p-2 '
+            className='hidden sm:flex flex-wrap grow gap-2 items-center justify-end p-2 '
+          />
+
+          <CompZone compItems={compMob1Items}
+            className='sm:hidden flex flex-wrap grow gap-2 items-center justify-center p-2'
           />
         </div>
       }
       <div id='header-main' className='flex items-center gap-2'>
         <CompZone compItems={comp4Items}
-          className='flex flex-wrap grow gap-2 justify-start p-2 '
+          className='hidden sm:flex flex-wrap grow gap-2 items-center justify-start p-2 '
         />
         <CompZone compItems={comp5Items}
-          className='flex flex-wrap grow gap-2 justify-center p-2 '
+          className='hidden sm:flex flex-wrap grow gap-2 items-center justify-center p-2 '
         />
         <CompZone compItems={comp6Items}
-          className='flex flex-wrap grow gap-2 justify-end p-2 '
+          className='hidden sm:flex flex-wrap grow gap-2 items-center justify-end p-2 '
+        />
+
+        <CompZone compItems={compMob2Items}
+          className='sm:hidden flex flex-wrap grow gap-2 items-center justify-start p-2 '
+        />
+        <CompZone compItems={compMob3Items}
+          className='sm:hidden flex flex-wrap grow gap-2 items-center justify-center p-2 '
+        />
+        <CompZone compItems={compMob4Items}
+          className='sm:hidden flex flex-wrap grow gap-2 items-center justify-end p-2 '
         />
       </div>
       <div id='header-bottom' className='flex items-center gap-2'>
         <CompZone compItems={comp7Items}
-          className='flex flex-wrap grow gap-2 justify-start p-2 '
+          className='hidden sm:flex flex-wrap grow gap-2 items-center justify-start p-2 '
         />
         <CompZone compItems={comp8Items}
-          className='flex flex-wrap grow gap-2 justify-center p-2 '
+          className='hidden sm:flex flex-wrap grow gap-2 items-center justify-center p-2 '
         />
         <CompZone compItems={comp9Items}
-          className='flex flex-wrap grow gap-2 justify-end p-2 '
+          className='hidden sm:flex flex-wrap grow gap-2 items-center justify-end p-2 '
+        />
+
+        <CompZone compItems={compMob5Items}
+          className='sm:hidden flex flex-wrap grow gap-2 items-center justify-center p-2 '
         />
       </div>
     </div>

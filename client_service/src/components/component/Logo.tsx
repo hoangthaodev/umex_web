@@ -2,7 +2,6 @@
 
 import { getConfigByKey } from '@/action/config.action'
 import { getImageById } from '@/action/image.action'
-import { useTheme } from '@/app/themeContext'
 import { ImageType, SiteIdentifyType } from '@/lib/type'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -17,17 +16,6 @@ const Logo = async () => {
   let logoMaxWidth: number | undefined = undefined;
   let logoPadding: number = 0;
   let logoLink: string = '';
-
-  // const { logo, title, description, isDisplayBelowLogo, logoContainerWidth, logoMaxWidth, logoPadding, logoLink } = useTheme()
-  // const [logoImage, setLogoImage] = useState<ImageType | undefined>(undefined)
-
-  // useEffect(() => {
-  //   if (logo > 0) getImageById(logo).then(data => {
-  //     if (data) {
-  //       setLogoImage(data)
-  //     }
-  //   })
-  // }, [logo])
 
   const siteiden = await getConfigByKey('header_siteidentify')
   if (siteiden) {

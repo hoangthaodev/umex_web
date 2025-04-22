@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const MainMenuMob = () => {
+const MainMenuMob = async () => {
   return (
     <div>MainMenuMob</div>
   )

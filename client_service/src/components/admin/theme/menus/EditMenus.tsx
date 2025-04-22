@@ -89,7 +89,7 @@ const EditMenus = () => {
         <div className='flex flex-col gap-2 grow'>
           <h2>Menu Structure</h2>
           <div className='border border-gray-400'>
-            <MenuStructure menuValue={menuValue} isNew={isNew} setIsNew={setIsNew} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} allMenu={allMenu} setAllMenu={setAllMenu} />
+            <MenuStructure menuValue={menuValue} setMenuValue={setMenuValue} isNew={isNew} setIsNew={setIsNew} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} allMenu={allMenu} setAllMenu={setAllMenu} />
           </div>
         </div>
       </div>

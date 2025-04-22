@@ -13,9 +13,10 @@ type UserResponseStruct struct {
 }
 
 type JWTPayloadStruct struct {
-	UserId    int64  `json:"user_id"`
-	UserName  string `json:"user_name"`
-	UserEmail string `json:"user_email"`
+	UserId          int64  `json:"user_id"`
+	UserName        string `json:"user_name"`
+	UserEmail       string `json:"user_email"`
+	UserDisplayName string `json:"user_display_name"`
 }
 
 type TokenPairStruct struct {

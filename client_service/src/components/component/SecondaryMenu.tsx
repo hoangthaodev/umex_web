@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const SecondaryMenu = () => {
+const SecondaryMenu = async () => {
   return (
     <div>SecondaryMenu</div>
   )

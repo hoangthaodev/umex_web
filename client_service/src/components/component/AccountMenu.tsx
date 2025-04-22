@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const AccountMenu = () => {
+const AccountMenu = async () => {
   return (
     <div>AccountMenu</div>
   )

@@ -116,7 +116,7 @@ const CategoryEnter = ({ listPage, className, active, menuValue, setMenuValue }:
         content: {
           id: i,
           label: listPage.find(a => a.category_id === i)?.category_name || `category ${i}`,
-          url: "",
+          url: `/category/${listPage.find(a => a.category_id === i)?.category_slug}`,
         },
         depth: 0,
       }

@@ -13,16 +13,17 @@ import { toast } from 'sonner'
 import z from 'zod';
 
 type Props = {
-  isNew: boolean,
-  setIsNew: React.Dispatch<SetStateAction<boolean>>,
-  selectedMenu: MenuType | undefined,
+  isNew: boolean
+  setIsNew: React.Dispatch<SetStateAction<boolean>>
+  selectedMenu: MenuType | undefined
   setSelectedMenu: React.Dispatch<SetStateAction<MenuType | undefined>>
-  menuValue: string,
+  menuValue: string
+  setMenuValue: React.Dispatch<SetStateAction<string>>
   allMenu: MenuType[]
   setAllMenu: React.Dispatch<SetStateAction<MenuType[]>>
 }
 
-const MenuStructure = ({ isNew, setIsNew, selectedMenu, menuValue, setSelectedMenu, allMenu, setAllMenu
+const MenuStructure = ({ isNew, setIsNew, selectedMenu, setSelectedMenu, menuValue, setMenuValue, allMenu, setAllMenu
 }: Props) => {
   const [menuName, setMenuName] = useState(selectedMenu?.menu_name || "")
   const [listValue, setListValue] = useState<MenuValueType[]>(JSON.parse(menuValue))
@@ -32,30 +33,53 @@ const MenuStructure = ({ isNew, setIsNew, selectedMenu, menuValue, setSelectedMe
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    if (!isLoading) return
     const fetchData = async () => {
-      const allLocation = await getAllMenuLocation()
-      if (!allLocation) return
-      setAllMenuLocation(allLocation)
-      if (!selectedMenu) {
-        setMenuName("")
-        setListValue([])
-        setSelectedLocation([])
-      } else {
-        setMenuName(selectedMenu.menu_name)
-        setListValue(JSON.parse(menuValue))
-        const menuPosition = allLocation.filter(i => i.menu_id === selectedMenu.menu_id!).map(i => i.location_id!)
-        setSelectedLocation(menuPosition)
+      const menuLocations = await getAllMenuLocation()
+      if (menuLocations) {
+        setAllMenuLocation(menuLocations)
       }
-
-      setIsLoading(false)
     }
     fetchData()
-  }, [isLoading])
+  }, [])
 
   useEffect(() => {
-    setIsLoading(true)
+    if (selectedMenu) {
+      setMenuName(selectedMenu.menu_name)
+      setListValue(JSON.parse(menuValue))
+      const menuPosition = allMenuLocation.filter(i => i.menu_id === selectedMenu.menu_id!).map(i => i.location_id!)
+      setSelectedLocation(menuPosition)
+    } else {
+      setMenuName("")
+      setListValue([])
+      setSelectedLocation([])
+    }
   }, [selectedMenu])
+
+  // useEffect(() => {
+  //   if (!isLoading) return
+  //   const fetchData = async () => {
+  //     const allLocation = await getAllMenuLocation()
+  //     if (!allLocation) return
+  //     setAllMenuLocation(allLocation)
+  //     if (!selectedMenu) {
+  //       setMenuName("")
+  //       setListValue([])
+  //       setSelectedLocation([])
+  //     } else {
+  //       setMenuName(selectedMenu.menu_name)
+  //       setListValue(JSON.parse(menuValue))
+  //       const menuPosition = allLocation.filter(i => i.menu_id === selectedMenu.menu_id!).map(i => i.location_id!)
+  //       setSelectedLocation(menuPosition)
+  //     }
+
+  //     setIsLoading(false)
+  //   }
+  //   fetchData()
+  // }, [isLoading])
+
+  // useEffect(() => {
+  //   setIsLoading(true)
+  // }, [selectedMenu])
 
   useEffect(() => {
     if (isNew) {
@@ -73,7 +97,7 @@ const MenuStructure = ({ isNew, setIsNew, selectedMenu, menuValue, setSelectedMe
     const newMenu: MenuType = {
       menu_id: selectedMenu.menu_id!,
       menu_name: menuName,
-      menu_value: menuValue,
+      menu_value: JSON.stringify(listValue),
       menu_slug: selectedMenu.menu_slug,
     }
     updateMenu(newMenu)
@@ -187,7 +211,7 @@ const MenuStructure = ({ isNew, setIsNew, selectedMenu, menuValue, setSelectedMe
               : listValue.length <= 0 ? (<label>Add menu items from the column on the left.</label>)
                 : (
                   <ArrayToList array={listValue}
-                    setArray={setListValue}
+                    setArray={setMenuValue}
                   />
                 )
           }

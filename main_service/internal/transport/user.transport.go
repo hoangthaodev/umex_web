@@ -48,6 +48,7 @@ func (ut *UserTransport) Login(c context.Context, in *pb.LoginRequest) (*pb.Logi
 	payload.UserId = user.UserID
 	payload.UserName = user.UserName
 	payload.UserEmail = user.UserEmail
+	payload.UserDisplayName = user.UserDisplayName
 	tokenPair, err := auth.CreateTokenPair(payload)
 	if err != nil {
 		global.Logger.Error(err.Error())

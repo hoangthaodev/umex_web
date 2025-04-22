@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const SearchIcon = () => {
+const SearchIcon = async () => {
   return (
     <div>SearchIcon</div>
   )

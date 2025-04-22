@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const Language = () => {
+const Language = async () => {
   return (
     <div>Language</div>
   )

@@ -80,3 +80,24 @@ export async function getMenuLocationByMenu(menuId: number) {
     return null;
   }
 }
+
+export async function getMenuLocationById(locationId: number) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/menu_location/${locationId}`,
+      {
+        method: "GET",
+      }
+    );
+    const data = await res.json();
+    const dataParse = JSON.parse(JSON.stringify(data));
+    if (dataParse.code !== 2000) {
+      console.log("fail to getMenuLocationById:: ", dataParse);
+      return null;
+    }
+    return dataParse.data.location as MenuLocationType;
+  } catch (error) {
+    console.log("error::", error);
+    return null;
+  }
+}

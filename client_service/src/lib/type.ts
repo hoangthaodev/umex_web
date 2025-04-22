@@ -355,3 +355,14 @@ export type MenuValueType = {
   };
   depth: number;
 };
+
+export type WidgetValueType = {
+  component: string;
+  attribute: {};
+};
+
+export type WidgetPageType = {
+  title: string;
+  sortby: number;
+  exclude: string[];
+};

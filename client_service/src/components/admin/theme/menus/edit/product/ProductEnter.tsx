@@ -71,7 +71,6 @@ const SearchPage = ({ pageList, value, setValue, listSearched, setListSearched, 
 }
 
 const ProductEnter = ({ listPage, className, active, menuValue, setMenuValue }: Props) => {
-  const typeId = 5 // product
   const [tabActive, setTabActive] = useState(0)
   const newest = [...listPage].sort((a, b) => b.page_id! - a.page_id!)
   const listNewest = newest.slice(0, 16)
@@ -104,7 +103,7 @@ const ProductEnter = ({ listPage, className, active, menuValue, setMenuValue }: 
         content: {
           id: i,
           label: listPage.find(a => a.page_id === i)?.page_title || `page ${i}`,
-          url: "",
+          url: `/product/${listPage.find(a => a.page_id === i)?.page_slug}`,
         },
         depth: 0,
       }

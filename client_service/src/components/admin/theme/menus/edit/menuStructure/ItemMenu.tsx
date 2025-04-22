@@ -15,7 +15,7 @@ type Props = {
   menuValue: MenuValueType,
   index: number,
   array: MenuValueType[],
-  setArray: (newListValue: MenuValueType[]) => void
+  setArray: React.Dispatch<SetStateAction<string>>
 }
 
 const ItemMenu = ({ array, setArray, menuValue, index }: Props) => {
@@ -45,13 +45,13 @@ const ItemMenu = ({ array, setArray, menuValue, index }: Props) => {
   useEffect(() => {
     const newArray = [...array]
     newArray[index].content.url = debounceMenuUrl
-    setArray(newArray)
+    setArray(JSON.stringify(newArray))
   }, [debounceMenuUrl])
 
   useEffect(() => {
     const newArray = [...array]
     newArray[index].content.label = debounceMenuLabel
-    setArray(newArray)
+    setArray(JSON.stringify(newArray))
   }, [debounceMenuLabel])
 
   const [{ isDragging }, dragRef] = useDrag({
@@ -85,7 +85,7 @@ const ItemMenu = ({ array, setArray, menuValue, index }: Props) => {
         } else {
           newArray[dragIndex].depth = menuValue.depth + 1
         }
-        setArray(newArray)
+        setArray(JSON.stringify(newArray))
       } else {
         const newArray = moveArray(array, dragIndex, dropIndex) as MenuValueType[]
         if (relativeY < zoneRect.height * 0.3) {
@@ -99,7 +99,7 @@ const ItemMenu = ({ array, setArray, menuValue, index }: Props) => {
         for (let i = depthIndexFrom; i <= depthIndexTo; i++) {
           if (newArray[i].depth !== 0) newArray[i].depth -= 1
         }
-        setArray(newArray)
+        setArray(JSON.stringify(newArray))
         item.index = dropIndex
       }
     },
@@ -107,7 +107,7 @@ const ItemMenu = ({ array, setArray, menuValue, index }: Props) => {
 
   const handleDelete = () => {
     const newArray = array.filter((i) => i.value_id !== menuValue.value_id)
-    setArray(newArray)
+    setArray(JSON.stringify(newArray))
   }
 
   dragRef(dropRef(ref))
@@ -115,7 +115,7 @@ const ItemMenu = ({ array, setArray, menuValue, index }: Props) => {
   return (
     <li
       ref={ref}
-      className={`w-[400px] cursor-move flex flex-col ${isDragging ? "opacity-50" : ""} 
+      className={`w-[400px] select-none cursor-move flex flex-col ${isDragging ? "opacity-50" : ""} 
           transition-all`}
       style={{ marginLeft: menuValue.depth * 20 }}
     >

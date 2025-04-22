@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const Block3 = () => {
+const Block3 = async () => {
   return (
     <div>Block3</div>
   )

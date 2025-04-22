@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const Checkout = () => {
+const Checkout = async () => {
   return (
     <div>Checkout</div>
   )

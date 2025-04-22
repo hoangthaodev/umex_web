@@ -27,7 +27,7 @@ const layout = ({ children }: Props) => {
   }
 
   return (
-    <div className='flex flex-col h-full'>
+    <div className='flex flex-col w-full h-full'>
       <Navbar className='h-10' />
       <div className={`h-[calc(100%-40px)] flex`}>
         <Sidebar />

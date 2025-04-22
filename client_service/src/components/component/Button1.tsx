@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const Button1 = () => {
+const Button1 = async () => {
   return (
     <div>Button1</div>
   )

@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const TopbarMenu = () => {
+const TopbarMenu = async () => {
   return (
     <div>TopbarMenu</div>
   )

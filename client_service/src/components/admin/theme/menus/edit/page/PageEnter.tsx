@@ -103,7 +103,7 @@ const PageEnter = ({ listPage, className, active, menuValue, setMenuValue }: Pro
         content: {
           id: i,
           label: listPage.find(a => a.page_id === i)?.page_title || `page ${i}`,
-          url: "",
+          url: `/page/${listPage.find(a => a.page_id === i)?.page_slug}`,
         },
         depth: 0,
       }

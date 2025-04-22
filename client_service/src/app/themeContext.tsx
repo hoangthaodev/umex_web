@@ -1,6 +1,6 @@
 'use client'
 
-import { updateComponent } from '@/action/component.action'
+import { getAllComponent, updateComponent } from '@/action/component.action'
 import { getAllConfig, updateConfig } from '@/action/config.action'
 import { ButtonType, ColorType, ComponentType, ConfigType, ContactType, DrawerType, FollowIconsType, FooterType, HeaderBottomType, HeaderMainType, HomepageType, HTMLType, LayoutType, NaviconType, SearchType, ShareType, SiteIdentifyType, StickyType, TopbarType, TypographyType, VerticalType } from '@/lib/type'
 import React, { createContext, SetStateAction, useContext, useEffect, useRef, useState } from 'react'
@@ -9,8 +9,6 @@ import { toast } from 'sonner'
 type themeContextType = {
   saveTheme: () => void
   isChanged: boolean,
-  changedComponent: ComponentType[],
-  setChangedComponent: React.Dispatch<SetStateAction<ComponentType[]>>
   // layout
   themeMode: number
   setThemeMode: React.Dispatch<SetStateAction<number>>;
@@ -410,6 +408,39 @@ type themeContextType = {
   homepagePage: number,
   setHomepageDisplay: React.Dispatch<SetStateAction<number>>,
   setHomepagePage: React.Dispatch<SetStateAction<number>>,
+  // component
+  componentAll: ComponentType[],
+  component0: ComponentType[],
+  component1: ComponentType[],
+  component2: ComponentType[],
+  component3: ComponentType[],
+  component4: ComponentType[],
+  component5: ComponentType[],
+  component6: ComponentType[],
+  component7: ComponentType[],
+  component8: ComponentType[],
+  component9: ComponentType[],
+  componentMob1: ComponentType[],
+  componentMob2: ComponentType[],
+  componentMob3: ComponentType[],
+  componentMob4: ComponentType[],
+  componentMob5: ComponentType[],
+  setComponentAll: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponent0: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponent1: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponent2: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponent3: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponent4: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponent5: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponent6: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponent7: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponent8: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponent9: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponentMob1: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponentMob2: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponentMob3: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponentMob4: React.Dispatch<SetStateAction<ComponentType[]>>,
+  setComponentMob5: React.Dispatch<SetStateAction<ComponentType[]>>,
 
 }
 const themeContext = createContext<themeContextType | undefined>(undefined)
@@ -627,9 +658,25 @@ export function ThemeProvider({ children }: themeProviderType) {
   // homepage
   const [homepageDisplay, setHomepageDisplay] = useState(1)
   const [homepagePage, setHomepagePage] = useState(1)
+  // component
+  const [componentAll, setComponentAll] = useState<ComponentType[]>([])
+  const [component0, setComponent0] = useState<ComponentType[]>([])
+  const [component1, setComponent1] = useState<ComponentType[]>([])
+  const [component2, setComponent2] = useState<ComponentType[]>([])
+  const [component3, setComponent3] = useState<ComponentType[]>([])
+  const [component4, setComponent4] = useState<ComponentType[]>([])
+  const [component5, setComponent5] = useState<ComponentType[]>([])
+  const [component6, setComponent6] = useState<ComponentType[]>([])
+  const [component7, setComponent7] = useState<ComponentType[]>([])
+  const [component8, setComponent8] = useState<ComponentType[]>([])
+  const [component9, setComponent9] = useState<ComponentType[]>([])
+  const [componentMob1, setComponentMob1] = useState<ComponentType[]>([])
+  const [componentMob2, setComponentMob2] = useState<ComponentType[]>([])
+  const [componentMob3, setComponentMob3] = useState<ComponentType[]>([])
+  const [componentMob4, setComponentMob4] = useState<ComponentType[]>([])
+  const [componentMob5, setComponentMob5] = useState<ComponentType[]>([])
 
   const [isChanged, setIsChanged] = useState(false)
-  const [changedComponent, setChangedComponent] = useState<ComponentType[]>([])
   const [changedLayout, setChangedLayout] = useState(false)
   const [changedTypo, setChangedTypo] = useState(false)
   const [changedColors, setChangedColors] = useState(false)
@@ -649,6 +696,7 @@ export function ThemeProvider({ children }: themeProviderType) {
   const [changedFooter, setChangedFooter] = useState(false)
   const [changedShare, setChangedShare] = useState(false)
   const [changedHomepage, setChangedHomepage] = useState(false)
+  const [changedComponent, setChangedComponent] = useState(false)
 
   const [firstMount, setFirstMount] = useState(true);
   const [listentChange, setListentChange] = useState(false)
@@ -683,7 +731,6 @@ export function ThemeProvider({ children }: themeProviderType) {
         layoutConfig.current = data.find(i => i.config_key === "layout")
         if (layoutConfig.current) {
           const layoutParse: LayoutType = JSON.parse(layoutConfig.current.config_value)
-          // document.documentElement.classList.toggle("dark", layoutParse.themeMode === 1)
           setThemeMode(layoutParse.themeMode)
           setBackgroundsColor(layoutParse.backgroundsColor)
           setContainerWidth(layoutParse.containerWidth)
@@ -964,6 +1011,11 @@ export function ThemeProvider({ children }: themeProviderType) {
           setHomepageDisplay(homepageParse.homepageDisplay)
           setHomepagePage(homepageParse.homepagePage)
         }
+        // component
+        const components = await getAllComponent()
+        if (components) {
+          setComponentAll(components)
+        }
 
       }
 
@@ -981,10 +1033,10 @@ export function ThemeProvider({ children }: themeProviderType) {
     if (!listentChange) return
     setIsChanged(true)
   }, [
-    changedComponent, changedLayout, changedTypo, changedColors, changedDrawer, changedSiteIden, changedTopbar,
     changedLayout, changedTypo, changedColors, changedDrawer, changedSiteIden, changedTopbar, changedHeadermain, changedHeaderbottom,
     changedSticky, changedButtons, changedSearch, changedFollowicons, changedHtml, changedContact, changedVertical, changedNavicon,
-    changedFooter, changedShare, changedHomepage
+    changedFooter, changedShare, changedHomepage,
+    changedComponent,
   ])
 
   useEffect(() => {
@@ -1120,8 +1172,30 @@ export function ThemeProvider({ children }: themeProviderType) {
     homepageDisplay, homepagePage,
   ])
 
+  useEffect(() => {
+    setComponent0(componentAll.filter(i => i.component_position === (0 || undefined)).sort((a, b) => a.component_index - b.component_index))
+    setComponent1(componentAll.filter(i => i.component_position === 1).sort((a, b) => a.component_index - b.component_index))
+    setComponent2(componentAll.filter(i => i.component_position === 2).sort((a, b) => a.component_index - b.component_index))
+    setComponent3(componentAll.filter(i => i.component_position === 3).sort((a, b) => a.component_index - b.component_index))
+    setComponent4(componentAll.filter(i => i.component_position === 4).sort((a, b) => a.component_index - b.component_index))
+    setComponent5(componentAll.filter(i => i.component_position === 5).sort((a, b) => a.component_index - b.component_index))
+    setComponent6(componentAll.filter(i => i.component_position === 6).sort((a, b) => a.component_index - b.component_index))
+    setComponent7(componentAll.filter(i => i.component_position === 7).sort((a, b) => a.component_index - b.component_index))
+    setComponent8(componentAll.filter(i => i.component_position === 8).sort((a, b) => a.component_index - b.component_index))
+    setComponent9(componentAll.filter(i => i.component_position === 9).sort((a, b) => a.component_index - b.component_index))
+    setComponentMob1(componentAll.filter(i => i.component_position === 11).sort((a, b) => a.component_index - b.component_index))
+    setComponentMob2(componentAll.filter(i => i.component_position === 12).sort((a, b) => a.component_index - b.component_index))
+    setComponentMob3(componentAll.filter(i => i.component_position === 13).sort((a, b) => a.component_index - b.component_index))
+    setComponentMob4(componentAll.filter(i => i.component_position === 14).sort((a, b) => a.component_index - b.component_index))
+    setComponentMob5(componentAll.filter(i => i.component_position === 15).sort((a, b) => a.component_index - b.component_index))
+    if (!listentChange) return
+    setChangedComponent(true)
+  }, [
+    componentAll
+  ])
+
   const setChangedFailse = () => {
-    setChangedComponent([])
+    setChangedComponent(false)
     setChangedLayout(false)
     setChangedTypo(false)
     setChangedColors(false)
@@ -1149,8 +1223,8 @@ export function ThemeProvider({ children }: themeProviderType) {
 
   const saveTheme = () => {
     // component
-    if (changedComponent.length > 0) {
-      changedComponent.map(i => {
+    if (changedComponent) {
+      componentAll.map(i => {
         const newComponent: ComponentType = {
           component_id: i.component_id,
           component_name: i.component_name,
@@ -1675,7 +1749,7 @@ export function ThemeProvider({ children }: themeProviderType) {
 
   return (
     <themeContext.Provider value={{
-      isMobile, setIsMobile, saveTheme, isChanged, changedComponent, setChangedComponent,
+      isMobile, setIsMobile, saveTheme, isChanged,
       // layout
       themeMode,
       setThemeMode,
@@ -2073,6 +2147,39 @@ export function ThemeProvider({ children }: themeProviderType) {
       homepagePage,
       setHomepageDisplay,
       setHomepagePage,
+      // component
+      componentAll,
+      component0,
+      component1,
+      component2,
+      component3,
+      component4,
+      component5,
+      component6,
+      component7,
+      component8,
+      component9,
+      componentMob1,
+      componentMob2,
+      componentMob3,
+      componentMob4,
+      componentMob5,
+      setComponentAll,
+      setComponent0,
+      setComponent1,
+      setComponent2,
+      setComponent3,
+      setComponent4,
+      setComponent5,
+      setComponent6,
+      setComponent7,
+      setComponent8,
+      setComponent9,
+      setComponentMob1,
+      setComponentMob2,
+      setComponentMob3,
+      setComponentMob4,
+      setComponentMob5,
     }}>
       {children}
     </themeContext.Provider>

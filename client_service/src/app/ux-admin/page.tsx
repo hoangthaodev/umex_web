@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import DashboardPage from "@/app/ux-admin/dashboard/page"
 import React from 'react'

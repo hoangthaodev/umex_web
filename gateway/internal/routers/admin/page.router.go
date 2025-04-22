@@ -12,6 +12,13 @@ type PageRouter struct {
 }
 
 func (pc *PageRouter) InitPageRouter(router *gin.RouterGroup) {
+	// public
+	publicPageRouter := router.Group("/page")
+	{
+		publicPageRouter.GET("/id/:id", pc.PageController.GetPageById)
+		publicPageRouter.GET("/slug/:slug", pc.PageController.GetPageBySlug)
+	}
+
 	// private
 	privatePageRouter := router.Group("/admin/pages")
 	// middleware
@@ -21,12 +28,10 @@ func (pc *PageRouter) InitPageRouter(router *gin.RouterGroup) {
 		privatePageRouter.GET("", pc.PageController.GetPageASC)
 		privatePageRouter.GET("/desc/", pc.PageController.GetPageDESC)
 		privatePageRouter.GET("/typenstatus/", pc.PageController.GetPageByTypeNStatus)
-		privatePageRouter.GET("/id/:id", pc.PageController.GetPageById)
 		privatePageRouter.GET("/ids/", pc.PageController.GetPageByManyId)
 		privatePageRouter.GET("/year/", pc.PageController.GetPageByPublishYear)
 		privatePageRouter.GET("/month/", pc.PageController.GetPageByPublishYearMonth)
 		privatePageRouter.GET("/day/", pc.PageController.GetPageByPublishYearMonthDay)
-		privatePageRouter.GET("/slug/:slug", pc.PageController.GetPageBySlug)
 		privatePageRouter.GET("/status/:id", pc.PageController.GetPageByStatus)
 		privatePageRouter.GET("/type/:id", pc.PageController.GetPageByType)
 		privatePageRouter.GET("/user/:id", pc.PageController.GetPageByUser)

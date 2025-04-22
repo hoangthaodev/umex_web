@@ -1,10 +1,12 @@
 'use client'
 
 import { BreadcrumbProvider } from '@/app/ux-admin/theme/(theme)/BreadcrumbContext'
+import ActionArea from '@/components/admin/theme/theme/actionArea/ActionArea'
 import Breadcrumb from '@/components/admin/theme/theme/Breadcrumb'
 import ShowArea from '@/components/admin/theme/theme/showArea/ShowArea'
 import DivNgang from '@/components/DivNgang'
-import React, { ReactNode, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { FaCircleChevronLeft, FaCircleChevronRight } from 'react-icons/fa6'
 
 type Props = {
@@ -13,17 +15,42 @@ type Props = {
 
 const ThemeLayout = ({ children }: Props) => {
   const [isShowSidebar, setIsShowSidebar] = useState(true)
+  const [isHeader, setIsHeader] = useState(false)
+  const [firstMount, setFirstMount] = useState(true)
+  const router = useRouter()
+
+  useEffect(() => {
+    setIsHeader(window.location.pathname.startsWith('/ux-admin/theme/header'))
+    setFirstMount(false)
+  }, [])
+
+
+  useEffect(() => {
+    if (firstMount) return
+    if (isHeader) return
+    router.back()
+  }, [isHeader])
 
   const handleHideSidebar = () => {
     setIsShowSidebar(false)
+    setIsHeader(false)
   }
   const handleShowSidebar = () => {
     setIsShowSidebar(true)
+    setIsHeader(window.location.pathname.startsWith('/ux-admin/theme/header'))
   }
+
+  if (firstMount) {
+    return (
+      <div>Loading...</div>
+    )
+  }
+
+  let size = document.documentElement.clientWidth
 
   return (
     <BreadcrumbProvider>
-      <div className='relative flex w-full h-[calc(100vh-2.5rem)]'>
+      <div className='relative flex flex-col sm:flex-row w-full h-[calc(100vh-2.5rem)]'>
         <div className={`${isShowSidebar ? "" : "hidden"} w-full h-full sm:w-80 border-r text-sm flex flex-col`}>
           <Breadcrumb />
           <DivNgang />
@@ -39,6 +66,11 @@ const ThemeLayout = ({ children }: Props) => {
               onClick={handleHideSidebar}
               className='cursor-pointer'>Hide Controls</label>
           </div>
+          <div className='sm:hidden'>
+            {
+              isHeader && <ActionArea setIsHeader={setIsHeader} />
+            }
+          </div>
         </div>
         {
           !isShowSidebar && (
@@ -48,13 +80,14 @@ const ThemeLayout = ({ children }: Props) => {
             </div>
           )
         }
-        <div className='hidden sm:flex grow h-full flex-col justify-between overflow-hidden'>
-          <div className='grow overflow-y-auto '>
+        <div className='flex grow h-full flex-col justify-between overflow-hidden'>
+          <div className='hidden sm:block grow overflow-y-auto '>
             <ShowArea />
           </div>
           <div>
-            action area
-            {/* <ActionArea /> */}
+            {
+              isHeader && <ActionArea setIsHeader={setIsHeader} />
+            }
           </div>
         </div>
       </div>

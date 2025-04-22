@@ -1,6 +1,8 @@
+'use server'
+
 import React from 'react'
 
-const Contact = () => {
+const Contact = async () => {
   return (
     <div>Contact</div>
   )

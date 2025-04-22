@@ -1,3 +1,5 @@
+'use server'
+
 import { componentMap } from '@/lib/componentMap';
 import React from 'react'
 

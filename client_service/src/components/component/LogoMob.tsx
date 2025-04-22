@@ -1,24 +1,39 @@
-'use client'
+'use server'
 
+import { getConfigByKey } from '@/action/config.action'
 import { getImageById } from '@/action/image.action'
-import { useTheme } from '@/app/themeContext'
-import { ImageType } from '@/lib/type'
+import { ImageType, SiteIdentifyType } from '@/lib/type'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-const LogoMob = () => {
-  const { logo, title, description, isDisplayBelowLogo, logoContainerWidth, logoMaxWidth, logoPadding, logoLink } = useTheme()
-  const [logoImage, setLogoImage] = useState<ImageType | undefined>(undefined)
+const LogoMob = async () => {
+  let logoImage: ImageType | undefined = undefined;
+  let title: string = '';
+  let description: string = '';
+  let isDisplayBelowLogo: boolean = false;
+  let logoContainerWidth: number = 0;
+  let logoMaxWidth: number | undefined = undefined;
+  let logoPadding: number = 0;
+  let logoLink: string = '';
 
-  useEffect(() => {
-    if (logo > 0) getImageById(logo).then(data => {
-      if (data) {
-        setLogoImage(data)
+  const siteiden = await getConfigByKey('header_siteidentify')
+  if (siteiden) {
+    const siteidenParse = JSON.parse(siteiden.config_value || '') as SiteIdentifyType;
+    if (siteidenParse.logo) {
+      const image = await getImageById(siteidenParse.logo)
+      if (image) {
+        logoImage = image
       }
-    })
-  }, [logo])
-
+    }
+    title = siteidenParse.title
+    description = siteidenParse.description
+    isDisplayBelowLogo = siteidenParse.isDisplayBelowLogo
+    logoContainerWidth = siteidenParse.logoContainerWidth
+    logoMaxWidth = siteidenParse.logoMaxWidth
+    logoPadding = siteidenParse.logoPadding
+    logoLink = siteidenParse.logoLink
+  }
   const style = {
     width: logoContainerWidth,
     maxWidth: logoMaxWidth ? `${logoMaxWidth}px` : undefined,
